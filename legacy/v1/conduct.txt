@@ -1,0 +1,58 @@
+  const worldList = ['leviathan', 'hyperion', 'behemoth', 'exodus', 'excalibur', 'ultros', 'lamia', 'famfrit'];
+                const aetheryteList = ['tomra', 'lydha', 'twine'];
+                // Checks author is the one replying //
+                const filter = m => m.author.id === message.author.id;
+                let worldFlag = 0;
+                let aetheryteFlag = 0;
+
+
+                // Bot message //
+                message.reply('Please enter a world...');
+                const collector = new Discord.MessageCollector(message.channel, filter, {
+                        max: 1,
+                        time: 1000 * 15, // 15s //
+                });
+                // const worldInput = (`${collector.collected.first()}`).toLowerCase();
+                console.log(`flag check = ${worldFlag}`);
+                collector.on('collect', m => {
+                        for (let step = 0; step <= worldList.length - 1; step++) {
+                                console.log(step);
+                                // message.reply(step);
+                                const worldTemp = worldList[step];
+                                // if (worldList.includes(m.content)) { //
+                                if (worldTemp === m.content) {
+                                        message.reply(`You've selected: ${m.content}. Please enter aetheryte.`);
+                                        worldFlag = 1;
+                                        console.log(`world flag check = ${worldFlag}`); {
+                                                break;
+                                        }
+                                }
+                        }
+                });
+                if (worldFlag === 1) {
+                        console.log('here');
+                        collector.on('collect', m => {
+                                for (let step = 0; step <= aetheryteList.length - 1; step++) {
+                                        const aetheryteTemp = aetheryteList[step];
+                                        message.reply(step);
+                                        if (aetheryteTemp === m.content) {
+                                                message.reply('it worked');
+                                                aetheryteFlag = 1;
+                                                console.log(`aetheryte flag check = ${aetheryteFlag}`);
+                                                collector.stop(); {
+                                                        break;
+                                                }
+                                        }
+                                }
+                        });
+                }
+                // collector.on('end', collected => {
+                //      console.log(`Submitted ${collected.content}`);
+                // });
+
+                // for (let step = 0; step < worldlist.size-1 ; step++) { if worldlist [step] = m.content }
+                // worldList.indexOf(step)
+                // indexOf()
+                // flag for world/aetheryte true/false ticks
+        },
+};

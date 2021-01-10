@@ -1,0 +1,64 @@
+[{
+      "world": [{
+         "name": "Behemoth",
+         "shorthand": "beh",
+         "roleid": "784680997613731850"
+      }]
+   },
+   {
+      "world": [{
+         "name": "Excalibur",
+         "shorthand": "exc",
+         "roleid": "784690789065293836"
+      }]
+   },
+   {
+      "world": [{
+         "name": "Exodus",
+         "shorthand": "exo",
+         "roleid": "784690786993700874"
+      }]
+   },
+   {
+      "world": [{
+         "name": "Famfrit",
+         "shorthand": "fam",
+         "roleid": "784690791117225984"
+      }]
+   },
+   {
+      "world": [{
+         "name": "Hyperion",
+         "shorthand": "hyp",
+         "roleid": "784684907288461322"
+      }]
+   },
+   {
+      "world": [{
+         "name": "Lamia",
+         "shorthand": "lam",
+         "roleid": "784690793159983114"
+      }]
+   },
+   {
+      "world": [{
+         "name": "Leviathan",
+         "shorthand": "lev",
+         "roleid": "784503839658999818"
+      }]
+   },
+   {
+      "world": [{
+         "name": "Ultros",
+         "shorthand": "ult",
+         "roleid": "784690794623139851"
+      }]
+   },
+   {
+      "world": [{
+         "name": "Ultros",
+         "shorthand": "mat",
+         "roleid": "784690794623139851"
+      }]
+   }
+]

@@ -1,0 +1,249 @@
+	{{/* User Variables */}}
+{{ $userName := .User.Username }}
+{{ $userAvatar := (.User.AvatarURL "256") }}
+{{ $userNickName := .Member.Nick }}
+
+	{{/* Channel Variables */}}
+{{ $channelID := .Channel.ID }}
+{{ $liveRelaysChannel := "785777005055442944"}}
+{{ $testRelaysChannel := "785419736791253013"}}
+{{ $sendtoChannel := "785777005055442944" }}
+
+	{{/* Picture Variables */}}
+{{ $aetherytePng := " " }}
+{{ $tomraPng := "https://i.imgur.com/ma6mUU1.png" }}
+{{ $stilltidePng := "https://i.imgur.com/UyOoTbw.png" }}
+{{ $wrightPng := "https://i.imgur.com/cJckhQu.png" }}
+{{ $fortJobbPng := "https://i.imgur.com/ACpbedg.png" }}
+{{ $ostallImperativePng := "https://i.imgur.com/qStoy8c.png" }}
+{{ $wolekdorfPng := "https://i.imgur.com/0SWCFFb.png" }}
+{{ $plaEnniPng := "https://i.imgur.com/qsaXQqM.png" }}
+{{ $lydhaLranPng := "https://i.imgur.com/SbbnWA3.png" }}
+{{ $ondoCupsPng := "https://i.imgur.com/SgM9hZY.png" }}
+{{ $slitherboughPng := "https://i.imgur.com/RseEN1N.png" }}
+{{ $twinePng := "https://i.imgur.com/jVUOj8Y.png" }}
+{{ $fanowPng := "https://i.imgur.com/kkHkq03.png" }}
+{{ $crystariumPng := "https://i.imgur.com/xKujf1O.png" }}
+{{ $eulmorePng := "https://i.imgur.com/ttIeRDC.png" }}
+{{ $innPng := "https://i.imgur.com/Q5e9FUx.png" }}
+{{ $macarensesAnglePng := "https://i.imgur.com/WdyPU5i.png" }}
+{{ $mordSouqPng := "https://i.imgur.com/jXb3cTp.png" }}
+
+	{{/* Role IDs */}}
+{{ $serverTrainRoleID := " " }}
+{{ $trainRoleID := "<@&783950640412885013>" }}
+
+{{ $beheTrainRoleID := "<@&784680997613731850>" }}
+{{ $excalTrainRoleID := "<@&784690789065293836>" }}
+{{ $exoTrainRoleID := "<@&784690786993700874>" }}
+{{ $famfTrainRoleID := "<@&784690791117225984>" }}
+{{ $hypeTrainRoleID := "<@&784684907288461322>" }}
+{{ $lamiaTrainRoleID := "<@&784690793159983114>" }}
+{{ $leviTrainRoleID := "<@&784503839658999818>" }}
+{{ $ultrosTrainRoleID := "<@&784690794623139851>" }}
+
+{{ $trainSpeedRoleID := " " }}
+{{ $bulletTrainRoleID := "<@&785377562875920434>" }}
+{{ $waitTrainRoleID := "<@&785377604391665664>" }}
+
+{{$args := parseArgs 2 "Syntax is <world> <speed> <aetheryte>"
+	(carg "string" "world name")
+	(carg "string" "speed")
+	(carg "string" "aetheryte")
+	}}
+	
+	
+{{ $argsWorld := ($args.Get 0) }}
+{{ $argsSpeed := ($args.Get 1) }}
+{{ $argsAetheryte := ($args.Get 2) }}
+
+{{ if lt (len $argsWorld) 3 }}
+	{{ sendMessage nil "Your relay was not sent. Please check your world. **-train/conduct <world> <speed> <aetheryte>**" }}
+		{{ else if lt (len $argsAetheryte) 3 }}
+			{{ sendMessage nil "Your relay was not sent. Please check your Aetheryte. **-train/conduct <world> <speed> <aetheryte>**" }}
+{{ end }}
+
+{{ $startingWorld := title $argsWorld }}
+{{ $shortWorld := slice $startingWorld 0 3 }}
+
+{{ $startingSpeed := lower $argsSpeed }}
+
+{{ $startingAetheryte := title $argsAetheryte }}
+{{ $shortAetheryte := slice $startingAetheryte 0 3 }}
+
+{{ if eq $shortWorld "Beh" }}
+		{{ $serverTrainRoleID = $beheTrainRoleID }}
+		{{ $startingWorld = "Behemoth" }}
+	{{else if eq $shortWorld "Exc" }}
+		{{ $serverTrainRoleID = $excalTrainRoleID }}
+		{{ $startingWorld = "Excalibur" }}
+	{{else if eq $shortWorld "Exo" }}
+		{{ $serverTrainRoleID = $exoTrainRoleID }}
+		{{ $startingWorld = "Exodus" }}
+	{{else if eq $shortWorld "Fam" }}
+		{{ $serverTrainRoleID = $famfTrainRoleID }}
+		{{ $startingWorld = "Famfrit" }}
+	{{else if eq $shortWorld "Hyp" }}
+		{{ $serverTrainRoleID = $hypeTrainRoleID }}
+		{{ $startingWorld = "Hyperion" }}
+	{{else if eq $shortWorld "Lam" }}
+		{{ $serverTrainRoleID = $lamiaTrainRoleID }}
+		{{ $startingWorld = "Lamia" }}
+	{{else if eq $shortWorld "Lev" }}
+		{{ $serverTrainRoleID = $leviTrainRoleID }}
+		{{ $startingWorld = "Leviathan" }}
+	{{else if eq $shortWorld "Ult" }}
+		{{ $serverTrainRoleID = $ultrosTrainRoleID }}
+		{{ $startingWorld = "Ultros" }}
+	{{ else }}
+		{{ $userAvatar = "x" }}
+		{{ sendMessage nil "Your relay was not sent, please check your syntax: **-train/conduct <world> <speed> <aetheryte>**" }}
+{{ end }}
+
+{{ $speedDescription := joinStr " " "This is a" $startingSpeed "train!" }}
+
+{{ if eq $startingSpeed "bullet" }}	
+		{{ $trainSpeedRoleID = $bulletTrainRoleID }}
+	{{else if eq $startingSpeed "wait" }}
+		{{ $trainSpeedRoleID = $waitTrainRoleID }}
+	{{else if eq $startingSpeed "chill" }}
+		{{ $trainSpeedRoleID = $waitTrainRoleID }}
+	{{else if eq $startingSpeed "na" }}
+		{{ $trainSpeedRoleID = " " }}
+		{{ $speedDescription = "No set speed for this train." }}
+	{{else if eq $startingSpeed "variable" }}
+		{{ $trainSpeedRoleID = " " }}
+		{{ $speedDescription = "This train will have a variable speed, and will change depending on congestion and attendance." }}
+	{{ else }}
+		{{ $userAvatar = "x" }}
+		{{ sendMessage nil "Your relay was not sent, please check your syntax: **-train/conduct <world> <speed> <aetheryte>**" }}		
+{{ end }}
+
+{{/* Crystarium */}}
+	{{if eq $shortAetheryte "Cry" }}
+		{{ $startingAetheryte = "Crystarium" }}
+		{{ $aetherytePng = $crystariumPng }}
+
+{{/* Eulmore */}}
+	{{else if eq $shortAetheryte "Eul" }}
+		{{ $startingAetheryte = "Eulmore" }}
+		{{ $aetherytePng = $eulmorePng }}	
+	
+{{/* Lakeland */}}
+	{{else if eq $shortAetheryte "For" }}
+		{{ $startingAetheryte = "Fort Jobb" }}
+		{{ $aetherytePng = $fortJobbPng }}
+			{{else if eq $shortAetheryte "Job" }}
+				{{ $startingAetheryte = "Fort Jobb" }}
+				{{ $aetherytePng = $fortJobbPng }}			
+	{{else if eq $shortAetheryte "Ost" }}
+		{{ $startingAetheryte = "Ostall Imperative" }}
+		{{ $aetherytePng = $ostallImperativePng }}
+			{{else if eq $shortAetheryte "Imp" }}
+				{{ $startingAetheryte = "Ostall Imperative" }}
+				{{ $aetherytePng = $ostallImperativePng }}
+				
+{{/* Kholusia */}}
+	{{else if eq $shortAetheryte "Tom" }}
+		{{ $startingAetheryte = "Tomra" }}
+		{{ $aetherytePng = $tomraPng }}
+	{{else if eq $shortAetheryte "Sti" }}
+		{{ $startingAetheryte = "Stilltide" }}
+		{{ $aetherytePng = $stilltidePng }}
+	{{else if eq $shortAetheryte "Wri" }}
+		{{ $startingAetheryte = "Wright" }}
+		{{ $aetherytePng = $wrightPng }}
+	
+{{/* Ahm Araeng */}}
+	{{else if eq $shortAetheryte "Twi" }}
+		{{ $startingAetheryte = "Twine" }}
+		{{ $aetherytePng = $twinePng }}
+	{{else if eq $shortAetheryte "Mor" }}
+		{{ $startingAetheryte = "Mord Souq" }}
+		{{ $aetherytePng = $mordSouqPng }}	
+			{{else if eq $shortAetheryte "Sou" }}
+				{{ $startingAetheryte = "Mord Souq" }}
+				{{ $aetherytePng = $mordSouqPng }}	
+	{{else if eq $shortAetheryte "Inn" }}
+		{{ $startingAetheryte = "Inn at Journey's Head" }}
+		{{ $aetherytePng = $innPng }}
+			{{else if eq $shortAetheryte "Jou" }}
+				{{ $startingAetheryte = "Inn at Journey's Head" }}
+				{{ $aetherytePng = $innPng }}
+			{{else if eq $shortAetheryte "Hea" }}
+				{{ $startingAetheryte = "Inn at Journey's Head" }}
+				{{ $aetherytePng = $innPng }}
+
+{{/* Il Mheg */}}
+	{{else if eq $shortAetheryte "Pla" }}
+		{{ $startingAetheryte = "Pla Enni" }}
+		{{ $aetherytePng = $plaEnniPng }}
+			{{else if eq $shortAetheryte "Enn" }}
+				{{ $startingAetheryte = "Pla Enni" }}
+				{{ $aetherytePng = $plaEnniPng }}
+	{{else if eq $shortAetheryte "Lyd" }}
+		{{ $startingAetheryte = "Lydha Lran" }}
+		{{ $aetherytePng = $lydhaLranPng }}
+			{{else if eq $shortAetheryte "Lra" }}
+				{{ $startingAetheryte = "Lydha Lran" }}
+				{{ $aetherytePng = $lydhaLranPng }}
+		{{else if eq $shortAetheryte "Wol" }}
+			{{ $startingAetheryte = "Wolekdorf" }}
+			{{ $aetherytePng = $wolekdorfPng }}
+	
+{{/* The Rak'tika Greatwood */}}
+	{{else if eq $shortAetheryte "Sli" }}
+		{{ $startingAetheryte = "Slitherbough" }}
+		{{ $aetherytePng = $slitherboughPng }}	
+	{{else if eq $shortAetheryte "Fan" }}
+		{{ $startingAetheryte = "Fanow" }}
+		{{ $aetherytePng = $fanowPng }}
+	
+{{/* The Tempest */}}
+	{{else if eq $shortAetheryte "Mac" }}
+		{{ $startingAetheryte = "Macarenses Angle" }}
+		{{ $aetherytePng = $macarensesAnglePng }}	
+			{{else if eq $shortAetheryte "Ang" }}
+				{{ $startingAetheryte = "Macarenses Angle" }}
+				{{ $aetherytePng = $macarensesAnglePng }}							
+	{{else if eq $shortAetheryte "Ond" }}
+		{{ $startingAetheryte = "Ondo Cups" }}
+		{{ $aetherytePng = $ondoCupsPng }}
+			{{else if eq $shortAetheryte "Cup" }}
+				{{ $startingAetheryte = "Ondo Cups" }}
+				{{ $aetherytePng = $ondoCupsPng }}
+	{{ else }}
+		{{ $userAvatar = "x" }}
+		{{ sendMessage nil "Your relay was not sent, please check your syntax: **-train/conduct <world> <speed> <aetheryte>**" }}
+{{ end }}
+
+	 {{/* Custom Embed Variables */}}
+{{ $relayMentions := joinStr " " $trainRoleID $serverTrainRoleID $trainSpeedRoleID }}
+
+{{ $relayerName := joinStr " " "Relayer:" $userNickName }}	
+{{ $emojiStartWorld := joinStr " " ":earth_americas:" $startingWorld }}
+
+{{ $startingText := joinStr " " "Hunt train starting at" $startingAetheryte "aetheryte!" }}
+{{ $cembedTitle := $startingText }}
+{{ $cembedDescription := joinStr " " "Proceed to location:" "(X,Y)" }}
+{{ $cembedRelay := cembed 
+			"author" (sdict "name" $relayerName "icon_url" $userAvatar)
+			"title" $cembedTitle 
+			"color" 16740975 
+			"fields" (cslice
+				(sdict "name" $emojiStartWorld "value" $speedDescription "inline" false)
+			)
+			"image" (sdict "url" $aetherytePng) 
+			"footer" (sdict "text" "Train speed may change due to congestion or attendance.") 
+		}}
+{{ $complexSend := complexMessage 
+			"content" $relayMentions
+			"embed" ($cembedRelay)
+		}}
+
+	{{/* Functional code based on finalized variables */}}
+
+{{sendMessageNoEscape
+ $sendtoChannel
+ $complexSend
+ }}

@@ -1,0 +1,34 @@
+save world
+- check world
+
+                const worldNames = ['levi', 'behe', 'lamia', 'famf', 'hype', 'exo', 'excal', 'ultros' ];
+
+
+                            const worldlist = ['levi', 'leviathan', 'behe', 'behemoth', 'lamia', 'famf', 'famfrit', 'hype', 'hyperion', 'exo', 'exodus', 'excal', 'excalibur', 'ultros'];
+            // m is the message being sent. index.js already does check for author.bot, so we omit here //
+            const filter = m => m.author.id === message.author.id;
+            message.reply('Please enter a world...');
+            message.channel.awaitMessages(filter, {
+                max: 1,
+                time: 15000,
+            }).then(collected => {
+                    // Sets the world input to lower case for consistancy. //
+                    const worldinput = (collected.first().content).toLowerCase();
+
+                    // Worldname set to first three letters, to be used in future checks. //
+                    let worldname = (collected.first().content).slice(0, 3);
+
+                    // command will stop if 'cancel' is input //
+                    if (worldinput === 'cancel') {
+                        return message.reply('Canceled!');
+                    }
+
+                    if (worldlist.includes(`${worldinput}`)); {
+                        return message.channel.send('Only standard shorthand and full names are valid inputs. Ex: "Levi" "Leviathan"');
+                    };
+                },
+            }
+}
+
+save aetheryte
+- check aetheryte
