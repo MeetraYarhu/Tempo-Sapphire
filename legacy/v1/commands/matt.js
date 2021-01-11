@@ -13,7 +13,7 @@ module.exports = {
     args: false,
     usage: '<matt>',
     execute(message) {
-
+// local directory
         const files = fs.readdirSync('./mattpictures');
         console.log(files);
 
