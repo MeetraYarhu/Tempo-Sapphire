@@ -11,6 +11,7 @@ module.exports = {
     usage: '<world> <aetheryte> <speed>',
     roles: '785414898125373441', // Relayer
     args: true,
+    channel: '785789582419558400', // Command center channel ID
     execute(message, args) {
 
         if (args.length !== 3) { // send appropriate error if arguments are not sufficient length
@@ -38,7 +39,7 @@ module.exports = {
             const aetheryteAllAliases = [];
 
             // Destination channel for relay
-            const destination = message.client.channels.cache.get('785419736791253013'); // ID for test-relay channel
+            const destination = message.client.channels.cache.get('785777005055442944'); // ID for relay channel
 
             // change this so the locations.json can just match lower case and delete these variables
             const locFirstChar = locationName.charAt(0).toUpperCase();

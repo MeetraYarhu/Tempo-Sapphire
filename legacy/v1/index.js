@@ -13,8 +13,8 @@ const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('
 
 client.once('ready', () => {
     console.log('Ready!');
+    client.user.setActivity('Ok\'Zundu');
 });
-
 
 for (const file of commandFiles) {
     const command = require(`./commands/${file}`);
@@ -51,6 +51,11 @@ client.on('message', message => {
         const authorRolePerms = member.roles.cache.has(command.roles);
         if (authorRolePerms == false) {
             return message.reply('Bug meetra for roles or something');
+        }
+    }
+    if (command.channel) {
+        if (message.channel.id !== (command.channel)) {
+            return message.reply('You can\'t use that command in this channel!');
         }
     }
     // Check for arguments if a command has args = true //
