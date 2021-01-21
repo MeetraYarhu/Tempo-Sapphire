@@ -173,6 +173,7 @@ module.exports = {
                                 destination.send(`<@&${trainRoleID}> <@&${relayWorldID}>`);
                             }
                             destination.send(relayEmbed);
+                            message.channel.send(`Your relay was sent, ${message.author}!`);
                             break;
                         }
                     }
