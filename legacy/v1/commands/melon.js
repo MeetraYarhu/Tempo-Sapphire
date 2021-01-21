@@ -11,7 +11,7 @@ module.exports = {
     description: 'Melons.',
     guildOnly: true,
     // eslint-disable-next-line no-inline-comments
-    roles: '724477995884216340', // Mod
+    roles: '785414898125373441', // Relayer
     args: false,
     usage: '<melon>',
     execute(message) {
