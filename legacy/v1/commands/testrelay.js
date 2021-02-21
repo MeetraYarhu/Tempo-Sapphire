@@ -7,13 +7,13 @@ const speeds = require('./speeds.json');
 const fs = require('fs');
 const path = require('path');
 module.exports = {
-    name: 'relay',
+    name: 'testrelay',
     description: 'Relay train',
     guildOnly: true,
     usage: '<world> <aetheryte> <speed>',
     roles: '785414898125373441', // Relayer
     args: true,
-    channel: '785789582419558400', // Command center channel ID
+    channel: '785419531815616552', // Command center channel ID
     execute(message, args) {
 
         if (args.length !== 3) { // send appropriate error if arguments are not sufficient length
@@ -35,13 +35,13 @@ module.exports = {
             const validWorldShorthand = worlds.map(obj => obj.world[0].shorthand);
             const worldRoleIDs = worlds.map(obj => obj.world[0].roleid);
             // Mapping objects from locations.json to local arrays
-            // const aetheryteNames = locations.map(obj => obj.aetheryte[0].name);
-            // const aetheryteUrls = locations.map(obj => obj.aetheryte[0].url);
+            const aetheryteNames = locations.map(obj => obj.aetheryte[0].name);
+            const aetheryteUrls = locations.map(obj => obj.aetheryte[0].url);
             const aetheryteAliases = locations.map(obj => obj.aetheryte[0].aliases);
             const aetheryteAllAliases = [];
 
             // Destination channel for relay
-            const destination = message.client.channels.cache.get('785777005055442944'); // ID for relay channel
+            const destination = message.client.channels.cache.get('785419736791253013'); // ID for relay channel
 
             // change this so the locations.json can just match lower case and delete these variables
             const locFirstChar = locationName.charAt(0).toUpperCase();
@@ -105,13 +105,13 @@ module.exports = {
                 const relayEmbed = new Discord.MessageEmbed()
                     .setColor('006CFF')
                     .setTitle('Hunt train starting!')
-                    .setImage('')
                     .setAuthor(`Relayer: ${message.member.displayName}`, message.author.avatarURL())
                     .addFields({
                         name: ':earth_americas: World',
                         value: relayWorld,
                         inline: true,
                     })
+                    .setImage('')
                     .setFooter('Train speed may change due to congestion or attendance.');
 
                 // Change embed color based on world
@@ -132,8 +132,6 @@ module.exports = {
                 } else if (worldInputSubstr === 'ult') { // magenta
                     relayEmbed.setColor('B300F1');
                 }
-
-
                 const aetheryteImages = fs.readdirSync('./shbAetherytes');
                 console.log(aetheryteImages);
 
@@ -142,8 +140,8 @@ module.exports = {
                     for (let k = 0; k < aetheryteAliases[i].length; k++) {
                         if (aetheryteAliases[i][k].includes(locTitle)) {
                             const tempIndexName = aetheryteAliases[i][0];
-                            // const tempIndex = aetheryteNames.indexOf(tempIndexName);
-                            // const tempUrl = aetheryteUrls[tempIndex];
+                            const tempIndex = aetheryteNames.indexOf(tempIndexName);
+                            const tempUrl = aetheryteUrls[tempIndex];
                             console.log(tempIndexName);
                             const tempImage = fs.readFileSync(path.join('./melonpics', tempIndexName));
                             relayEmbed.addFields({
