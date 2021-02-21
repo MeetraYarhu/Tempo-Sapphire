@@ -35,8 +35,8 @@ module.exports = {
             const validWorldShorthand = worlds.map(obj => obj.world[0].shorthand);
             const worldRoleIDs = worlds.map(obj => obj.world[0].roleid);
             // Mapping objects from locations.json to local arrays
-            const aetheryteNames = locations.map(obj => obj.aetheryte[0].name);
-            const aetheryteUrls = locations.map(obj => obj.aetheryte[0].url);
+            // const aetheryteNames = locations.map(obj => obj.aetheryte[0].name);
+            // const aetheryteUrls = locations.map(obj => obj.aetheryte[0].url);
             const aetheryteAliases = locations.map(obj => obj.aetheryte[0].aliases);
             const aetheryteAllAliases = [];
 
@@ -140,8 +140,8 @@ module.exports = {
                     for (let k = 0; k < aetheryteAliases[i].length; k++) {
                         if (aetheryteAliases[i][k].includes(locTitle)) {
                             const tempIndexName = aetheryteAliases[i][0];
-                            const tempIndex = aetheryteNames.indexOf(tempIndexName);
-                            const tempUrl = aetheryteUrls[tempIndex];
+                            // const tempIndex = aetheryteNames.indexOf(tempIndexName);
+                            // const tempUrl = aetheryteUrls[tempIndex];
                             console.log(tempIndexName);
                             const tempImage = fs.readFileSync(path.join('./melonpics', tempIndexName));
                             relayEmbed.addFields({
