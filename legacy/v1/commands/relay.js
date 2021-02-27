@@ -5,7 +5,6 @@ const locations = require('./locations.json');
 const worlds = require('./worlds.json');
 const speeds = require('./speeds.json');
 const fs = require('fs');
-const path = require('path');
 module.exports = {
     name: 'relay',
     description: 'Relay train',
@@ -35,7 +34,7 @@ module.exports = {
             const validWorldShorthand = worlds.map(obj => obj.world[0].shorthand);
             const worldRoleIDs = worlds.map(obj => obj.world[0].roleid);
             // Mapping objects from locations.json to local arrays
-            // const aetheryteNames = locations.map(obj => obj.aetheryte[0].name);
+            const aetheryteNames = locations.map(obj => obj.aetheryte[0].name);
             // const aetheryteUrls = locations.map(obj => obj.aetheryte[0].url);
             const aetheryteAliases = locations.map(obj => obj.aetheryte[0].aliases);
             const aetheryteAllAliases = [];
@@ -101,17 +100,19 @@ module.exports = {
                 const relayWorld = validWorldNames[validWorldIndex];
                 const relayWorldID = worldRoleIDs[validWorldIndex];
 
+                const aetheryteImages = fs.readdirSync('./shbAetherytes');
+
                 // Embed that will be used to confirm, then sent as the relay
                 const relayEmbed = new Discord.MessageEmbed()
                     .setColor('006CFF')
-                    .setTitle('Hunt train starting!')
-                    .setImage('')
+                    .setTitle('ShB hunt train starting!')
                     .setAuthor(`Relayer: ${message.member.displayName}`, message.author.avatarURL())
                     .addFields({
                         name: ':earth_americas: World',
                         value: relayWorld,
                         inline: true,
                     })
+                    .setImage('')
                     .setFooter('Train speed may change due to congestion or attendance.');
 
                 // Change embed color based on world
@@ -133,25 +134,24 @@ module.exports = {
                     relayEmbed.setColor('B300F1');
                 }
 
-
-                const aetheryteImages = fs.readdirSync('./shbAetherytes');
-                console.log(aetheryteImages);
-
                 // Loop through aetherytes to find matching index
                 for (let i = 0; i < aetheryteAliases.length; i++) {
                     for (let k = 0; k < aetheryteAliases[i].length; k++) {
                         if (aetheryteAliases[i][k].includes(locTitle)) {
                             const tempIndexName = aetheryteAliases[i][0];
-                            // const tempIndex = aetheryteNames.indexOf(tempIndexName);
+                            const tempIndex = aetheryteNames.indexOf(tempIndexName);
                             // const tempUrl = aetheryteUrls[tempIndex];
-                            console.log(tempIndexName);
-                            const tempImage = fs.readFileSync(path.join('./melonpics', tempIndexName));
+                            const chosenFile = aetheryteImages[tempIndex];
+                            const rid = 'shbAetherytes/' + chosenFile;
+                            const ridof = rid.replace('shbAetherytes/', '');
+
+                            relayEmbed.attachFiles(`./shbAetherytes/${ridof}`);
                             relayEmbed.addFields({
                                 name: 'Location',
                                 value: tempIndexName,
                                 inline: true,
                             });
-                            relayEmbed.setImage(tempImage);
+                            relayEmbed.setImage(`attachment://${ridof}`);
                             break;
                         }
                     }
