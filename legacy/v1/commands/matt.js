@@ -16,11 +16,11 @@ module.exports = {
 // local directory
         const files = fs.readdirSync('./mattpictures');
         console.log(files);
-
         const chosenFile = files[Math.floor(Math.random() * files.length)];
         console.log(chosenFile);
 
         const image = fs.readFileSync(path.join('./mattpictures', chosenFile));
+        console.log(image);
 
         const attachment = new MessageAttachment(image);
 
