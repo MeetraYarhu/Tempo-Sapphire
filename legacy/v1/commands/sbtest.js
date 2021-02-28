@@ -30,7 +30,7 @@ module.exports = {
             // Mapping arrays to run checks against
             const validWorldNames = worlds.map(obj => obj.world[0].name);
             const validWorldShorthand = worlds.map(obj => obj.world[0].shorthand);
-            const worldRoleIDs = worlds.map(obj => obj.world[0].sbroleid);
+            const worldRoleIDs = worlds.map(obj => obj.world[0].roleid);
             // Mapping objects from sblocations.json to local arrays
             const aetheryteNames = locations.map(obj => obj.aetheryte[0].name);
             const aetheryteAliases = locations.map(obj => obj.aetheryte[0].aliases);
@@ -119,8 +119,9 @@ module.exports = {
                                 inline: true,
                             });
                             relayEmbed.setImage(`attachment://${ridof}`);
-                            destination.send(`<@&${trainRoleID}> <@&${relayWorldID}>`);
-                            destination.send(relayEmbed);
+                            destination.send(`<@&${trainRoleID}> <@&${relayWorldID}>`, {
+                                embed: relayEmbed,
+                            });
                             message.channel.send(`Your relay was sent, ${message.author}!`);
                             break;
                         }

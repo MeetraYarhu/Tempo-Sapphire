@@ -175,11 +175,14 @@ module.exports = {
                                 inline: false,
                             });
                             if (tempSpeedRoleID !== '1234') {
-                                destination.send(`<@&${trainRoleID}> <@&${relayWorldID}> <@&${tempSpeedRoleID}>`);
+                                destination.send(`<@&${trainRoleID}> <@&${relayWorldID}> <@&${tempSpeedRoleID}>`, {
+                                    embed: relayEmbed,
+                                });
                             } else {
-                                destination.send(`<@&${trainRoleID}> <@&${relayWorldID}>`);
+                                destination.send(`<@&${trainRoleID}> <@&${relayWorldID}>`, {
+                                    embed: relayEmbed,
+                                });
                             }
-                            destination.send(relayEmbed);
                             message.channel.send(`Your relay was sent, ${message.author}!`);
                             break;
                         }

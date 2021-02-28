@@ -119,8 +119,9 @@ module.exports = {
                                 inline: true,
                             });
                             relayEmbed.setImage(`attachment://${ridof}`);
-                            destination.send(`<@&${trainRoleID}> <@&${relayWorldID}>`);
-                            destination.send(relayEmbed);
+                            destination.send(`<@&${trainRoleID}> <@&${relayWorldID}>`, {
+                                embed: relayEmbed,
+                            });
                             message.channel.send(`Your relay was sent, ${message.author}!`);
                             break;
                         }
