@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const fs = require('fs');
-
+const mongo = require('./mongo');
 const {
     prefix,
     token,
@@ -15,6 +15,16 @@ client.once('ready', () => {
     console.log('Ready!');
     client.user.setActivity('Ok\'Zundu');
 });
+
+const connectToMongoDB = async () => {
+    await mongo().then(mongoose => {
+        try {
+            console.log('Connected to MongoDB')
+        } finally {
+            mongoose.connection.close()
+        }
+    })
+}
 
 for (const file of commandFiles) {
     const command = require(`./commands/${file}`);
