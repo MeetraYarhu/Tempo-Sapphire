@@ -25,7 +25,7 @@ const connectToMongoDB = async () => {
         }
     })
 }
-
+// test
 for (const file of commandFiles) {
     const command = require(`./commands/${file}`);
     client.commands.set(command.name, command);
