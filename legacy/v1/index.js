@@ -15,7 +15,7 @@ client.once('ready', () => {
     console.log('Ready!');
     client.user.setActivity('Ok\'Zundu');
 });
-
+// memes
 const connectToMongoDB = async () => {
     await mongo().then(mongoose => {
         try {
