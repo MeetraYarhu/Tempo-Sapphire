@@ -1,0 +1,28 @@
+{
+  "name": "TrainProject",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "commando-provider-mongo": "^2.1.0",
+    "discord.js": "^12.5.1",
+    "discord.js-commando": "github:discordjs/commando",
+    "eslint": "^7.16.0",
+    "module-alias": "^2.2.2",
+    "mongoose": "^5.11.15"
+  },
+  "_moduleAliases": {
+    "@root": ".",
+    "@schemas": "./schemas",
+    "@util": "./util",
+    "@images": "./images",
+    "@features": "./features/features",
+    "@commands": "./commands/commands"
+  }
+}
