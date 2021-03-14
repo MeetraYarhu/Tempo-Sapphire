@@ -132,6 +132,7 @@ module.exports = class relayCommand extends Command {
                     .setFooter('Train speed may change due to congestion or attendance.');
 
                 // Change embed color based on world
+                // test
                 let colorDict = {
                     beh: "af53d4", // purple
                     exc: "f5df18", // gold
