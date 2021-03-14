@@ -6,7 +6,7 @@ module.exports = class MeowCommand extends Command {
 	constructor(client) {
 		super(client, {
 			name: 'meow',
-			aliases: ['nyaa', 'nya', 'nya~', 'akemi'],
+			aliases: ['nyaa', 'nya', 'nya~', 'akemi', 'dumb'],
 			group: 'misc',
 			memberName: 'meow',
 			description: 'Tells you who is a bad cat.',
