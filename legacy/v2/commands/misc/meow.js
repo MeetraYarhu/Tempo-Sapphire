@@ -16,6 +16,5 @@ module.exports = class MeowCommand extends Command {
 
     run(message) {
     message.say('Akemi is a bad cat.');
-	message.say(':spraygun: :akemisquint:')
     }
 };
