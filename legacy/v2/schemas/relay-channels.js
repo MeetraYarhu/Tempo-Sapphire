@@ -12,4 +12,4 @@ const relayChannelSchema = mongoose.Schema ({
     channelID: reqString,
 })
 
-module.exports = mongoose.model('relay-channels', relayChannelSchema)
+module.exports = mongoose.model('relay-channel', relayChannelSchema)

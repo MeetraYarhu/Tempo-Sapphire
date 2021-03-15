@@ -10,7 +10,8 @@ const client = new Commando.CommandoClient({
   owner: '127254878190829568',
   commandPrefix: config.prefix,
 });
-const mongo = require('@root/mongo')
+const mongo = require('@root/mongo.js')
+const mongoose = require("mongoose");
 
 client.setProvider(
   MongoClient.connect(config.mongoPath)
@@ -21,7 +22,19 @@ client.setProvider(
       console.error(err)
     })
 )
-
+/*
+  //Connect to mongoose database
+  mongoose.connect(config.mongoDB, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  }).then(() => {
+    //If it connects log the following
+    client.logger.log("Connected to the Mongodb database.", "log");
+  }).catch((err) => {
+    //If it doesn't connect log the following
+    client.logger.log("Unable to connect to the Mongodb database. Error:"+err, "error");
+  });
+*/
 client.registry
   .registerDefaultTypes()
   .registerGroups([

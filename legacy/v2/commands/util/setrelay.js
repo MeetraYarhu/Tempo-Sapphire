@@ -1,14 +1,7 @@
+const Discord = require('discord.js');
 const {
     Command
 } = require('discord.js-commando');
-const {
-    MessageAttachment
-} = require('discord.js');
-const fs = require('fs');
-const path = require('path');
-
-const relayChannel = require('@schemas/relay-channels')
-const mongo = require('@root/mongo')
 
 module.exports = class setRelayCommand extends Command {
     constructor(client) {
@@ -19,29 +12,104 @@ module.exports = class setRelayCommand extends Command {
             memberName: 'setrelay',
             description: 'Sets the channel to recieve ShB relays.',
             userPermissions: ['ADMINISTRATOR'],
-            args: [{
-                key: 'newChannelID',
-                prompt: 'Which channel would you like to set as the relay channel?',
-                type: 'string',
-            }]
         });
     }
-    run = async (message, {
-        newChannelID
-    }) => {
-        //~setrelay <channel id>
+    //Execute to command once the settings have been checked
+    async run(client, message, args, data) {
+        try {
 
-        const {
-            guild,
-            author: relayer
-        } = message
+            let embed = new Discord.MessageEmbed()
+                .setFooter(data.config.footer)
+                .setColor(data.config.color);
 
-        await new relayChannel({
-            guildID: guild.id,
-            changedByID: staff.id,
-            changedByTag: staff.tag,
-            channelID: newChannelID,
-        }).save()
-        message.reply('Channel set!')
+            // If no arguments return error
+            if (!args[0]) {
+                embed.setTitle("Error")
+                    .setDescription("Missing argument!```welcome set #channel\nwelcome custom <text>\nwelcome disable```")
+                return message.channel.send(embed); // Error message
+            }
+
+            if (args[0].toLowerCase() === "set" && !args[1]) {
+                embed.setTitle("Error")
+                    .setDescription("Unable to find a valid channel.\n\nMissing argument!```welcome set #channel\nwelcome custom <text>\nwelcome disable```")
+                return message.channel.send(embed); // Error message
+            }
+
+            // Enable welcome messages and set channel to mentioned channel
+            if (args[0].toLowerCase() === "set" && args[1]) {
+                // Try finding the channel
+                let welcomeChannel = await client.tools.resolveChannel(args[1], message.guild);
+                if (!welcomeChannel) return; // Invalid channel
+
+                data.guild.addons.welcome.enabled = true; // Enable settings
+                data.guild.addons.welcome.channel = welcomeChannel.id; // Set as channel ID
+                data.guild.markModified("addons.welcome");
+                await data.guild.save();
+
+                embed.setTitle("Successfully updated")
+                    .setDescription(`welcome messages will be sent to ${welcomeChannel}`)
+
+                return message.channel.send(embed)
+            }
+
+            if (args[0].toLowerCase() === "custom" && !args[1]) {
+                embed.setTitle("Error")
+                    .setDescription("Unable to find a valid channel.\n\nMissing argument!```welcome set #channel\nwelcome custom <text>\nwelcome disable```")
+                return message.channel.send(embed); // Error message
+            }
+
+            if (args[0].toLowerCase() === "custom" && args[1]) {
+
+                if (!data.guild.addons.welcome.enabled) {
+                    embed.setTitle("Error")
+                        .setDescription("Please enable welcome messages before setting up a custom message.\n\nMissing argument!\nVaribles:```{user.ping} - @KSJaay#2487\n{user.name} - KSJaay\n{user.id} - 249955383001481216\n{user.tag} - KSJaay#2487\n{guild.name} - KSJaayDevs\n{guild.id} - 783691402931601441\n{guild.totalUser} - 1```")
+                    return message.channel.send(embed); // Error message
+                }
+                await args.shift()
+                let msg = args.join(" ")
+                if (msg.length > 1500) {
+                    embed.setTitle("Error")
+                        .setDescription("Messages exceeded 1500 characters, please make sure message is under 1500 characters.")
+                    return message.channel.send(embed); // Error message
+                }
+
+                data.guild.addons.welcome.message = msg;
+                data.guild.markModified("addons.welcome");
+                await data.guild.save();
+
+                embed.setTitle("Successfully updated")
+                    .setDescription("Custom message has been updated.\n\n**New Message**\n```" + msg + "```")
+                return message.channel.send(embed); // Error message
+            }
+
+            if (args[0].toLowerCase() === "disable") {
+                if (!data.guild.addons.welcome.enabled) {
+                    embed.setTitle("Successfully updated")
+                        .setDescription("welcome messages were already disabled.")
+                    return message.channel.send(embed); // Error message
+                }
+
+                data.guild.addons.welcome.enabled = false;
+                data.guild.addons.welcome.channel = "";
+                data.guild.markModified("addons.welcome");
+                await data.guild.save();
+
+                embed.setTitle("Successfully updated")
+                    .setDescription("welcome messages have now been disabled.")
+                return message.channel.send(embed); // Error message
+            }
+
+            embed.setTitle("Error")
+                .setDescription("Missing argument!```welcome set #channel\nwelcome custom <text>\nwelcome disable```")
+            return message.channel.send(embed); // Error message
+
+        } catch (err) {
+            //Log error into the database
+            client.logger.error(`Ran into an error while executing ${data.cmd.name}`)
+            console.log(err)
+        }
     }
+
+
+
 }
