@@ -121,7 +121,7 @@ module.exports = class sbrelayCommand extends Command {
                                 this.client.channels.cache.get(allSbChannelID[i]).send(`<@&${allTrainRoleID[i]}> ${worldSelection.roleid[i]}`, {
                                     embed: relayEmbed,
                                 });
-                                this.client.channels.cache.get(commandCenterID[i]).send(`An SB train on ${worldSelection.name} was relay by ${message.member.displayName} from ${message.guild.name}.`);
+                                this.client.channels.cache.get(commandCenterID[i]).send(`An SB train on ${worldSelection.name} was relayed by ${message.member.displayName} from the ${message.guild.name} Discord.`);
                             }
                             message.channel.send(`Your relay was sent, ${message.author}!`);
                             break;

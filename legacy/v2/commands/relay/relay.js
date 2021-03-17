@@ -174,7 +174,7 @@ module.exports = class sendMessageCommand extends Command {
                                     this.client.channels.cache.get(allChannelID[i]).send(`<@&${allTrainRoleID[i]}> ${worldSelection.roleid[i]} <@&${tempSpeedRoleID}>`, {
                                         embed: relayEmbed,
                                     });
-                                    this.client.channels.cache.get(commandCenterID[i]).send(`An ShB train on ${worldSelection.name} was relay by ${message.author.username} from ${message.guild.name}.`);
+                                    this.client.channels.cache.get(commandCenterID[i]).send(`An ShB train on ${worldSelection.name} was relayed by ${message.author.username} from the ${message.guild.name} Discord.`);
                                 }
                             }
                         } else {
@@ -182,7 +182,7 @@ module.exports = class sendMessageCommand extends Command {
                                 this.client.channels.cache.get(allChannelID[i]).send(`<@&${allTrainRoleID[i]}> ${worldSelection.roleid[i]}`, {
                                     embed: relayEmbed,
                                 });
-                                this.client.channels.cache.get(commandCenterID[i]).send(`An ShB train on ${worldSelection.name} was relay by ${message.member.displayName} from ${message.guild.name}.`);
+                                this.client.channels.cache.get(commandCenterID[i]).send(`An ShB train on ${worldSelection.name} was relayed by ${message.member.displayName} from the ${message.guild.name} Discord.`);
                             }
                         }
                         message.channel.send(`Your relay was sent, ${message.author}!`);
