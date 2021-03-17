@@ -1,73 +1,51 @@
-[{
-      "world": [{
-         "name": "Behemoth",
-         "shorthand": "beh",
-         "roleid": "784680997613731850",
-         "sbroleid": "815047543406723102"
-      }]
-   },
-   {
-      "world": [{
-         "name": "Excalibur",
-         "shorthand": "exc",
-         "roleid": "784690789065293836",
-         "sbroleid": "815047530076831754"
-      }]
-   },
-   {
-      "world": [{
-         "name": "Exodus",
-         "shorthand": "exo",
-         "roleid": "784690786993700874",
-         "sbroleid": "815047527468367892"
-      }]
-   },
-   {
-      "world": [{
-         "name": "Famfrit",
-         "shorthand": "fam",
-         "roleid": "784690791117225984",
-         "sbroleid": "815047540806385687"
-      }]
-   },
-   {
-      "world": [{
-         "name": "Hyperion",
-         "shorthand": "hyp",
-         "roleid": "784684907288461322",
-         "sbroleid": "815047538512101396"
-      }]
-   },
-   {
-      "world": [{
-         "name": "Lamia",
-         "shorthand": "lam",
-         "roleid": "784690793159983114",
-         "sbroleid": "815047536125542410"
-      }]
-   },
-   {
-      "world": [{
-         "name": "Leviathan",
-         "shorthand": "lev",
-         "roleid": "784503839658999818",
-         "sbroleid": "815047524305076236"
-      }]
-   },
-   {
-      "world": [{
-         "name": "Ultros",
-         "shorthand": "ult",
-         "roleid": "784690794623139851",
-         "sbroleid": "815047533058326551"
-      }]
-   },
-   {
-      "world": [{
-         "name": "Ultros",
-         "shorthand": "mat",
-         "roleid": "784690794623139851",
-         "sbroleid": "815047533058326551"
-      }]
-   }
-]
+{
+   "worlds": [{
+           "name": "Behemoth",
+           "shorthand": "beh",
+           "roleid": ["<@&784680997613731850>", "", ""],
+           "sbroleid": "815047543406723102"
+       },
+       {
+           "name": "Excalibur",
+           "shorthand": "exc",
+           "roleid": ["<@&784690789065293836>", "", ""],
+           "sbroleid": "815047530076831754"
+       },
+       {
+           "name": "Exodus",
+           "shorthand": "exo",
+           "roleid": ["<@&784690786993700874>", "", ""],
+           "sbroleid": "815047527468367892"
+       },
+       {
+           "name": "Famfrit",
+           "shorthand": "fam",
+           "roleid": ["<@&784690791117225984>", "", ""],
+           "sbroleid": "815047540806385687"
+       },
+       {
+           "name": "Hyperion",
+           "shorthand": "hyp",
+           "roleid": ["<@&784684907288461322>", "", ""],
+           "sbroleid": "815047538512101396"
+        },
+        {
+           "name": "Lamia",
+           "shorthand": "lam",
+           "roleid": ["<@&784690793159983114>", "", ""],
+           "sbroleid": "815047536125542410"
+        },
+        {
+           "name": "Leviathan",
+           "shorthand": "lev",
+           "roleid": ["<@&784503839658999818>", "", ""],
+           "sbroleid": "815047524305076236"
+        },
+        {
+           "name": "Ultros",
+           "shorthand": "ult",
+           "roleid": ["<@&784690794623139851>", "", ""],
+           "sbroleid": "815047533058326551"
+        }
+   ]
+}
