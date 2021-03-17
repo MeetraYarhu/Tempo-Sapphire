@@ -7,7 +7,7 @@ const {
 const fs = require('fs');
 const path = require('path');
 const locations = require('@util/locations.json');
-const worlds = require('@util/worlds.json');
+const allWorlds = require('@util/worlds.json');
 const speeds = require('@util/speeds.json');
 const guildStuff = require('@util/guildstuff.json');
 const Discord = require('discord.js');
@@ -29,6 +29,7 @@ module.exports = class sendMessageCommand extends Command {
         const allGuildName = guildStuff.map(obj => obj.guild[0].name);
         const allGuildID = guildStuff.map(obj => obj.guild[0].guildid);
         const allChannelID = guildStuff.map(obj => obj.guild[0].channelid);
+        const allTrainRoleID = guildStuff.map(obj => obj.guild[0].trainroleid)
         const guildList = this.client.guilds.cache.array()
 
         /* const specificChannel = '785789582419558400' // ID of command center
@@ -52,12 +53,9 @@ module.exports = class sendMessageCommand extends Command {
             const locationName = args[1].toLowerCase();
             const trainSpeed = args[2].toLowerCase();
             // Mapping arrays to run checks against
-            const validWorldNames = worlds.map(obj => obj.world[0].name);
-            const validWorldShorthand = worlds.map(obj => obj.world[0].shorthand);
-            const worldRoleIDs = worlds.map(obj => obj.world[0].roleid);
+
             // Mapping objects from locations.json to local arrays
             const aetheryteNames = locations.map(obj => obj.aetheryte[0].name);
-            // const aetheryteUrls = locations.map(obj => obj.aetheryte[0].url);
             const aetheryteAliases = locations.map(obj => obj.aetheryte[0].aliases);
             const aetheryteAllAliases = [];
 
@@ -79,7 +77,6 @@ module.exports = class sendMessageCommand extends Command {
             const speedDescriptions = speeds.map(obj => obj.speed[0].description);
             const speedAliases = speeds.map(obj => obj.speed[0].aliases);
             const speedRoleIDs = speeds.map(obj => obj.speed[0].roleid);
-            const trainRoleID = '783950640412885013';
             const speedAllAliases = [];
 
             // Mega array of all speed aliases
@@ -89,19 +86,7 @@ module.exports = class sendMessageCommand extends Command {
 
             // check new local world arrays for substring, match index and set name
             const worldInputSubstr = worldName.substr(0, 3);
-            if (!validWorldShorthand.includes(worldInputSubstr) && !aetheryteAllAliases.includes(locTitle) && !speedAllAliases.includes(trainSpeed)) {
-                let errorReply = `Invalid world name, aetheryte, and speed, ${message.author}!`;
-                errorReply += '\nThe proper usage would be: `~relay <world> <aetheryte> <speed>`';
-                message.channel.send(errorReply);
-            } else if (!validWorldShorthand.includes(worldInputSubstr) && !aetheryteAllAliases.includes(locTitle)) {
-                let errorReply = `Invalid world name and aetheryte, ${message.author}!`;
-                errorReply += '\nThe proper usage would be: `~relay <world> <aetheryte> <speed>`';
-                message.channel.send(errorReply);
-            } else if (!validWorldShorthand.includes(worldInputSubstr) && !speedAllAliases.includes(trainSpeed)) {
-                let errorReply = `Invalid world name and speed, ${message.author}!`;
-                errorReply += '\nThe proper usage would be: `~relay <world> <aetheryte> <speed>`';
-                message.channel.send(errorReply);
-            } else if (!aetheryteAllAliases.includes(locTitle) && !speedAllAliases.includes(trainSpeed)) {
+            if (!aetheryteAllAliases.includes(locTitle) && !speedAllAliases.includes(trainSpeed)) {
                 let errorReply = `Invalid aetheryte and speed, ${message.author}!`;
                 errorReply += '\nThe proper usage would be: `~relay <world> <aetheryte> <speed>`';
                 message.channel.send(errorReply);
@@ -113,14 +98,9 @@ module.exports = class sendMessageCommand extends Command {
                 let errorReply = `Invalid speed, ${message.author}!`;
                 errorReply += '\nThe proper usage would be: `~relay <world> <aetheryte> <speed>`';
                 message.channel.send(errorReply);
-            } else if (!validWorldShorthand.includes(worldInputSubstr)) {
-                let errorReply = `Invalid world, ${message.author}!`;
-                errorReply += '\nThe proper usage would be: `~relay <world> <aetheryte> <speed>`';
-                message.channel.send(errorReply);
             } else {
-                const validWorldIndex = validWorldShorthand.indexOf(worldInputSubstr);
-                const relayWorld = validWorldNames[validWorldIndex];
-                const relayWorldID = worldRoleIDs[validWorldIndex];
+
+                const worldSelection = allWorlds.worlds.find(obj => obj.shorthand === worldInputSubstr)
 
                 // Embed that will be used to confirm, then sent as the relay
                 const relayEmbed = new Discord.MessageEmbed()
@@ -129,7 +109,7 @@ module.exports = class sendMessageCommand extends Command {
                     .setAuthor(`Relayed by: ${message.author.username}`, message.author.avatarURL())
                     .addFields({
                         name: ':earth_americas: World',
-                        value: relayWorld,
+                        value: worldSelection.name,
                         inline: true,
                     })
                     .setImage('')
@@ -194,14 +174,14 @@ module.exports = class sendMessageCommand extends Command {
                             });
                             if (tempSpeedRoleID !== '1234') {
                                 for (let i = 0; i < allGuildName.length; i++) {
-                                    this.client.channels.cache.get(allChannelID[i]).send(`<@&${trainRoleID}> <@&${relayWorldID}> <@&${tempSpeedRoleID}>`, {
+                                    this.client.channels.cache.get(allChannelID[i]).send(`<@&${allTrainRoleID[i]}> ${worldSelection.roleid[i]} <@&${tempSpeedRoleID}>`, {
                                         embed: relayEmbed,
                                     });
                                 }
                             }
                         } else {
                             for (let i = 0; i < allGuildName.length; i++) {
-                                this.client.channels.cache.get(allChannelID[i]).send(`<@&${trainRoleID}> <@&${relayWorldID}>`, {
+                                this.client.channels.cache.get(allChannelID[i]).send(`<@&${allTrainRoleID[i]}> ${worldSelection.roleid[i]}`, {
                                     embed: relayEmbed,
                                 });
                             }
