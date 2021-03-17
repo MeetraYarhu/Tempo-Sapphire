@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const locations = require('@util/sblocations.json');
-const worlds = require('@util/worlds.json');
+const allWorlds = require('@util/worlds.json');
+const guildStuff = require('@util/guildstuff.json');
 const fs = require('fs');
 const {
     Command
@@ -23,16 +24,13 @@ module.exports = class sbrelayCommand extends Command {
     }
     run(message, args) {
 
-        const specificChannel = '785789582419558400' // ID of command center
-        const channelID = message.channel.id
-        if (channelID !== specificChannel) {
-            return message.reply('You can\'t use that command in this channel!')
-        }
-
-        const {
-            guild,
-            author: relayer
-        } = message
+        const allGuildName = guildStuff.map(obj => obj.guild[0].name);
+        const allGuildID = guildStuff.map(obj => obj.guild[0].guildid);
+        const allChannelID = guildStuff.map(obj => obj.guild[0].channelid);
+        const allSbChannelID = guildStuff.map(obj => obj.guild[0].sbchannelid);
+        const allTrainRoleID = guildStuff.map(obj => obj.guild[0].sbtrainroleid)
+        const commandCenterID = guildStuff.map(obj => obj.guild[0].commandcenter)
+        const guildList = this.client.guilds.cache.array()
 
         if (args.length < 2) { // send appropriate error if arguments are not sufficient length
             let errorReply = `You need at least two inputs, ${message.author}!`;
@@ -47,17 +45,11 @@ module.exports = class sbrelayCommand extends Command {
             // Defining arguments
             const worldName = args[0].toLowerCase();
             const locationName = (args.slice(1)).join(' ');
-            // Mapping arrays to run checks against
-            const validWorldNames = worlds.map(obj => obj.world[0].name);
-            const validWorldShorthand = worlds.map(obj => obj.world[0].shorthand);
-            const worldRoleIDs = worlds.map(obj => obj.world[0].roleid);
+
             // Mapping objects from sblocations.json to local arrays
             const aetheryteNames = locations.map(obj => obj.aetheryte[0].name);
             const aetheryteAliases = locations.map(obj => obj.aetheryte[0].aliases);
             const aetheryteAllAliases = [];
-
-            // Destination channel for relay
-            const destination = message.client.channels.cache.get('788189199127412737'); // ID for relay channel
 
             // change this so the locations.json can just match lower case and delete these variables
             const locFirstChar = locationName.charAt(0).toUpperCase();
@@ -68,40 +60,31 @@ module.exports = class sbrelayCommand extends Command {
             for (let i = 0; i < aetheryteAliases.length; i++) {
                 aetheryteAllAliases.push(...aetheryteAliases[i]);
             }
-            const trainRoleID = '815028860047196181';
 
 
             // check new local world arrays for substring, match index and set name
             const worldInputSubstr = worldName.substr(0, 3);
-            if (!validWorldShorthand.includes(worldInputSubstr) && !aetheryteAllAliases.includes(locTitle)) {
-                let errorReply = `Invalid world name and aetheryte ${message.author}!`;
-                errorReply += '\nThe proper usage would be: `~relay <world> <nearest aetheryte>`';
-                message.channel.send(errorReply);
-            } else if (!validWorldShorthand.includes(worldInputSubstr)) {
-                let errorReply = `Invalid world name, ${message.author}!`;
-                errorReply += '\nThe proper usage would be: `~relay <world> <nearest aetheryte>`';
-                message.channel.send(errorReply);
-            } else if (!aetheryteAllAliases.includes(locTitle)) {
-                let errorReply = `Invalid aetheryte and speed, ${message.author}!`;
+            if (!aetheryteAllAliases.includes(locTitle)) {
+                let errorReply = `Invalid aetheryte, ${message.author}!`;
                 errorReply += '\nThe proper usage would be: `~relay <world> <nearest aetheryte>`';
                 message.channel.send(errorReply);
             } else {
-                const validWorldIndex = validWorldShorthand.indexOf(worldInputSubstr);
-                const relayWorld = validWorldNames[validWorldIndex];
-                const relayWorldID = worldRoleIDs[validWorldIndex];
+
+
+                const worldSelection = allWorlds.worlds.find(obj => obj.shorthand === worldInputSubstr)
 
                 // Embed that will be used to confirm, then sent as the relay
                 const relayEmbed = new Discord.MessageEmbed()
                     .setColor('006CFF')
                     .setTitle('Stormblood hunt train starting!')
-                    .setAuthor(`Relayer: ${message.member.displayName}`, message.author.avatarURL())
+                    .setAuthor(`Relayer: ${message.author.username}`, message.author.avatarURL())
                     .addFields({
                         name: ':earth_americas: World',
-                        value: relayWorld,
+                        value: worldSelection.name,
                         inline: true,
                     })
                     .setImage('')
-                    .setFooter('Stormblood trains tend to move quickly!');
+                    .setFooter(`Relay sent from ${message.guild.name}.`);
 
                 // Change embed color based on world
                 let colorDict = {
@@ -134,12 +117,16 @@ module.exports = class sbrelayCommand extends Command {
                                 inline: true,
                             });
                             relayEmbed.setImage(`attachment://${ridof}`);
-                            destination.send(`<@&${trainRoleID}> <@&${relayWorldID}>`, {
-                                embed: relayEmbed,
-                            });
+                            for (let i = 0; i < allGuildName.length; i++) {
+                                this.client.channels.cache.get(allSbChannelID[i]).send(`<@&${allTrainRoleID[i]}> ${worldSelection.roleid[i]}`, {
+                                    embed: relayEmbed,
+                                });
+                                this.client.channels.cache.get(commandCenterID[i]).send(`An SB train on ${worldSelection.name} was relay by ${message.author.username} from ${message.guild.name}.`);
+                            }
                             message.channel.send(`Your relay was sent, ${message.author}!`);
                             break;
                         }
+                        break;
                     }
                 }
             }
