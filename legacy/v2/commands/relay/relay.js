@@ -7,30 +7,37 @@ const {
 const fs = require('fs');
 const path = require('path');
 const locations = require('@util/locations.json');
-const worlds = require('@util/worlds.json');
+const allWorlds = require('@util/worlds.json');
 const speeds = require('@util/speeds.json');
+const guildStuff = require('@util/guildstuff.json');
 const Discord = require('discord.js');
 
-module.exports = class relayCommand extends Command {
+module.exports = class sendMessageCommand extends Command {
     constructor(client) {
         super(client, {
             name: 'relay',
-            aliases: ['shbrelay'],
             group: 'relay',
             memberName: 'relay',
-            description: 'Relay an ShB train.',
+            description: 'Send a relay to another guild',
             argsType: 'multiple',
             guildOnly: true,
-            userPermissions: ['ATTACH_FILES'],
-            examples: ['`~relay levi jobb na`']
+            userPermissions: ['ATTACH_FILES']
         });
     }
     run(message, args) {
-        const specificChannel = '785789582419558400' // ID of command center
+
+        const allGuildName = guildStuff.map(obj => obj.guild[0].name);
+        const allGuildID = guildStuff.map(obj => obj.guild[0].guildid);
+        const allChannelID = guildStuff.map(obj => obj.guild[0].channelid);
+        const allTrainRoleID = guildStuff.map(obj => obj.guild[0].trainroleid)
+        const commandCenterID = guildStuff.map(obj => obj.guild[0].commandcenter)
+        const guildList = this.client.guilds.cache.array()
+
+        /* const specificChannel = '785789582419558400' // ID of command center
         const channelID = message.channel.id
         if (channelID !== specificChannel) {
             return message.reply('You can\'t use that command in this channel!')
-        }
+        } */
 
         if (args.length !== 3) { // send appropriate error if arguments are not sufficient length
             let errorReply = `Incorrect number of inputs, ${message.author}!`;
@@ -46,18 +53,11 @@ module.exports = class relayCommand extends Command {
             const worldName = args[0].toLowerCase();
             const locationName = args[1].toLowerCase();
             const trainSpeed = args[2].toLowerCase();
-            // Mapping arrays to run checks against
-            const validWorldNames = worlds.map(obj => obj.world[0].name);
-            const validWorldShorthand = worlds.map(obj => obj.world[0].shorthand);
-            const worldRoleIDs = worlds.map(obj => obj.world[0].roleid);
+
             // Mapping objects from locations.json to local arrays
             const aetheryteNames = locations.map(obj => obj.aetheryte[0].name);
-            // const aetheryteUrls = locations.map(obj => obj.aetheryte[0].url);
             const aetheryteAliases = locations.map(obj => obj.aetheryte[0].aliases);
             const aetheryteAllAliases = [];
-
-            // Destination channel for relay
-            const destination = message.client.channels.cache.get('785777005055442944'); // ID for relay channel
 
             // change this so the locations.json can just match lower case and delete these variables
             const locFirstChar = locationName.charAt(0).toUpperCase();
@@ -74,7 +74,6 @@ module.exports = class relayCommand extends Command {
             const speedDescriptions = speeds.map(obj => obj.speed[0].description);
             const speedAliases = speeds.map(obj => obj.speed[0].aliases);
             const speedRoleIDs = speeds.map(obj => obj.speed[0].roleid);
-            const trainRoleID = '783950640412885013';
             const speedAllAliases = [];
 
             // Mega array of all speed aliases
@@ -84,19 +83,7 @@ module.exports = class relayCommand extends Command {
 
             // check new local world arrays for substring, match index and set name
             const worldInputSubstr = worldName.substr(0, 3);
-            if (!validWorldShorthand.includes(worldInputSubstr) && !aetheryteAllAliases.includes(locTitle) && !speedAllAliases.includes(trainSpeed)) {
-                let errorReply = `Invalid world name, aetheryte, and speed, ${message.author}!`;
-                errorReply += '\nThe proper usage would be: `~relay <world> <aetheryte> <speed>`';
-                message.channel.send(errorReply);
-            } else if (!validWorldShorthand.includes(worldInputSubstr) && !aetheryteAllAliases.includes(locTitle)) {
-                let errorReply = `Invalid world name and aetheryte, ${message.author}!`;
-                errorReply += '\nThe proper usage would be: `~relay <world> <aetheryte> <speed>`';
-                message.channel.send(errorReply);
-            } else if (!validWorldShorthand.includes(worldInputSubstr) && !speedAllAliases.includes(trainSpeed)) {
-                let errorReply = `Invalid world name and speed, ${message.author}!`;
-                errorReply += '\nThe proper usage would be: `~relay <world> <aetheryte> <speed>`';
-                message.channel.send(errorReply);
-            } else if (!aetheryteAllAliases.includes(locTitle) && !speedAllAliases.includes(trainSpeed)) {
+            if (!aetheryteAllAliases.includes(locTitle) && !speedAllAliases.includes(trainSpeed)) {
                 let errorReply = `Invalid aetheryte and speed, ${message.author}!`;
                 errorReply += '\nThe proper usage would be: `~relay <world> <aetheryte> <speed>`';
                 message.channel.send(errorReply);
@@ -108,28 +95,22 @@ module.exports = class relayCommand extends Command {
                 let errorReply = `Invalid speed, ${message.author}!`;
                 errorReply += '\nThe proper usage would be: `~relay <world> <aetheryte> <speed>`';
                 message.channel.send(errorReply);
-            } else if (!validWorldShorthand.includes(worldInputSubstr)) {
-                let errorReply = `Invalid world, ${message.author}!`;
-                errorReply += '\nThe proper usage would be: `~relay <world> <aetheryte> <speed>`';
-                message.channel.send(errorReply);
             } else {
-                const validWorldIndex = validWorldShorthand.indexOf(worldInputSubstr);
-                const relayWorld = validWorldNames[validWorldIndex];
-                const relayWorldID = worldRoleIDs[validWorldIndex];
 
+                const worldSelection = allWorlds.worlds.find(obj => obj.shorthand === worldInputSubstr)
 
                 // Embed that will be used to confirm, then sent as the relay
                 const relayEmbed = new Discord.MessageEmbed()
                     .setColor('006CFF')
                     .setTitle('ShB hunt train starting!')
-                    .setAuthor(`Relayer: ${message.member.displayName}`, message.author.avatarURL())
+                    .setAuthor(`Relayed by: ${message.author.username}`, message.author.avatarURL())
                     .addFields({
                         name: ':earth_americas: World',
-                        value: relayWorld,
+                        value: worldSelection.name,
                         inline: true,
                     })
                     .setImage('')
-                    .setFooter('Train speed may change due to congestion or attendance.');
+                    .setFooter(`Relay sent from ${message.guild.name}.`);
 
                 // Change embed color based on world
                 // test
@@ -189,18 +170,25 @@ module.exports = class relayCommand extends Command {
                                 inline: false,
                             });
                             if (tempSpeedRoleID !== '1234') {
-                                destination.send(`<@&${trainRoleID}> <@&${relayWorldID}> <@&${tempSpeedRoleID}>`, {
-                                    embed: relayEmbed,
-                                });
-                            } else {
-                                destination.send(`<@&${trainRoleID}> <@&${relayWorldID}>`, {
-                                    embed: relayEmbed,
-                                });
+                                for (let i = 0; i < allGuildName.length; i++) {
+                                    this.client.channels.cache.get(allChannelID[i]).send(`<@&${allTrainRoleID[i]}> ${worldSelection.roleid[i]} <@&${tempSpeedRoleID}>`, {
+                                        embed: relayEmbed,
+                                    });
+                                    this.client.channels.cache.get(commandCenterID[i]).send(`An ShB train on ${worldSelection.name} was relay by ${message.author.username} from ${message.guild.name}.`);
+                                }
                             }
-                            message.channel.send(`Your relay was sent, ${message.author}!`);
-                            break;
+                        } else {
+                            for (let i = 0; i < allGuildName.length; i++) {
+                                this.client.channels.cache.get(allChannelID[i]).send(`<@&${allTrainRoleID[i]}> ${worldSelection.roleid[i]}`, {
+                                    embed: relayEmbed,
+                                });
+                                this.client.channels.cache.get(commandCenterID[i]).send(`An ShB train on ${worldSelection.name} was relay by ${message.author.username} from ${message.guild.name}.`);
+                            }
                         }
+                        message.channel.send(`Your relay was sent, ${message.author}!`);
+                        break;
                     }
+                    break;
                 }
             }
         }
