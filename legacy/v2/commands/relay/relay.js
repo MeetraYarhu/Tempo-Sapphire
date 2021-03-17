@@ -103,7 +103,7 @@ module.exports = class sendMessageCommand extends Command {
                 const relayEmbed = new Discord.MessageEmbed()
                     .setColor('006CFF')
                     .setTitle('ShB hunt train starting!')
-                    .setAuthor(`Relayed by: ${message.author.username}`, message.author.avatarURL())
+                    .setAuthor(`Relayed by: ${message.member.displayName}`, message.author.avatarURL())
                     .addFields({
                         name: ':earth_americas: World',
                         value: worldSelection.name,
@@ -182,7 +182,7 @@ module.exports = class sendMessageCommand extends Command {
                                 this.client.channels.cache.get(allChannelID[i]).send(`<@&${allTrainRoleID[i]}> ${worldSelection.roleid[i]}`, {
                                     embed: relayEmbed,
                                 });
-                                this.client.channels.cache.get(commandCenterID[i]).send(`An ShB train on ${worldSelection.name} was relay by ${message.author.username} from ${message.guild.name}.`);
+                                this.client.channels.cache.get(commandCenterID[i]).send(`An ShB train on ${worldSelection.name} was relay by ${message.member.displayName} from ${message.guild.name}.`);
                             }
                         }
                         message.channel.send(`Your relay was sent, ${message.author}!`);
