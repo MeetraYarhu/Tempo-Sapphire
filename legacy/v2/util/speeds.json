@@ -4,25 +4,25 @@
             "name": "Bullet/Fast",
             "aliases": ["Bullet/Fast", "bullet", "bull", "fast", "speedy", "sonic", "ultros speed", "matt greene"],
             "description": "This train will not stop or wait per zone.",
-            "roleid": "785377562875920434"
+            "roleid": "<@&785377562875920434>"
         },
         {
             "name": "Variable",
             "aliases": ["Variable", "variable", "var", "switch", "va", "vari", "change", "any", "regios"],
             "description": "This train may have holding flags depending on congestion.",
-            "roleid": "1234"
+            "roleid": ""
         },
         {
             "name": "Slow/Chill",
             "aliases": ["Slow/Chill", "slow", "chill", "casual", "k'kiba", "fenrir", "famfrit speed", "holding", "relax", "relaxing", "wait"],
             "description": "This train will have holding flags and waits per zone.",
-            "roleid": "785377604391665664"
+            "roleid": "<@&785377604391665664>"
         },
         {
             "name": "No Set Speed",
             "aliases": ["No Set Speed", "unknown", "na", "none"],
             "description": "This train has no set speed, or the speed is unknown.",
-            "roleid": "1234"
+            "roleid": ""
         }
     ]
 }

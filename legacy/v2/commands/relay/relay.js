@@ -33,12 +33,6 @@ module.exports = class sendMessageCommand extends Command {
         const commandCenterID = guildStuff.map(obj => obj.guild[0].commandcenter)
         const guildList = this.client.guilds.cache.array()
 
-        /* const specificChannel = '785789582419558400' // ID of command center
-        const channelID = message.channel.id
-        if (channelID !== specificChannel) {
-            return message.reply('You can\'t use that command in this channel!')
-        } */
-
         if (args.length !== 3) { // send appropriate error if arguments are not sufficient length
             let errorReply = `Incorrect number of inputs, ${message.author}!`;
             errorReply += '\nThe proper usage would be: `~relay <world> <aetheryte> <speed>`';
@@ -95,16 +89,20 @@ module.exports = class sendMessageCommand extends Command {
                     .setColor('006CFF')
                     .setTitle('ShB hunt train starting!')
                     .setAuthor(`Relayed by: ${message.member.displayName}`, message.author.avatarURL())
+                    .setDescription(`Relay sent from ${message.guild.name}.`)
                     .addFields({
                         name: ':earth_americas: World',
                         value: worldSelection.name,
                         inline: true,
-                    })
+                    }, {
+                        name: 'Speed',
+                        value: speedSelection.description,
+                        inline: true,
+                    },)
                     .setImage('')
-                    .setFooter(`Relay sent from ${message.guild.name}.`);
+                    .setFooter(`Join the Tempo Bot discord: https://discord.gg/zusBKtp`);
 
                 // Change embed color based on world
-                // test
                 let colorDict = {
                     beh: "af53d4", // purple
                     exc: "f5df18", // gold
@@ -126,7 +124,6 @@ module.exports = class sendMessageCommand extends Command {
                         if (aetheryteAliases[i][k].includes(locTitle)) {
                             const tempIndexName = aetheryteAliases[i][0];
                             const tempIndex = aetheryteNames.indexOf(tempIndexName);
-                            // const tempUrl = aetheryteUrls[tempIndex];
                             const chosenFile = aetheryteImages[tempIndex];
                             const rid = 'shbAetherytes/' + chosenFile;
                             const ridof = rid.replace('shbAetherytes/', '');
@@ -142,44 +139,12 @@ module.exports = class sendMessageCommand extends Command {
                         }
                     }
                 }
-
                 // loop through speed to find matching name, description, and roleid
-                for (let i = 0; i < speedAliases.length; i++) {
-                    for (let k = 0; k < speedAliases[i].length; k++) {
-                        if (speedAliases[i][k].includes(trainSpeed)) {
-                            const tempIndexName1 = speedAliases[i][0];
-                            const tempIndex1 = speedTypes.indexOf(tempIndexName1);
-                            const tempDescription1 = speedDescriptions[tempIndex1];
-                            const tempSpeedRoleID = speedRoleIDs[tempIndex1];
-                            relayEmbed.addFields({
-                                name: 'Speed',
-                                value: tempIndexName1,
-                                inline: true,
-                            }, {
-                                name: '\u200B',
-                                value: tempDescription1,
-                                inline: false,
-                            });
-                            if (tempSpeedRoleID !== '1234') {
-                                for (let i = 0; i < allGuildName.length; i++) {
-                                    this.client.channels.cache.get(allChannelID[i]).send(`<@&${allTrainRoleID[i]}> ${worldSelection.roleid[i]} <@&${tempSpeedRoleID}>`, {
-                                        embed: relayEmbed,
-                                    });
-                                    this.client.channels.cache.get(commandCenterID[i]).send(`An ShB train on ${worldSelection.name} was relayed by ${message.author.username} from the ${message.guild.name} Discord.`);
-                                }
-                            }
-                        } else {
-                            for (let i = 0; i < allGuildName.length; i++) {
-                                this.client.channels.cache.get(allChannelID[i]).send(`<@&${allTrainRoleID[i]}> ${worldSelection.roleid[i]}`, {
-                                    embed: relayEmbed,
-                                });
-                                this.client.channels.cache.get(commandCenterID[i]).send(`An ShB train on ${worldSelection.name} was relayed by ${message.member.displayName} from the ${message.guild.name} Discord.`);
-                            }
-                        }
-                        message.channel.send(`Your relay was sent, ${message.author}!`);
-                        break;
-                    }
-                    break;
+                for (let i = 0; i < allGuildName.length; i++) {
+                    this.client.channels.cache.get(allChannelID[i]).send(`<@&${allTrainRoleID[i]}> ${worldSelection.roleid[i]} ${speedSelection.roleid}`, {
+                        embed: relayEmbed,
+                    });
+                    this.client.channels.cache.get(commandCenterID[i]).send(`An ShB train on ${worldSelection.name} was relayed by ${message.author.username} from the ${message.guild.name} Discord.`);
                 }
             }
         }
