@@ -30,5 +30,16 @@
          "sbchannelid": "797717617997643798",
          "commandcenter": "797717662012538900"
       }]
+   },
+   {
+      "guild": [{
+         "name": "Fractal",
+         "guildid": "581175735541301268",
+         "channelid": "821833901331710032",
+         "trainroleid": "821839273249734698",
+         "sbtrainroleid": "821839459023847505",
+         "sbchannelid": "821833861096800317",
+         "commandcenter": "821833971490881536"
+      }]
    }
 ]
