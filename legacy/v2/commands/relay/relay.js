@@ -8,7 +8,7 @@ const fs = require('fs');
 const path = require('path');
 const locations = require('@util/locations.json');
 const allWorlds = require('@util/worlds.json');
-const speeds = require('@util/speeds.json');
+const allSpeeds = require('@util/speeds.json');
 const guildStuff = require('@util/guildstuff.json');
 const Discord = require('discord.js');
 
@@ -69,21 +69,12 @@ module.exports = class sendMessageCommand extends Command {
                 aetheryteAllAliases.push(...aetheryteAliases[i]);
             }
 
-            // Mapping objects from speeds.json to local arrays
-            const speedTypes = speeds.map(obj => obj.speed[0].name);
-            const speedDescriptions = speeds.map(obj => obj.speed[0].description);
-            const speedAliases = speeds.map(obj => obj.speed[0].aliases);
-            const speedRoleIDs = speeds.map(obj => obj.speed[0].roleid);
-            const speedAllAliases = [];
-
-            // Mega array of all speed aliases
-            for (let i = 0; i < speedAliases.length; i++) {
-                speedAllAliases.push(...speedAliases[i]);
-            }
+            // Locate speed configuration from alias input
+            const speedSelection = allSpeeds.speeds.find(obj => obj.aliases.includes(trainSpeed));
 
             // check new local world arrays for substring, match index and set name
             const worldInputSubstr = worldName.substr(0, 3);
-            if (!aetheryteAllAliases.includes(locTitle) && !speedAllAliases.includes(trainSpeed)) {
+            if (!aetheryteAllAliases.includes(locTitle) && !speedSelection) {
                 let errorReply = `Invalid aetheryte and speed, ${message.author}!`;
                 errorReply += '\nThe proper usage would be: `~relay <world> <aetheryte> <speed>`';
                 message.channel.send(errorReply);
@@ -91,7 +82,7 @@ module.exports = class sendMessageCommand extends Command {
                 let errorReply = `Invalid aetheryte, ${message.author}!`;
                 errorReply += '\nThe proper usage would be: `~relay <world> <aetheryte> <speed>`';
                 message.channel.send(errorReply);
-            } else if (!speedAllAliases.includes(trainSpeed)) {
+            } else if (!speedSelection) {
                 let errorReply = `Invalid speed, ${message.author}!`;
                 errorReply += '\nThe proper usage would be: `~relay <world> <aetheryte> <speed>`';
                 message.channel.send(errorReply);
