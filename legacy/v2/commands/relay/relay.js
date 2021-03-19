@@ -44,27 +44,20 @@ module.exports = class sendMessageCommand extends Command {
             const trainSpeed = args[2].toLowerCase();
 
             // Locate location configuration from alias input
-            const locationSelection = allLocations.name.find(obj => obj.aliases.includes(locationName));
+            const locationSelection = allLocations.aetherytes.find(obj => obj.aliases.includes(locationName));
 
             // Locate speed configuration from alias input
             const speedSelection = allSpeeds.speeds.find(obj => obj.aliases.includes(trainSpeed));
 
             // Locate world configuration from alias input
+            const worldInputSubstr = worldName.substr(0, 3);
             const worldSelection = allWorlds.worlds.find(obj => obj.shorthand === worldInputSubstr)
 
-            // check new local world arrays for substring, match index and set name
-            const worldInputSubstr = worldName.substr(0, 3);
-            if (!aetheryteAllAliases) {
-                let errorReply = `Invalid aetheryte, ${message.author}!`;
-                errorReply += '\nThe proper usage would be: `~relay <world> <aetheryte> <speed>`';
-                message.channel.send(errorReply);
-            } else if (!speedSelection) {
+            if (!speedSelection) {
                 let errorReply = `Invalid speed, ${message.author}!`;
                 errorReply += '\nThe proper usage would be: `~relay <world> <aetheryte> <speed>`';
                 message.channel.send(errorReply);
             } else {
-
-
 
                 // Embed that will be used to confirm, then sent as the relay
                 const relayEmbed = new Discord.MessageEmbed()
@@ -82,10 +75,10 @@ module.exports = class sendMessageCommand extends Command {
                         inline: true,
                     }, {
                         name: 'Speed',
-                        value: speedSelection.description,
+                        value: speedSelection.name,
                         inline: true,
                     }, )
-                    .attachFiles(`/images/shbAetherytes/${locationSelection.filename}`)
+                    .attachFiles(`images/shbAetherytes/${locationSelection.filename}`)
                     .setImage(`attachment://${locationSelection.filename}`)
                     .setFooter(`Tempo Bot discord: https://discord.gg/zusBKtp`);
 
@@ -104,10 +97,10 @@ module.exports = class sendMessageCommand extends Command {
                 relayEmbed.setColor(color)
 
                 for (let i = 0; i < guildList.length; i++) {
-                    this.client.channels.cache.get(guildStuff[i].channelid).send(`<@&${guildStuff[i].trainroleid}> ${worldSelection.roleid[i]} ${speedSelection.roleid}`, {
+                    this.client.channels.cache.get(guildStuff.guilds[i].channelid).send(`<@&${guildStuff.guilds[i].trainroleid}> ${worldSelection.roleid[i]}`, {
                         embed: relayEmbed,
                     });
-                    this.client.channels.cache.get(guildStuff[i].commandcenter).send(`An ShB train on ${worldSelection.name} was relayed by ${message.author.username} from the ${message.guild.name} Discord.`);
+                    this.client.channels.cache.get(guildStuff.guilds[i].commandcenter).send(`An ShB train on ${worldSelection.name} was relayed by ${message.member.displayName} from the ${message.guild.name} Discord.`);
                 }
             }
         }

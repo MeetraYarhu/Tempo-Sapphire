@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const locations = require('@util/sblocations.json');
+const allLocations = require('@util/sblocations.json');
 const allWorlds = require('@util/worlds.json');
 const guildStuff = require('@util/guildstuff.json');
 const fs = require('fs');
@@ -24,12 +24,6 @@ module.exports = class sbrelayCommand extends Command {
     }
     run(message, args) {
 
-        const allGuildName = guildStuff.map(obj => obj.guild[0].name);
-        const allGuildID = guildStuff.map(obj => obj.guild[0].guildid);
-        const allChannelID = guildStuff.map(obj => obj.guild[0].channelid);
-        const allSbChannelID = guildStuff.map(obj => obj.guild[0].sbchannelid);
-        const allTrainRoleID = guildStuff.map(obj => obj.guild[0].sbtrainroleid)
-        const commandCenterID = guildStuff.map(obj => obj.guild[0].commandcenter)
         const guildList = this.client.guilds.cache.array()
 
         if (args.length < 2) { // send appropriate error if arguments are not sufficient length
@@ -46,45 +40,37 @@ module.exports = class sbrelayCommand extends Command {
             const worldName = args[0].toLowerCase();
             const locationName = (args.slice(1)).join(' ');
 
-            // Mapping objects from sblocations.json to local arrays
-            const aetheryteNames = locations.map(obj => obj.aetheryte[0].name);
-            const aetheryteAliases = locations.map(obj => obj.aetheryte[0].aliases);
-            const aetheryteAllAliases = [];
+            // Locate location configuration from alias input
+            const locationSelection = allLocations.aetherytes.find(obj => obj.aliases.includes(locationName));
 
-            // change this so the locations.json can just match lower case and delete these variables
-            const locFirstChar = locationName.charAt(0).toUpperCase();
-            const locRestChar = locationName.slice(1);
-            const locTitle = locFirstChar.concat(locRestChar);
-
-            // Mega array of all aetheryte aliases
-            for (let i = 0; i < aetheryteAliases.length; i++) {
-                aetheryteAllAliases.push(...aetheryteAliases[i]);
-            }
-
-
-            // check new local world arrays for substring, match index and set name
+            // Locate world configuration from alias input
             const worldInputSubstr = worldName.substr(0, 3);
-            if (!aetheryteAllAliases.includes(locTitle)) {
-                let errorReply = `Invalid aetheryte, ${message.author}!`;
+            const worldSelection = allWorlds.worlds.find(obj => obj.shorthand === worldInputSubstr)
+
+            if (!worldSelection) {
+                let errorReply = `Invalid world, ${message.author}!`;
                 errorReply += '\nThe proper usage would be: `~relay <world> <nearest aetheryte>`';
                 message.channel.send(errorReply);
             } else {
-
-
-                const worldSelection = allWorlds.worlds.find(obj => obj.shorthand === worldInputSubstr)
 
                 // Embed that will be used to confirm, then sent as the relay
                 const relayEmbed = new Discord.MessageEmbed()
                     .setColor('006CFF')
                     .setTitle('Stormblood hunt train starting!')
-                    .setAuthor(`Relayer: ${message.member.displayName}`, message.author.avatarURL())
+                    .setAuthor(`Relayed by: ${message.member.displayName}`, message.author.avatarURL())
+                    .setDescription(`Relay sent from the ${message.guild.name} discord.`)
                     .addFields({
                         name: ':earth_americas: World',
                         value: worldSelection.name,
                         inline: true,
+                    }, {
+                        name: 'Nearest Aetheryte',
+                        value: locationSelection.name,
+                        inline: true,
                     })
-                    .setImage('')
-                    .setFooter(`Relay sent from ${message.guild.name}.`);
+                    .attachFiles(`images/sbAetherytes/${locationSelection.filename}`)
+                    .setImage(`attachment://${locationSelection.filename}`)
+                    .setFooter('Join the Tempo Bot discord: https://discord.gg/zusBKtp');
 
                 // Change embed color based on world
                 let colorDict = {
@@ -100,34 +86,11 @@ module.exports = class sbrelayCommand extends Command {
                 let color = colorDict[worldInputSubstr]
                 relayEmbed.setColor(color)
 
-                const aetheryteImages = fs.readdirSync('images/sbAetherytes');
-
-                // Loop through aetherytes to find matching index
-                for (let i = 0; i < aetheryteAliases.length; i++) {
-                    for (let k = 0; k < aetheryteAliases[i].length; k++) {
-                        if (aetheryteAliases[i][k].includes(locTitle)) {
-                            const tempIndexName = aetheryteAliases[i][0];
-                            const tempIndex = aetheryteNames.indexOf(tempIndexName);
-                            const ridof = aetheryteImages[tempIndex];
-
-                            relayEmbed.attachFiles(`images/sbAetherytes/${ridof}`);
-                            relayEmbed.addFields({
-                                name: 'Nearest Aetheryte',
-                                value: tempIndexName,
-                                inline: true,
-                            });
-                            relayEmbed.setImage(`attachment://${ridof}`);
-                            for (let i = 0; i < allGuildName.length; i++) {
-                                this.client.channels.cache.get(allSbChannelID[i]).send(`<@&${allTrainRoleID[i]}> ${worldSelection.roleid[i]}`, {
-                                    embed: relayEmbed,
-                                });
-                                this.client.channels.cache.get(commandCenterID[i]).send(`An SB train on ${worldSelection.name} was relayed by ${message.member.displayName} from the ${message.guild.name} Discord.`);
-                            }
-                            message.channel.send(`Your relay was sent, ${message.author}!`);
-                            break;
-                        }
-                        break;
-                    }
+                for (let i = 0; i < guildList.length; i++) {
+                    this.client.channels.cache.get(guildStuff.guilds[i].sbchannelid).send(`<@&${guildStuff[i].sbtrainroleid}> ${worldSelection.roleid[i]}`, {
+                        embed: relayEmbed,
+                    });
+                    this.client.channels.cache.get(guildStuff.guilds[i].commandcenter).send(`An SB train on ${worldSelection.name} was relayed by ${message.member.displayName} from the ${message.guild.name} Discord.`);
                 }
             }
         }
