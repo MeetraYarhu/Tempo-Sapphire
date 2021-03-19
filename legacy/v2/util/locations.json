@@ -2,71 +2,71 @@
     "aetherytes": [{
 
         "name": "Fort Jobb",
-        "aliases": ["Fort Jobb", "Fort", "Jobb", "Foot job", "Foot jobb", "Fort jobb", "Matt greene"],
+        "aliases": ["fort", "jobb", "foot"],
         "filename": "00"
     }, {
         "name": "The Ostall Imperative",
-        "aliases": ["The Ostall Imperative", "Ostwall", "Ostall", "Imperative", "Ostall imperative"],
+        "aliases": ["ostwall", "ostall", "imperative"],
         "filename": "01"
     }, {
         "name": "Tomra",
-        "aliases": ["Tomra"],
+        "aliases": ["tomra"],
         "filename": "02"
     }, {
         "name": "Stilltide",
-        "aliases": ["Stilltide", "Still"],
+        "aliases": ["stilltide", "still"],
         "filename": "03"
     }, {
         "name": "Wright",
-        "aliases": ["Wright", "Right"],
+        "aliases": ["wright", "right"],
         "filename": "04"
     }, {
         "name": "Twine",
-        "aliases": ["Twine", "Twinning"],
+        "aliases": ["twine", "twinning"],
         "filename": "05"
     }, {
         "name": "The Inn at Journey's Head",
-        "aliases": ["The Inn at Journey's Head", "Inn", "Journey", "Journey's head", "Journeys head", "Inn at journey's head", "Inn at journeys head"],
+        "aliases": ["inn", "journey", "journey's", "journeys", "head"],
         "filename": "06"
     }, {
         "name": "Mord Souq",
-        "aliases": ["Mord Souq", "Mord", "Souq", "Mord souq", "Mord soup", "More soup", "Soup"],
+        "aliases": ["mord", "souq", "mord souq", "mord soup", "more soup", "soup"],
         "filename": "07"
     }, {
         "name": "Wolekdorf",
-        "aliases": ["Wolekdorf", "Wolek", "Wolekdoh", "Wole", "Wol"],
+        "aliases": ["wolekdorf", "wolek", "wolekdoh", "wole", "wol"],
         "filename": "08"
     }, {
         "name": "Lydha Lran",
-        "aliases": ["Lydha Lran", "Lydha", "Lran", "Lyd", "Lyda", "Lydha lran", "Lyda Lran"],
+        "aliases": ["lydha lran", "lydha", "lran", "lyd", "lyda", "lydha lran", "lyda lran"],
         "filename": "09"
     }, {
         "name": "Pla Enni",
-        "aliases": ["Pla Enni", "Play pen", "Pla", "Enni", "Pla enni", "Pia enni", "Pia"],
+        "aliases": ["pla enni", "play pen", "pla", "enni", "pla enni", "pia enni", "pia"],
         "filename": "10"
     }, {
         "name": "Fanow",
-        "aliases": ["Fanow", "Fanowo", "Fanos", "Bunnies"],
+        "aliases": ["fanow", "fanowo", "fanos", "bunnies"],
         "filename": "11"
     }, {
         "name": "Slitherbough",
-        "aliases": ["Slitherbough", "Slither", "Slither bough"],
+        "aliases": ["slitherbough", "slither", "slither bough"],
         "filename": "12"
     }, {
         "name": "The Ondo Cups",
-        "aliases": ["The Ondo Cups", "Ondo", "Cups", "Ondo cups"],
+        "aliases": ["the ondo cups", "ondo", "cups", "ondo cups"],
         "filename": "13"
     }, {
         "name": "The Macarenses Angle",
-        "aliases": ["The Macarenses Angle", "Mercedes", "Mercedes angle", "Macaroni", "Macarenses", "Angle", "Macarenses angle", "Macaroni angle", "Trap tele", "Trap aether"],
+        "aliases": ["the macarenses angle", "mercedes", "mercedes angle", "macaroni", "macarenses", "angle", "macarenses angle", "macaroni angle", "trap tele", "trap aether"],
         "filename": "14"
     }, {
         "name": "The Crystarium",
-        "aliases": ["The Crystarium", "Crystarium", "Cryst"],
+        "aliases": ["the crystarium", "crystarium", "cryst"],
         "filename": "15"
     }, {
         "name": "Eulmore",
-        "aliases": ["Eulmore", "Eul"],
+        "aliases": ["eulmore", "eul"],
         "filename": "16"
     }]
 }
