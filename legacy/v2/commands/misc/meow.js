@@ -1,7 +1,9 @@
 const {
     Command
 } = require('discord.js-commando');
-
+const {
+    MessageAttachment
+} = require('discord.js');
 module.exports = class MeowCommand extends Command {
 	constructor(client) {
 		super(client, {
@@ -15,6 +17,7 @@ module.exports = class MeowCommand extends Command {
 	}
 
     run(message) {
-    message.say('Akemi is a bad cat.');
+	const attachment = new MessageAttachment('images/spray.png')
+    message.say('Akemi is a bad cat.', attachment);
     }
 };
