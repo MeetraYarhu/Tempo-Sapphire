@@ -1,6 +1,5 @@
 {
-    "speeds":[
-        {
+    "speeds": [{
             "name": "Bullet/Fast",
             "aliases": ["Bullet/Fast", "bullet", "bull", "fast", "speedy", "sonic", "ultros speed", "matt greene"],
             "description": "This train will not stop or wait per zone.",
@@ -9,13 +8,13 @@
         {
             "name": "Variable",
             "aliases": ["Variable", "variable", "var", "switch", "va", "vari", "change", "any", "regios"],
-            "description": "This train may have holding flags depending on congestion.",
+            "description": "May have waits depending on congestion.",
             "roleid": ""
         },
         {
             "name": "Slow/Chill",
             "aliases": ["Slow/Chill", "slow", "chill", "casual", "k'kiba", "fenrir", "famfrit speed", "holding", "relax", "relaxing", "wait"],
-            "description": "This train will have holding flags and waits per zone.",
+            "description": "There will be waits at each zone.",
             "roleid": "<@&785377604391665664>"
         },
         {

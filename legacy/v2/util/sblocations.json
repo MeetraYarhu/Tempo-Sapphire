@@ -1,79 +1,68 @@
-[{
-        "aetheryte": [{
+{
+    "aetherytes": [{
             "name": "Castrum Oriens",
-            "aliases": ["Castrum Oriens", "Castrum", "Oriens", "Gaiusland", "Garlemald"]
-        }]
-    },
-    {
-        "aetheryte": [{
+            "aliases": ["castrum oriens", "castrum", "oriens", "gaiusland", "garlemald"],
+            "filename": "00.png"
+        },
+        {
             "name": "The Peering Stones",
-            "aliases": ["The Peering Stones", "Peering", "Stones", "Peepingtom", "Stonewall"]
-        }]
-    },
-    {
-        "aetheryte": [{
+            "aliases": ["the peering stones", "peering", "stones", "peepingtom", "stonewall"],
+            "filename": "01.png"
+        },
+        {
             "name": "Porta Praetoria",
-            "aliases": ["Porta Praetoria", "Porta praetoria", "Porta", "Praetoria", "Pornhub", "Praegay", "Toria"]
-        }]
-    },
-    {
-        "aetheryte": [{
+            "aliases": ["porta praetoria", "porta praetoria", "porta", "praetoria", "pornhub", "praegay", "toria"],
+            "filename": "02.png"
+        },
+        {
             "name": "The Ala Mhigan Quarter",
-            "aliases": ["The Ala Mhigan Quarter", "Ala mhigan", "Mhigan", "Quarter", "Griffin", "Raubahn", "Left", "Arm"]
-        }]
-    },
-    {
-        "aetheryte": [{
+            "aliases": ["the ala mhigan quarter", "ala mhigan", "mhigan", "quarter", "griffin", "raubahn", "left", "arm"],
+            "filename": "03.png"
+        },
+        {
             "name": "Ala Ghiri",
-            "aliases": ["Ala Ghiri", "Ala ghiri", "Ghiri"]
-        }]
-    },
-    {
-        "aetheryte": [{
+            "aliases": ["ala ghiri", "ghiri"],
+            "filename": "04.png"
+        },
+        {
             "name": "Ala Gannha",
-            "aliases": ["Ala Gannha", "Ala gannha", "Gannha"]
-        }]
-    },
-    {
-        "aetheryte": [{
+            "aliases": ["ala gannha", "gannha"],
+            "filename": "05.png"
+        },
+        {
             "name": "Onokoro",
-            "aliases": ["Onokoro", "Hoh", "Pirates"]
-        }]
-    },
-    {
-        "aetheryte": [{
+            "aliases": ["onokoro", "hoh", "pirates"],
+            "filename": "06.png"
+        },
+        {
             "name": "Tamamizu",
-            "aliases": ["Tamamizu", "Tama", "Mizu", "Mermaid", "Turtles", "Okina"]
-        }]
-    },
-    {
-        "aetheryte": [{
+            "aliases": ["tamamizu", "tama", "mizu", "mermaid", "turtles", "okina"],
+            "filename": "07.png"
+        },
+        {
             "name": "The House of the Fierce",
-            "aliases": ["The House of the Fierce", "House", "Fierce", "Domans", "Dinkleburg", "Tamamo"]
-        }]
-    },
-    {
-        "aetheryte": [{
+            "aliases": ["the house of the fierce", "house", "fierce", "domans", "dinkleburg", "tamamo"],
+            "filename": "08.png"
+        },
+        {
             "name": "Namai",
-            "aliases": ["Namai", "Enclave", "Namazu"]
-        }]
-    },
-    {
-        "aetheryte": [{
+            "aliases": ["namai", "enclave", "namazu"],
+            "filename": "09.png"
+        },
+        {
             "name": "Dhoro lloh",
-            "aliases": ["Dhoro Iloh", "Dhoro", "Iloh", "Wasshou"]
-        }]
-    },
-    {
-        "aetheryte": [{
+            "aliases": ["dhoro iloh", "dhoro", "iloh", "wasshou"],
+            "filename": "10.png"
+        },
+        {
             "name": "The Dawn Throne",
-            "aliases": ["The Dawn Throne", "The dawn throne", "Dawn", "Throne", "Lilsun", "Khagan"]
-        }]
-    },
-    {
-        "aetheryte": [{
+            "aliases": ["the dawn throne", "the dawn throne", "dawn", "throne", "lilsun", "khagan"],
+            "filename": "11.png"
+        },
+        {
             "name": "Reunion",
-            "aliases": ["Reunion", "Azem", "Steppe", "Lizards"]
-        }]
-    }
-]
+            "aliases": ["reunion", "azem", "steppe", "lizards"],
+            "filename": "12.png"
+        }
+    ]
+}

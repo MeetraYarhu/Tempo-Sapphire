@@ -1,72 +1,71 @@
 {
     "aetherytes": [{
-
         "name": "Fort Jobb",
         "aliases": ["fort", "jobb", "foot"],
-        "filename": "00"
+        "filename": "00.png"
     }, {
         "name": "The Ostall Imperative",
         "aliases": ["ostwall", "ostall", "imperative"],
-        "filename": "01"
+        "filename": "01.png"
     }, {
         "name": "Tomra",
         "aliases": ["tomra"],
-        "filename": "02"
+        "filename": "02.png"
     }, {
         "name": "Stilltide",
         "aliases": ["stilltide", "still"],
-        "filename": "03"
+        "filename": "03.png"
     }, {
         "name": "Wright",
         "aliases": ["wright", "right"],
-        "filename": "04"
+        "filename": "04.png"
     }, {
         "name": "Twine",
         "aliases": ["twine", "twinning"],
-        "filename": "05"
+        "filename": "05.png"
     }, {
         "name": "The Inn at Journey's Head",
         "aliases": ["inn", "journey", "journey's", "journeys", "head"],
-        "filename": "06"
+        "filename": "06.png"
     }, {
         "name": "Mord Souq",
         "aliases": ["mord", "souq", "mord souq", "mord soup", "more soup", "soup"],
-        "filename": "07"
+        "filename": "07.png"
     }, {
         "name": "Wolekdorf",
         "aliases": ["wolekdorf", "wolek", "wolekdoh", "wole", "wol"],
-        "filename": "08"
+        "filename": "08.png"
     }, {
         "name": "Lydha Lran",
         "aliases": ["lydha lran", "lydha", "lran", "lyd", "lyda", "lydha lran", "lyda lran"],
-        "filename": "09"
+        "filename": "09.png"
     }, {
         "name": "Pla Enni",
         "aliases": ["pla enni", "play pen", "pla", "enni", "pla enni", "pia enni", "pia"],
-        "filename": "10"
+        "filename": "10.png"
     }, {
         "name": "Fanow",
         "aliases": ["fanow", "fanowo", "fanos", "bunnies"],
-        "filename": "11"
+        "filename": "11.png"
     }, {
         "name": "Slitherbough",
         "aliases": ["slitherbough", "slither", "slither bough"],
-        "filename": "12"
+        "filename": "12.png"
     }, {
         "name": "The Ondo Cups",
         "aliases": ["the ondo cups", "ondo", "cups", "ondo cups"],
-        "filename": "13"
+        "filename": "13.png"
     }, {
         "name": "The Macarenses Angle",
         "aliases": ["the macarenses angle", "mercedes", "mercedes angle", "macaroni", "macarenses", "angle", "macarenses angle", "macaroni angle", "trap tele", "trap aether"],
-        "filename": "14"
+        "filename": "14.png"
     }, {
         "name": "The Crystarium",
         "aliases": ["the crystarium", "crystarium", "cryst"],
-        "filename": "15"
+        "filename": "15.png"
     }, {
         "name": "Eulmore",
         "aliases": ["eulmore", "eul"],
-        "filename": "16"
+        "filename": "16.png"
     }]
 }
