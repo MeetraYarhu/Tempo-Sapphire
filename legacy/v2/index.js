@@ -6,6 +6,7 @@ const config = require('@root/config.json')
 const fs = require('fs');
 const MongoClient = require('mongodb').MongoClient;
 const MongoDBProvider = require('commando-provider-mongo').MongoDBProvider;
+const relayerSchema = require('@schemas/relayers.js');
 const client = new Commando.CommandoClient({
   owner: '127254878190829568',
   commandPrefix: config.prefix,
@@ -15,14 +16,32 @@ const mongoose = require("mongoose");
 
 client.setProvider(
   MongoClient.connect(config.mongoPath)
-    .then((client) => {
-      return new MongoDBProvider(client, 'TempoBot')
-    })
-    .catch((err) => {
-      console.error(err)
-    })
+  .then((client) => {
+    return new MongoDBProvider(client, 'TempoBot')
+  })
+  .catch((err) => {
+    console.error(err)
+  })
 )
-/*
+// this code below works. it returns true, because that userid is in the database
+// schema will need to be changed to get rid of the relayers object, and simply leave it as a nickname, userid
+// then, can simply take the author's id, and determine if it exists. if result = false, code can end and throw a permission error
+/*const connectToMongoDB = async () => {
+  await mongo().then(async (mongoose) => {
+    try {
+      console.log('Connected to mongodb!')
+      const result = await relayerSchema.exists({
+        userid: "123456789"
+      })
+
+      console.log(result)
+    } finally {
+      mongoose.connection.close()
+    }
+  })
+}
+connectToMongoDB()
+
   //Connect to mongoose database
   mongoose.connect(config.mongoDB, {
     useNewUrlParser: true,
