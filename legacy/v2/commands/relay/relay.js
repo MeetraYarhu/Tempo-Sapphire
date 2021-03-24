@@ -4,24 +4,28 @@ const {
 const {
     MessageAttachment
 } = require('discord.js');
-const fs = require('fs');
-const path = require('path');
 const allLocations = require('@util/locations.json');
 const allWorlds = require('@util/worlds.json');
 const allSpeeds = require('@util/speeds.json');
 const guildStuff = require('@util/guildstuff.json');
 const Discord = require('discord.js');
-
-module.exports = class sendMessageCommand extends Command {
+const mongoose = require("mongoose");
+const mongo = require('@root/mongo.js')
+const userInfoSchema = require('@schemas/users.js');
+module.exports = class relayCommand extends Command {
     constructor(client) {
         super(client, {
             name: 'relay',
             group: 'relay',
             memberName: 'relay',
-            description: 'Send a relay to another guild',
+            description: 'Relay an ShB train to all connected Discord servers.',
             argsType: 'multiple',
             guildOnly: true,
-            userPermissions: ['ATTACH_FILES']
+            userPermissions: ['ATTACH_FILES'],
+            clientPermissions: ['ATTACH_FILES', 'EMBED_LINKS', 'SEND_MESSAGES', 'ADD_REACTIONS'],
+            details: 'Sends a relay to every server connected via Tempo Bot. Will also send a message to any connected \'command centers\', to avoid overlapping relays.',
+            format: '<world> <aetheryte> <speed>',
+            examples: ['`~relay levi ostall bullet`']
         });
     }
     run(message, args) {
@@ -58,7 +62,31 @@ module.exports = class sendMessageCommand extends Command {
                 errorReply += '\nThe proper usage would be: `~relay <world> <aetheryte> <speed>`';
                 message.channel.send(errorReply);
             } else {
-
+                // Set relayer info to data base,tracking relay count and other info
+                const connectToMongoDB = async () => {
+                    await mongo().then(async (mongoose) => {
+                        try {
+                            console.log('Connected!')
+                            await userInfoSchema.findOneAndUpdate({
+                                _id: author.id,
+                            }, {
+                                _id: author.id,
+                                tag: author.tag,
+                                relayer: true,
+                                $inc: {
+                                    'shbRelayCount': 1
+                                }
+                            }, {
+                                upsert: true,
+                                new: true,
+                            }).exec()
+                        } finally {
+                            mongoose.connection.close()
+                            console.log('Connection closed!')
+                        }
+                    })
+                }
+                connectToMongoDB()
                 // Embed that will be used to confirm, then sent as the relay
                 const relayEmbed = new Discord.MessageEmbed()
                     .setColor('006CFF')

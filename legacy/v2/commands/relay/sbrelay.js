@@ -15,7 +15,7 @@ module.exports = class sbrelayCommand extends Command {
             name: 'sbrelay',
             group: 'relay',
             memberName: 'sbrelay',
-            description: 'Relay an SB train.',
+            description: 'Relay an SB train to all connected Discord servers',
             argsType: 'multiple',
             guildOnly: true,
             userPermissions: ['ATTACH_FILES'],
@@ -52,7 +52,31 @@ module.exports = class sbrelayCommand extends Command {
                 errorReply += '\nThe proper usage would be: `~relay <world> <nearest aetheryte>`';
                 message.channel.send(errorReply);
             } else {
-
+                // Set relayer info to data base,tracking relay count and other info
+                const connectToMongoDB = async () => {
+                    await mongo().then(async (mongoose) => {
+                        try {
+                            console.log('Connected!')
+                            await userInfoSchema.findOneAndUpdate({
+                                _id: author.id,
+                            }, {
+                                _id: author.id,
+                                tag: author.tag,
+                                relayer: true,
+                                $inc: {
+                                    'sbRelayCount': 1
+                                }
+                            }, {
+                                upsert: true,
+                                new: true,
+                            }).exec()
+                        } finally {
+                            mongoose.connection.close()
+                            console.log('Connection closed!')
+                        }
+                    })
+                }
+                connectToMongoDB()
                 // Embed that will be used to confirm, then sent as the relay
                 const relayEmbed = new Discord.MessageEmbed()
                     .setColor('006CFF')
@@ -70,7 +94,7 @@ module.exports = class sbrelayCommand extends Command {
                     })
                     .attachFiles(`images/sbAetherytes/${locationSelection.filename}`)
                     .setImage(`attachment://${locationSelection.filename}`)
-                    .setFooter('Join the Tempo Bot discord: https://discord.gg/zusBKtp');
+                    .setFooter('Tempo Bot discord: https://discord.gg/zusBKtp');
 
                 // Change embed color based on world
                 let colorDict = {
@@ -87,7 +111,7 @@ module.exports = class sbrelayCommand extends Command {
                 relayEmbed.setColor(color)
 
                 for (let i = 0; i < guildList.length; i++) {
-                    this.client.channels.cache.get(guildStuff.guilds[i].sbchannelid).send(`<@&${guildStuff[i].sbtrainroleid}> ${worldSelection.roleid[i]}`, {
+                    this.client.channels.cache.get(guildStuff.guilds[i].sbchannelid).send(`<@&${guildStuff.guilds[i].sbtrainroleid}> ${worldSelection.roleid[i]}`, {
                         embed: relayEmbed,
                     });
                     this.client.channels.cache.get(guildStuff.guilds[i].commandcenter).send(`An SB train on ${worldSelection.name} was relayed by ${message.member.displayName} from the ${message.guild.name} Discord.`);
