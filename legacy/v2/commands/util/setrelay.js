@@ -2,7 +2,9 @@ const Discord = require('discord.js');
 const {
     Command
 } = require('discord.js-commando');
-
+const mongoose = require("mongoose");
+const mongo = require('@root/mongo.js')
+const userInfoSchema = require('@schemas/users.js');
 module.exports = class setRelayCommand extends Command {
     constructor(client) {
         super(client, {
@@ -14,102 +16,39 @@ module.exports = class setRelayCommand extends Command {
             userPermissions: ['ADMINISTRATOR'],
         });
     }
-    //Execute to command once the settings have been checked
-    async run(client, message, args, data) {
-        try {
+    run(message, args) {
+        const {
+            author
+        } = message
+        const {
+            id
+        } = author
+        message.reply(`${author.id}, ${author.tag}`)
 
-            let embed = new Discord.MessageEmbed()
-                .setFooter(data.config.footer)
-                .setColor(data.config.color);
-
-            // If no arguments return error
-            if (!args[0]) {
-                embed.setTitle("Error")
-                    .setDescription("Missing argument!```welcome set #channel\nwelcome custom <text>\nwelcome disable```")
-                return message.channel.send(embed); // Error message
-            }
-
-            if (args[0].toLowerCase() === "set" && !args[1]) {
-                embed.setTitle("Error")
-                    .setDescription("Unable to find a valid channel.\n\nMissing argument!```welcome set #channel\nwelcome custom <text>\nwelcome disable```")
-                return message.channel.send(embed); // Error message
-            }
-
-            // Enable welcome messages and set channel to mentioned channel
-            if (args[0].toLowerCase() === "set" && args[1]) {
-                // Try finding the channel
-                let welcomeChannel = await client.tools.resolveChannel(args[1], message.guild);
-                if (!welcomeChannel) return; // Invalid channel
-
-                data.guild.addons.welcome.enabled = true; // Enable settings
-                data.guild.addons.welcome.channel = welcomeChannel.id; // Set as channel ID
-                data.guild.markModified("addons.welcome");
-                await data.guild.save();
-
-                embed.setTitle("Successfully updated")
-                    .setDescription(`welcome messages will be sent to ${welcomeChannel}`)
-
-                return message.channel.send(embed)
-            }
-
-            if (args[0].toLowerCase() === "custom" && !args[1]) {
-                embed.setTitle("Error")
-                    .setDescription("Unable to find a valid channel.\n\nMissing argument!```welcome set #channel\nwelcome custom <text>\nwelcome disable```")
-                return message.channel.send(embed); // Error message
-            }
-
-            if (args[0].toLowerCase() === "custom" && args[1]) {
-
-                if (!data.guild.addons.welcome.enabled) {
-                    embed.setTitle("Error")
-                        .setDescription("Please enable welcome messages before setting up a custom message.\n\nMissing argument!\nVaribles:```{user.ping} - @KSJaay#2487\n{user.name} - KSJaay\n{user.id} - 249955383001481216\n{user.tag} - KSJaay#2487\n{guild.name} - KSJaayDevs\n{guild.id} - 783691402931601441\n{guild.totalUser} - 1```")
-                    return message.channel.send(embed); // Error message
+        const connectToMongoDB = async () => {
+            await mongo().then(async (mongoose) => {
+                try {
+                    console.log('Connected!')
+                    await userInfoSchema.findOneAndUpdate({
+                        _id: author.id,
+                    }, {
+                        _id: author.id,
+                        tag: author.tag,
+                        relayer: true,
+                        $inc: {
+                            'sbRelayCount': 1
+                        }
+                    }, {
+                        upsert: true,
+                        new: true,
+                    }).exec()
+                } finally {
+                    mongoose.connection.close()
+                    console.log('Connection closed!')
                 }
-                await args.shift()
-                let msg = args.join(" ")
-                if (msg.length > 1500) {
-                    embed.setTitle("Error")
-                        .setDescription("Messages exceeded 1500 characters, please make sure message is under 1500 characters.")
-                    return message.channel.send(embed); // Error message
-                }
-
-                data.guild.addons.welcome.message = msg;
-                data.guild.markModified("addons.welcome");
-                await data.guild.save();
-
-                embed.setTitle("Successfully updated")
-                    .setDescription("Custom message has been updated.\n\n**New Message**\n```" + msg + "```")
-                return message.channel.send(embed); // Error message
-            }
-
-            if (args[0].toLowerCase() === "disable") {
-                if (!data.guild.addons.welcome.enabled) {
-                    embed.setTitle("Successfully updated")
-                        .setDescription("welcome messages were already disabled.")
-                    return message.channel.send(embed); // Error message
-                }
-
-                data.guild.addons.welcome.enabled = false;
-                data.guild.addons.welcome.channel = "";
-                data.guild.markModified("addons.welcome");
-                await data.guild.save();
-
-                embed.setTitle("Successfully updated")
-                    .setDescription("welcome messages have now been disabled.")
-                return message.channel.send(embed); // Error message
-            }
-
-            embed.setTitle("Error")
-                .setDescription("Missing argument!```welcome set #channel\nwelcome custom <text>\nwelcome disable```")
-            return message.channel.send(embed); // Error message
-
-        } catch (err) {
-            //Log error into the database
-            client.logger.error(`Ran into an error while executing ${data.cmd.name}`)
-            console.log(err)
+            })
         }
+        connectToMongoDB()
     }
-
-
 
 }
