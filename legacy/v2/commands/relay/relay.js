@@ -29,7 +29,30 @@ module.exports = class relayCommand extends Command {
         });
     }
     run(message, args) {
-
+        // Set relayer info to data base,tracking relay count and other info
+        const connectToMongoDB = async () => {
+            await mongo().then(async (mongoose) => {
+                try {
+                    console.log('Connected!')
+                    await userInfoSchema.findOneAndUpdate({
+                        _id: author.id,
+                    }, {
+                        _id: author.id,
+                        tag: author.tag,
+                        relayer: true,
+                        $inc: {
+                            'shbRelayCount': 1
+                        }
+                    }, {
+                        upsert: true,
+                        new: true,
+                    }).exec()
+                } finally {
+                    mongoose.connection.close()
+                    console.log('Connection closed!')
+                }
+            })
+        }
         const guildList = this.client.guilds.cache.array()
 
         if (args.length !== 3) { // send appropriate error if arguments are not sufficient length
@@ -62,31 +85,6 @@ module.exports = class relayCommand extends Command {
                 errorReply += '\nThe proper usage would be: `~relay <world> <aetheryte> <speed>`';
                 message.channel.send(errorReply);
             } else {
-                // Set relayer info to data base,tracking relay count and other info
-                const connectToMongoDB = async () => {
-                    await mongo().then(async (mongoose) => {
-                        try {
-                            console.log('Connected!')
-                            await userInfoSchema.findOneAndUpdate({
-                                _id: author.id,
-                            }, {
-                                _id: author.id,
-                                tag: author.tag,
-                                relayer: true,
-                                $inc: {
-                                    'shbRelayCount': 1
-                                }
-                            }, {
-                                upsert: true,
-                                new: true,
-                            }).exec()
-                        } finally {
-                            mongoose.connection.close()
-                            console.log('Connection closed!')
-                        }
-                    })
-                }
-                connectToMongoDB()
                 // Embed that will be used to confirm, then sent as the relay
                 const relayEmbed = new Discord.MessageEmbed()
                     .setColor('006CFF')
@@ -132,5 +130,6 @@ module.exports = class relayCommand extends Command {
                 }
             }
         }
+        connectToMongoDB()
     }
 }
