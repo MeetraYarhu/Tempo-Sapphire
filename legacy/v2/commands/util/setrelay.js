@@ -13,7 +13,6 @@ module.exports = class setRelayCommand extends Command {
             group: 'util',
             memberName: 'setrelay',
             description: 'Sets the channel to recieve ShB relays.',
-            userPermissions: ['ADMINISTRATOR'],
         });
     }
     run(message, args) {
@@ -23,7 +22,6 @@ module.exports = class setRelayCommand extends Command {
         const {
             id
         } = author
-        message.reply(`${author.id}, ${author.tag}`)
 
         const connectToMongoDB = async () => {
             await mongo().then(async (mongoose) => {
@@ -36,7 +34,8 @@ module.exports = class setRelayCommand extends Command {
                         tag: author.tag,
                         relayer: true,
                         $inc: {
-                            'sbRelayCount': 1
+                            'sbRelayCount': 1,
+                            'shbRelayCount': 0
                         }
                     }, {
                         upsert: true,
@@ -48,6 +47,7 @@ module.exports = class setRelayCommand extends Command {
                 }
             })
         }
+        message.reply(`${author.id}, ${author.tag}`)
         connectToMongoDB()
     }
 

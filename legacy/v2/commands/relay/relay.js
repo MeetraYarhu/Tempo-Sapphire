@@ -30,6 +30,9 @@ module.exports = class relayCommand extends Command {
     }
     run(message, args) {
         // Set relayer info to data base,tracking relay count and other info
+        const {
+            author
+        } = message
         const connectToMongoDB = async () => {
             await mongo().then(async (mongoose) => {
                 try {
@@ -41,6 +44,7 @@ module.exports = class relayCommand extends Command {
                         tag: author.tag,
                         relayer: true,
                         $inc: {
+                            'sbRelayCount': 0,
                             'shbRelayCount': 1
                         }
                     }, {
