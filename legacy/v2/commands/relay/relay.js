@@ -44,8 +44,7 @@ module.exports = class relayCommand extends Command {
                         tag: author.tag,
                         relayer: true,
                         $inc: {
-                            'sbRelayCount': 0,
-                            'shbRelayCount': 1
+                            'relayCount': 1
                         }
                     }, {
                         upsert: true,

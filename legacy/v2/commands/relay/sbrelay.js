@@ -38,8 +38,7 @@ module.exports = class sbrelayCommand extends Command {
                         tag: author.tag,
                         relayer: true,
                         $inc: {
-                            'sbRelayCount': 1,
-                            'shbRelayCount': 0
+                            'relayCount': 1
                         }
                     }, {
                         upsert: true,
@@ -69,7 +68,7 @@ module.exports = class sbrelayCommand extends Command {
             const locationName = (args.slice(1)).join(' ');
 
             // Locate location configuration from alias input
-            const locationSelection = allLocations.aetherytes.find(obj => obj.aliases.includes(locationName));
+            const locationSelection = allLocations.aetherytes.find(obj => obj.aliases.includes(locationName.toLowerCase()));
 
             // Locate world configuration from alias input
             const worldInputSubstr = worldName.substr(0, 3);
