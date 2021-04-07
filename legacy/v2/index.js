@@ -63,7 +63,9 @@ client.registry
     ['util', 'Custom Utility Commands']
   ])
   .registerDefaultGroups()
-  .registerDefaultCommands()
+  .registerDefaultCommands({
+    unknownCommand: false,
+  })
   .registerCommandsIn(path.join(__dirname, 'commands'));
 
 client.once('ready', () => {

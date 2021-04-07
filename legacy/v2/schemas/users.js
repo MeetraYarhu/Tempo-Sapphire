@@ -18,10 +18,11 @@ const userInfoSchema = mongoose.Schema({
     _id: reqString,
     tag: reqString,
     relayer: reqBool,
-    shbRelayCount: reqNum,
-    sbRelayCount: reqNum,
+    relayCount: reqNum,
 }, {
     timestamps: true
 })
 
 module.exports = mongoose.model('users', userInfoSchema)
+
+//( { relayCount : -1 } )

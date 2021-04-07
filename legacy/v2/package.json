@@ -22,6 +22,7 @@
     "@schemas": "./schemas",
     "@util": "./util",
     "@images": "./images",
+    "@audio": "./audio",
     "@features": "./features/features",
     "@commands": "./commands/commands"
   }
