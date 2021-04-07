@@ -8,7 +8,6 @@
       "sbchannelid": "788189199127412737",
       "commandcenter": "785789582419558400"
    }, {
-
       "name": "Matt Gang",
       "guildid": "755152542027088003",
       "channelid": "755152686760067082",
@@ -25,7 +24,6 @@
       "sbchannelid": "797717617997643798",
       "commandcenter": "797717662012538900"
    }, {
-
       "name": "Fractal",
       "guildid": "581175735541301268",
       "channelid": "821833901331710032",
@@ -33,6 +31,14 @@
       "sbtrainroleid": "821839459023847505",
       "sbchannelid": "821833861096800317",
       "commandcenter": "821833971490881536"
-
+   },
+   {
+      "name": "Icon",
+      "guildid": "555610963488014346",
+      "channelid": "606193861563515056",
+      "trainroleid": "696213486061092864",
+      "sbtrainroleid": "696213486061092864",
+      "sbchannelid": "606193861563515056",
+      "commandcenter": "827400122203242496"
    }]
 }
