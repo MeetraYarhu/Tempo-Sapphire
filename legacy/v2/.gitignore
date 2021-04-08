@@ -479,3 +479,6 @@ MigrationBackup/
 FodyWeavers.xsd
 
 config.json
+old command stuff/
+playground.js
+embed stuff/
