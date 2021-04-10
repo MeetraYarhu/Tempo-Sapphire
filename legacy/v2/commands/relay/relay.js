@@ -91,25 +91,20 @@ module.exports = class relayCommand extends Command {
                 // Embed that will be used to confirm, then sent as the relay
                 const relayEmbed = new Discord.MessageEmbed()
                     .setColor('006CFF')
-                    .setTitle('ShB hunt train starting!')
-                    .setAuthor(`Relayed by: ${message.member.displayName}`, message.author.avatarURL())
-                    .setDescription(`Relay sent from the ${message.guild.name} discord.`)
+                    .setTitle('<:hunt:830145867599446087> Shadowbringers Hunt Train Starting!')
                     .addFields({
-                        name: ':earth_americas: World',
-                        value: worldSelection.name,
+                        name: `:earth_americas: **${worldSelection.name}**`,
+                        value: `<:aetheryte:829954982866190337> **${locationSelection.name}**\n🚗 **${speedSelection.name}**`,
                         inline: true,
                     }, {
-                        name: 'Location',
-                        value: locationSelection.name,
-                        inline: true,
-                    }, {
-                        name: 'Speed',
-                        value: speedSelection.name,
+                        name: `<:discord:830133926566559824> ${message.guild.name}`,
+                        value: `📣 **${message.member.displayName}**`,
                         inline: true,
                     }, )
                     .attachFiles(`images/shbAetherytes/${locationSelection.filename}`)
                     .setImage(`attachment://${locationSelection.filename}`)
-                    .setFooter(`Tempo Bot discord: https://discord.gg/zusBKtp`);
+                    .setTimestamp()
+                    .setFooter('Tempo Bot Discord: discord.gg/zusBKtp');
 
                 // Change embed color based on world
                 let colorDict = {
