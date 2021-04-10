@@ -21,18 +21,18 @@ const reqNum = {
 const guildInfoSchema = mongoose.Schema({
     _id: reqString, // Guild ID
     name: reqString, // Guild Name
-    channels: {
+    channels: { // Channels to relay to/from
         commandCenterID: optString,
         ewChannelID: optString,
         shbChannelID: optString,
         sbChannelID: optString
     },
-    roles: {
-        allTrainRoleID: reqString,
+    roles: { // Role IDs to ping specific train expansions
+        allTrainRoleID: optString,
         ewTrainRoleID: optString,
         shbTrainRoleID: optString,
         sbTrainRoleID: optString,
-        worldRoles: {
+        worldRoles: { // Role IDs to ping specific worlds
             Behemoth: optString,
             Excalibur: optString,
             Exodus: optString,
@@ -43,6 +43,8 @@ const guildInfoSchema = mongoose.Schema({
             Ultros: optString
         }
     }
+}, {
+    timestamps: true
 })
 
 module.exports = mongoose.model('guilds', guildInfoSchema)
