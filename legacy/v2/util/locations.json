@@ -1,7 +1,7 @@
 {
     "aetherytes": [{
         "name": "Fort Jobb",
-        "aliases": ["fort", "jobb", "foot"],
+        "aliases": ["fort", "jobb", "job", "foot"],
         "filename": "fortjobb.png"
     }, {
         "name": "The Ostall Imperative",
