@@ -15,6 +15,7 @@ module.exports = class IhnaCommand extends Command {
             group: 'misc',
             memberName: 'ihna',
             description: 's h r i m p',
+            guildOnly: true,
         });
     }
     run(message) {
