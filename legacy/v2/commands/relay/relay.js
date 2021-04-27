@@ -33,6 +33,10 @@ module.exports = class relayCommand extends Command {
         const {
             author
         } = message
+        // grab user id, look for matching document
+        // IF no match, create new one with relay false, and return
+        // if match exists, check relayer value
+        // if relayer false, return, if true, continue
         const connectToMongoDB = async () => {
             await mongo().then(async (mongoose) => {
                 try {
