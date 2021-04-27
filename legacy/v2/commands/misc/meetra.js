@@ -15,6 +15,7 @@ module.exports = class MeetraCommand extends Command {
             group: 'misc',
             memberName: 'meetra',
             description: 'Meetra memes',
+            guildOnly: true,
         });
     }
     run(message) {

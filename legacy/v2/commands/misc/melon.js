@@ -15,6 +15,7 @@ module.exports = class MelonCommand extends Command {
             group: 'misc',
             memberName: 'melon',
             description: 'Posts a random picture of someone holding a melon.',
+            guildOnly: true,
         });
     }
     run(message) {

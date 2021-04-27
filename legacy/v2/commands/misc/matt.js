@@ -15,6 +15,7 @@ module.exports = class MattCommand extends Command {
             group: 'misc',
             memberName: 'matt',
             description: 'Posts a random picture of Matt.',
+            guildOnly: true,
         });
     }
     run(message) {
