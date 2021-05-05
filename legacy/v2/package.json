@@ -1,7 +1,7 @@
 {
-  "name": "TrainProject",
-  "version": "0.2.0",
-  "description": "",
+  "name": "Tempo Bot",
+  "version": "0.3.2",
+  "description": "Memes and trains, yes.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
