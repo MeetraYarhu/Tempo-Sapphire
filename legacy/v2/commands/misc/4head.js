@@ -15,7 +15,7 @@ module.exports = class Nyx4headCommand extends Command {
             guildOnly: true,
 		});
 	}
-
+	// test comment
     run(message) {
 	const attachment = new MessageAttachment('audio/forehead.mp3')
     message.say('<:nyx4head:829219532869599262> *Can I get a 4head in the chat*.', attachment);
