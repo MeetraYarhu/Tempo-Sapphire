@@ -10,6 +10,7 @@ const relayerSchema = require('@schemas/relayers.js');
 const client = new Commando.CommandoClient({
   owner: '127254878190829568',
   commandPrefix: config.prefix,
+  invite: 'https://discord.gg/zusBKtp'
 });
 const mongo = require('@root/mongo.js')
 const mongoose = require("mongoose");
