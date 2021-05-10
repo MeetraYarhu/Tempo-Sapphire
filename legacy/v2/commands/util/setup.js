@@ -74,7 +74,7 @@ module.exports = class setRelayCommand extends Command {
                 }
             })
         }
-        message.reply('Channel Set!')
+        message.reply('Channel(s) Set!')
         connectToMongoDB()
     }
 }
