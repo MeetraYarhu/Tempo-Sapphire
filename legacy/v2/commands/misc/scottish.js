@@ -8,7 +8,7 @@ module.exports = class ScottishCommand extends Command {
 	constructor(client) {
 		super(client, {
 			name: 'scottish',
-			aliases: ['karen', 'kkaren', 'tia', 'kkiba', 'kiba', 'rent-free'],
+			aliases: ['karen', 'kkaren', 'kkiba', 'kiba', 'rent-free'],
 			group: 'misc',
 			memberName: 'scottish',
 			description: 'A scottish person doing scottish things.',

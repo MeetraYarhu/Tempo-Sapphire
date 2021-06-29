@@ -124,7 +124,7 @@ module.exports = class relayCommand extends Command {
                 let color = colorDict[worldInputSubstr]
                 relayEmbed.setColor(color)
 
-                for (let i = 0; i < guildList.length; i++) {
+                for (let i = 0; i < guildStuff.guilds.length; i++) {
                     this.client.channels.cache.get(guildStuff.guilds[i].channelid).send(`<@&${guildStuff.guilds[i].trainroleid}> ${worldSelection.roleid[i]}`, {
                         embed: relayEmbed,
                     });

@@ -11,7 +11,7 @@ module.exports = class MeetraCommand extends Command {
     constructor(client) {
         super(client, {
             name: 'meetra',
-            aliases: ['feet', 'feetra', 'toes', 'meestra', 'carbuncles', 'yahoo', 'meetrass', 'oppressor', 'dogehello'],
+            aliases: ['feet', 'sweetra', 'sweet', 'sweetfeet', 'feetra', 'toes', 'meestra', 'carbuncles', 'yahoo', 'meetrass', 'oppressor', 'dogehello'],
             group: 'misc',
             memberName: 'meetra',
             description: 'Meetra memes',
