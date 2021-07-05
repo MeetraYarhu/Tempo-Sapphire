@@ -2,70 +2,87 @@
     "aetherytes": [{
         "name": "Fort Jobb",
         "aliases": ["fort", "jobb", "job", "foot"],
-        "filename": "fortjobb.png"
+        "filename": "fortjobb.png",
+        "zone": "Lakeland"
     }, {
         "name": "The Ostall Imperative",
         "aliases": ["ostwall", "ostall", "imperative"],
-        "filename": "ostall.png"
+        "filename": "ostall.png",
+        "zone": "Lakeland"
     }, {
         "name": "Tomra",
         "aliases": ["tomra"],
-        "filename": "tomra.png"
+        "filename": "tomra.png",
+        "zone": "Kholusia"
     }, {
         "name": "Stilltide",
         "aliases": ["stilltide", "still"],
-        "filename": "stilltide.png"
+        "filename": "stilltide.png",
+        "zone": "Kholusia"
     }, {
         "name": "Wright",
         "aliases": ["wright", "right"],
-        "filename": "wright.png"
+        "filename": "wright.png",
+        "zone": "Kholusia"
     }, {
         "name": "Twine",
         "aliases": ["twine", "twinning"],
-        "filename": "twine.png"
+        "filename": "twine.png",
+        "zone": "Amh Araeng"
     }, {
         "name": "The Inn at Journey's Head",
         "aliases": ["inn", "journey", "journey's", "journeys", "head"],
-        "filename": "inn.png"
+        "filename": "inn.png",
+        "zone": "Amh Araeng"
     }, {
         "name": "Mord Souq",
         "aliases": ["mord", "souq", "mord souq", "mord soup", "more soup", "soup"],
-        "filename": "mordsouq.png"
+        "filename": "mordsouq.png",
+        "zone": "Amh Araeng"
     }, {
         "name": "Wolekdorf",
         "aliases": ["wolekdorf", "wolek", "wolekdoh", "wole", "wol"],
-        "filename": "wolekdorf.png"
+        "filename": "wolekdorf.png",
+        "zone": "Il Mheg"
     }, {
         "name": "Lydha Lran",
         "aliases": ["lydha lran", "lydha", "lran", "lyd", "lyda", "lydha lran", "lyda lran"],
-        "filename": "lydha.png"
+        "filename": "lydha.png",
+        "zone": "Il Mheg"
     }, {
         "name": "Pla Enni",
         "aliases": ["pla enni", "play pen", "pla", "enni", "pla enni", "pia enni", "pia"],
-        "filename": "plaenni.png"
+        "filename": "plaenni.png",
+        "zone": "Il Mheg"
     }, {
         "name": "Fanow",
         "aliases": ["fanow", "fanowo", "fanos", "bunnies"],
-        "filename": "fanow.png"
+        "filename": "fanow.png",
+        "zone": "The Rak'tika Greatwoods"
     }, {
         "name": "Slitherbough",
         "aliases": ["slitherbough", "slither", "slither bough"],
-        "filename": "slitherbough.png"
+        "filename": "slitherbough.png",
+        "zone": "The Rak'tika Greatwoods"
     }, {
         "name": "The Ondo Cups",
         "aliases": ["the ondo cups", "ondo", "cups", "ondo cups"],
-        "filename": "ondocups.png"
+        "filename": "ondocups.png",
+        "zone": "The Tempest"
     }, {
         "name": "The Macarenses Angle",
         "aliases": ["the macarenses angle", "mercedes", "mercedes angle", "macaroni", "macarenses", "angle", "macarenses angle", "macaroni angle", "trap tele", "trap aether"],
-        "filename": "macarenses.png"
+        "filename": "macarenses.png",
+        "zone": "The Tempest"
     }, {
         "name": "The Crystarium",
         "aliases": ["the crystarium", "crystarium", "cryst"],
-        "filename": "crystarium.png"
+        "filename": "crystarium.png",
+        "zone": "The Crystarium"
     }, {
         "name": "Eulmore",
         "aliases": ["eulmore", "eul"],
-        "filename": "eulmore.png"
+        "filename": "eulmore.png",
+        "zone": "Eulmore"
     }]
 }
