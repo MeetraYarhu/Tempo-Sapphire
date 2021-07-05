@@ -113,7 +113,7 @@ module.exports = class sbrelayCommand extends Command {
                 relayEmbed.setColor(color)
 
                 for (let i = 0; i < guildStuff.guilds.length; i++) {
-                    this.client.channels.cache.get(guildStuff.guilds[i].sbchannelid).send(`${worldSelection.name} SB train starting at ${locationSelection.name}\n<@&${guildStuff.guilds[i].sbtrainroleid}> ${worldSelection.roleid[i]}`, {
+                    this.client.channels.cache.get(guildStuff.guilds[i].sbchannelid).send(`${worldSelection.name} SB train starting at ${locationSelection.name}, ${locationSelection.zone}\n<@&${guildStuff.guilds[i].sbtrainroleid}> ${worldSelection.roleid[i]}`, {
                         embed: relayEmbed,
                     });
                     this.client.channels.cache.get(guildStuff.guilds[i].commandcenter).send(`An SB train on ${worldSelection.name} was relayed by ${message.member.displayName} from the ${message.guild.name} Discord.`);
