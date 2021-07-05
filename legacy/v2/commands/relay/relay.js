@@ -125,7 +125,7 @@ module.exports = class relayCommand extends Command {
                 relayEmbed.setColor(color)
 
                 for (let i = 0; i < guildStuff.guilds.length; i++) {
-                    this.client.channels.cache.get(guildStuff.guilds[i].channelid).send(`<@&${guildStuff.guilds[i].trainroleid}> ${worldSelection.roleid[i]}`, {
+                    this.client.channels.cache.get(guildStuff.guilds[i].channelid).send(`${worldSelection.name} ShB train starting at ${locationSelection.name}\n<@&${guildStuff.guilds[i].trainroleid}> ${worldSelection.roleid[i]}`, {
                         embed: relayEmbed,
                     });
                     this.client.channels.cache.get(guildStuff.guilds[i].commandcenter).send(`An ShB train on ${worldSelection.name} was relayed by ${message.member.displayName} from the ${message.guild.name} Discord.`);
