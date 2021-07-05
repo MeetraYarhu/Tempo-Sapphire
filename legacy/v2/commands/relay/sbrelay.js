@@ -65,7 +65,7 @@ module.exports = class sbrelayCommand extends Command {
 
             // Defining arguments
             const worldName = args[0].toLowerCase();
-            const locationName = (args.slice(1)).join(' ');
+            const locationName = args[1].toLowerCase();
 
             // Locate location configuration from alias input
             const locationSelection = allLocations.aetherytes.find(obj => obj.aliases.includes(locationName.toLowerCase()));
@@ -82,21 +82,21 @@ module.exports = class sbrelayCommand extends Command {
                 // Embed that will be used to confirm, then sent as the relay
                 const relayEmbed = new Discord.MessageEmbed()
                     .setColor('006CFF')
-                    .setTitle('Stormblood hunt train starting!')
-                    .setAuthor(`Relayed by: ${message.member.displayName}`, message.author.avatarURL())
+                    .setTitle('<:hunt:830145867599446087> Stormblood hunt train starting!')
                     .setDescription(`Relay sent from the ${message.guild.name} discord.`)
                     .addFields({
-                        name: ':earth_americas: World',
-                        value: worldSelection.name,
+                        name: `:earth_americas: **${worldSelection.name}**`,
+                        value: `<:aetheryte:829954982866190337> **${locationSelection.name}**`,
                         inline: true,
                     }, {
-                        name: 'Nearest Aetheryte',
-                        value: locationSelection.name,
+                        name: `<:discord:830133926566559824> ${message.guild.name}`,
+                        value: `📣 **${message.member.displayName}**`,
                         inline: true,
-                    })
+                    }, )
                     .attachFiles(`images/sbAetherytes/${locationSelection.filename}`)
                     .setImage(`attachment://${locationSelection.filename}`)
-                    .setFooter('Tempo Bot discord: https://discord.gg/zusBKtp');
+                    .setTimestamp()
+                    .setFooter('Tempo Bot Discord: discord.gg/zusBKtp');
 
                 // Change embed color based on world
                 let colorDict = {
@@ -113,7 +113,7 @@ module.exports = class sbrelayCommand extends Command {
                 relayEmbed.setColor(color)
 
                 for (let i = 0; i < guildStuff.guilds.length; i++) {
-                    this.client.channels.cache.get(guildStuff.guilds[i].sbchannelid).send(`<@&${guildStuff.guilds[i].sbtrainroleid}> ${worldSelection.roleid[i]}`, {
+                    this.client.channels.cache.get(guildStuff.guilds[i].sbchannelid).send(`${worldSelection.name} SB train starting at ${locationSelection.name}\n<@&${guildStuff.guilds[i].sbtrainroleid}> ${worldSelection.roleid[i]}`, {
                         embed: relayEmbed,
                     });
                     this.client.channels.cache.get(guildStuff.guilds[i].commandcenter).send(`An SB train on ${worldSelection.name} was relayed by ${message.member.displayName} from the ${message.guild.name} Discord.`);
