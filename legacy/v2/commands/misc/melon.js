@@ -26,7 +26,7 @@ module.exports = class MelonCommand extends Command {
         const image = fs.readFileSync(path.join('images/melonpics', chosenFile));
 
         const attachment = new MessageAttachment(image);
-
-        message.say(attachment);
+        const name = chosenFile.slice(0,-4);
+        message.say(name, attachment);
     }
 }
