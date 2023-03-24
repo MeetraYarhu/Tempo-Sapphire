@@ -6,7 +6,7 @@ class RandomBallCommand extends Command {
 		super(context, {
 			...options,
 			name: '8ball',
-			aliases: ['8ball'],
+			aliases: ['pr8ball'],
 			description: '8ball responses',
 		});
 	}
@@ -14,7 +14,8 @@ class RandomBallCommand extends Command {
 	messageRun(message) {
 		const responseArray = responses.responses;
 		const selection = responseArray[Math.floor(Math.random() * responseArray.length)];
-		message.reply(selection);
+
+		message.reply(selection.charAt(0).toUpperCase() + selection.slice(1));
 	}
 
 }
