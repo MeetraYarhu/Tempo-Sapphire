@@ -31,9 +31,10 @@ class GiveListCommand extends Command {
 		const member = interaction.options.getMember('target');
 		const role = interaction.options.getRole('role');
 		member.roles.add(role);
-		// console.log(member);
-		// console.log(role);
-		interaction.reply('done');
+
+		const user = interaction.options.getUser('target');
+
+		interaction.reply(`Added <@&${role.id}> to <@${user.id}>`);
 	}
 }
 
