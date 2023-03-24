@@ -3,7 +3,9 @@ const { Command } = require('@sapphire/framework');
 
 class PingCommand extends Command {
 	constructor(context, options) {
-		super(context, { ...options });
+		super(context, {
+			...options,
+		});
 	}
 
 	registerApplicationCommands(registry) {
