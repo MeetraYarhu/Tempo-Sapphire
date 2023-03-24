@@ -1,7 +1,7 @@
 const { Command } = require('@sapphire/framework');
 const fs = require('fs');
 const path = require('path');
-const { AttachmentBuilder } = require('discord,js');
+const { AttachmentBuilder } = require('discord.js');
 
 class MeetraCommand extends Command {
 	constructor(context, options) {
