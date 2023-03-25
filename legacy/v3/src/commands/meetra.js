@@ -19,12 +19,10 @@ class MeetraCommand extends Command {
 
 		const image = fs.readFileSync(path.join('images/meetrapics', chosenFile));
 
-		const name = chosenFile.slice(0, -4);
 
 		const attachment = new AttachmentBuilder(image, { name: chosenFile });
 
 		message.channel.send({
-			content: name,
 			files: [attachment],
 		});
 
