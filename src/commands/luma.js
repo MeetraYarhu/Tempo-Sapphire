@@ -6,6 +6,7 @@ class LumaCommand extends Command {
 		super(context, {
 			...options,
 			name: 'luma',
+			aliases: ['lumabug'],
 			description: 'bugnod',
 		});
 	}
