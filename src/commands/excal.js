@@ -26,7 +26,7 @@ class GiveListCommand extends Command {
 	async chatInputRun(interaction) {
 
 		try {
-			const role = '1088609642826973204';
+			const role = '785242661392482405';
 			const member = await interaction.options.getMember('target');
 			const user = await interaction.options.getUser('target');
 
