@@ -1,10 +1,12 @@
 const { Command } = require('@sapphire/framework');
-const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
 
 class GiveListCommand extends Command {
 	constructor(context, options) {
 		super(context, {
 			...options,
+			name: 'givelist',
+			description: 'giveslist',
+			requiredClientPermissions: ['ManageRoles'],
 		});
 	}
 
