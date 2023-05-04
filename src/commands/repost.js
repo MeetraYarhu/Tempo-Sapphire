@@ -22,6 +22,7 @@ class RepostCommand extends Command {
 
 	async chatInputRun(interaction) {
 
+		// Lets the bot run for longer without timing out
 		await interaction.deferReply();
 		await interaction.deleteReply();
 
@@ -37,15 +38,15 @@ class RepostCommand extends Command {
 				.setColor('Blue')
 				.setTitle('Placeholder');
 
-			// Final Embed
+			// Final Embeds for Message Links
 			const finalEmbed1 = await new EmbedBuilder()
 				.setColor('DarkBlue')
 				.setTitle('Message Links');
-
 			const finalEmbed2 = await new EmbedBuilder()
 				.setColor('DarkBlue')
 				.setTitle('Message Links');
 
+			// Arrays that will be used in Final Embeds
 			const finalArray1 = [];
 			const finalArray2 = [];
 
@@ -70,22 +71,11 @@ class RepostCommand extends Command {
 				}
 			}
 
-			// await interaction.channel.send({ embeds: [finalEmbed] });
-			// console.log(finalArray1);
+			// Set descriptions for final embeds
 			await finalEmbed1.setDescription(`${finalArray1.join('\n')}`);
 			await finalEmbed2.setDescription(`${finalArray2.join('\n')}`);
-			/* await finalEmbed.addFields(
-				{
-					name: '\u200b',
-					value: `${finalArray1.join('\n')}`,
-					inline: true,
-				},
-				{
-					name: '\u200b',
-					value: `${finalArray2.join('\n')}`,
-					inline: true,
-				},
-			); */
+
+			// Send final embeds
 			await interaction.channel.send({ embeds: [finalEmbed1] });
 			await interaction.channel.send({ embeds: [finalEmbed2] });
 		}
