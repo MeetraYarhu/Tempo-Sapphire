@@ -1,7 +1,7 @@
 const { SapphireClient } = require('@sapphire/framework');
 // const { maintoken } = require('../config.json');
 const { testtoken } = require('../config.json');
-const { Events, GatewayIntentBits } = require('discord.js');
+const { GatewayIntentBits } = require('discord.js');
 
 const client = new SapphireClient ({
 	defaultPrefix: '~',
