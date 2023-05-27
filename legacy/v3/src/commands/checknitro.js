@@ -60,9 +60,9 @@ class CheckNitroCommand extends Command {
 				for (let k = 0; k < tempMap.length; k++) {
 					if (tempMap[k].roles.cache.some(role => role.id === Nitro)) {
 						// DO NOTHING & edit response
-						await responseEmbed.addFields({
+						/* await responseEmbed.addFields({
 							name: ' ',
-							value: `<@${tempMap[k].user.id}> Has <@&${Nitro}>. Their <@&${colorsIDs[i]}> was not removed` });
+							value: `<@${tempMap[k].user.id}> Has <@&${Nitro}>. Their <@&${colorsIDs[i]}> was not removed` }); */
 					}
 					else {
 						// REMOVE ROLE & edit response
