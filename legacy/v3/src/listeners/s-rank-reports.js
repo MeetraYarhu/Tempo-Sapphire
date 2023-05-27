@@ -14,11 +14,11 @@ class ReportsListener extends Listener {
 
 	async run(message) {
 
-		if ((message.channelId === '1101248697280495637') && (message.author.bot === false)) {
+		if ((message.channelId === '1101248423249846372') && (message.author.bot === false)) {
 
 			try {
-				const reportsChannel = message.guild.channels.cache.get('1101248716305862656');
-				const mentionRole = '1091974796532785212';
+				const reportsChannel = await message.guild.channels.cache.get('1101248388483272834');
+				const mentionRole = '1022944281574518846';
 				// Create Relay Embed
 				const relayEmbed = await new EmbedBuilder()
 					.setColor('Red')
