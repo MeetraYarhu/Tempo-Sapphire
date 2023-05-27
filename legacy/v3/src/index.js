@@ -1,5 +1,5 @@
 const { SapphireClient } = require('@sapphire/framework');
-// const { maintoken } = require('../config.json');
+const { maintoken } = require('../config.json');
 const { testtoken } = require('../config.json');
 const { GatewayIntentBits } = require('discord.js');
 
