@@ -1,7 +1,7 @@
 const { SapphireClient } = require('@sapphire/framework');
-const { maintoken } = require('../config.json');
-// const { testtoken } = require('../config.json');
-const { Events, GatewayIntentBits } = require('discord.js');
+// const { maintoken } = require('../config.json');
+const { testtoken } = require('../config.json');
+const { GatewayIntentBits } = require('discord.js');
 
 const client = new SapphireClient ({
 	defaultPrefix: '~',
@@ -16,8 +16,5 @@ const client = new SapphireClient ({
 	loadMessageCommandListeners: true,
 });
 
-client.once(Events.ClientReady, c => {
-	console.log(`Ready! ${c.user.tag}`);
-});
-
-client.login(maintoken);
+// client.login(maintoken);
+client.login(testtoken);
