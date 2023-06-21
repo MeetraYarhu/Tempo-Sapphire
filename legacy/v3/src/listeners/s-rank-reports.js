@@ -18,7 +18,7 @@ class ReportsListener extends Listener {
 
 			try {
 				const reportsChannel = await message.guild.channels.cache.get('1101248388483272834');
-				// const mentionRole = '1022944281574518846';
+				const mentionRole = '1022944281574518846';
 				// Create Relay Embed
 				const relayEmbed = await new EmbedBuilder()
 					.setColor('Red')
@@ -37,11 +37,11 @@ class ReportsListener extends Listener {
 
 				// Send final embed
 				await reportsChannel.send({
-					// content: `<@&${mentionRole}>`,
+					content: `<@&${mentionRole}>`,
 					embeds: [relayEmbed],
-					/* allowedMentions: {
+					allowedMentions: {
 						roles: [mentionRole],
-					}, */
+					},
 				});
 
 				// Delete original message
