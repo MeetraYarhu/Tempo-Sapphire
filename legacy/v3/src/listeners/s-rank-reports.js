@@ -27,7 +27,7 @@ class ReportsListener extends Listener {
 						iconURL: message.author.avatarURL(),
 					})
 					.addFields({
-						name: `Sent a relay from <#${message.channel.id}>:`,
+						name: `Sent a report from <#${message.channel.id}>:`,
 						value: message.content,
 					})
 					.setTimestamp()
