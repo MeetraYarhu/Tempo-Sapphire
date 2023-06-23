@@ -15,7 +15,7 @@ class ReportsListener extends Listener {
 	async run(message) {
 		// coeurl 1101248423249846372
 		if ((message.channelId === '1101248423249846372') && (message.author.bot === false)) {
-			console.log(message.author);
+			// console.log(message.author);
 			try {
 				const reportsChannel = await message.guild.channels.cache.get('1101248388483272834');
 				const mentionRole = '1121306416389554266';
