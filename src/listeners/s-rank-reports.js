@@ -13,31 +13,26 @@ class ReportsListener extends Listener {
 	}
 
 	async run(message) {
-
+		// coeurl 1101248423249846372
 		if ((message.channelId === '1101248423249846372') && (message.author.bot === false)) {
-
+			console.log(message.author);
 			try {
 				const reportsChannel = await message.guild.channels.cache.get('1101248388483272834');
 				const mentionRole = '1121306416389554266';
+				// coeurl 1101248388483272834
 				// Create Relay Embed
 				const relayEmbed = await new EmbedBuilder()
 					.setColor('Red')
-					.setAuthor({
-						name: message.author.username,
-						iconURL: message.author.avatarURL(),
-					})
-					.addFields({
-						name: `Sent a report from <#${message.channel.id}>:`,
-						value: message.content,
-					})
+					.setDescription(message.content)
 					.setTimestamp()
 					.setFooter({
-						text: `ID: ${message.author.id}`,
+						text: message.author.username,
+						iconURL: message.author.avatarURL(),
 					});
 
 				// Send final embed
 				await reportsChannel.send({
-					content: `<@&${mentionRole}>`,
+					content: `<@${message.author.id}> <@&${mentionRole}>`,
 					embeds: [relayEmbed],
 					allowedMentions: {
 						roles: [mentionRole],
