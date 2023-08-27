@@ -36,15 +36,10 @@ class CheckNitroCommand extends Command {
 		};
 
 		try {
-
-			// Caching GuildMembers
-			// await interaction.guild.members.fetch();
-
 			// Length of Colors
 			const ColorsLength = await (Object.keys(Colors).length);
 
 			// Convert Colors to an array
-			// const colorsNames = await Object.keys(Colors);
 			const colorsIDs = await Object.values(Colors);
 
 			// Creating Embed Template
@@ -60,9 +55,6 @@ class CheckNitroCommand extends Command {
 				for (let k = 0; k < tempMap.length; k++) {
 					if (tempMap[k].roles.cache.some(role => role.id === Nitro)) {
 						// DO NOTHING & edit response
-						/* await responseEmbed.addFields({
-							name: ' ',
-							value: `<@${tempMap[k].user.id}> Has <@&${Nitro}>. Their <@&${colorsIDs[i]}> was not removed` }); */
 					}
 					else {
 						// REMOVE ROLE & edit response
@@ -74,7 +66,6 @@ class CheckNitroCommand extends Command {
 					}
 				}
 			}
-			// await interaction.reply({ embeds: [responseEmbed] });
 			await interaction.editReply({ embeds: [responseEmbed] });
 		}
 		catch (error) {
