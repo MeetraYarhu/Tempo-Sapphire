@@ -22,9 +22,9 @@ class FaloopCommand extends Command {
 						.setRequired(true)
 						.setDescription('Type of Permissions')
 						.addChoices(
-							{ name: 'Trials', value: '1145129528105119744' },
-							{ name: 'Full', value: '1145129487370043443' },
-							{ name: 'Retired', value: '1145129531531862149' },
+							{ name: 'Trials', value: '828812675831562291' },
+							{ name: 'Full', value: '612417945812992097' },
+							{ name: 'Retired', value: '829187433182265366' },
 						))
 				.addUserOption(option =>
 					option
@@ -37,14 +37,14 @@ class FaloopCommand extends Command {
 	async chatInputRun(interaction) {
 
 		// Assign RoleID Variables
-		const roleTrials = '1145129528105119744';
-		const roleReporter = '1145129487370043443';
-		const roleRetired = '1145129531531862149';
+		const roleTrials = '828812675831562291';
+		const roleReporter = '612417945812992097';
+		const roleRetired = '829187433182265366';
 
 		const perm = {
-			trials: '1145129528105119744',
-			full: '1145129487370043443',
-			retired: '1145129531531862149',
+			trials: '828812675831562291',
+			full: '612417945812992097',
+			retired: '829187433182265366',
 		};
 
 
@@ -87,7 +87,7 @@ class FaloopCommand extends Command {
 			}
 			// Object.values(perm)
 			// Removes any role that is not being added
-			const _roleList = ['1145129528105119744', '1145129487370043443', '1145129531531862149'];
+			const _roleList = ['828812675831562291', '612417945812992097', '829187433182265366'];
 			_roleList.forEach(element => {
 				if (choice != element) {
 					if (member.roles.cache.some(role => role.id === element)) {
