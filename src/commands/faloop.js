@@ -73,18 +73,14 @@ class FaloopCommand extends Command {
 		try {
 
 			// Checks if user already has retired role when trying to assign it, and returns
-			if (member.roles.cache.some(role => role.id === perm.retired)) {
-				if (choice === perm.retired) {
-					await interaction.reply({ content: `That user already has the <@&${roleRetired}> role.`, ephemeral: true });
-					return;
-				}
+			if ((choice === perm.retired) && (member.roles.cache.some(role => role.id === perm.retired))) {
+				await interaction.reply({ content: `That user already has the <@&${roleRetired}> role.`, ephemeral: true });
+				return;
 			}
 			// Checks if user has the trials role when adding retired, and returns
-			if (choice === perm.retired) {
-				if (member.roles.cache.some(role => role.id === perm.trials)) {
-					await interaction.reply({ content: 'Error, cannot add retired role to a user in trials.', ephemeral: true });
-					return;
-				}
+			if ((choice === perm.retired) && (member.roles.cache.some(role => role.id === perm.trials))) {
+				await interaction.reply({ content: 'Error, cannot add retired role to a user in trials.', ephemeral: true });
+				return;
 			}
 			// Object.values(perm)
 			// Removes any role that is not being added
