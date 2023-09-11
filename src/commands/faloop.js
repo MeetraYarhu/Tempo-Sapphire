@@ -89,6 +89,11 @@ class FaloopCommand extends Command {
 				if (choice != element) {
 					if (member.roles.cache.some(role => role.id === element)) {
 						member.roles.remove(element);
+						replyEmbed
+							.addFields({
+								name: '',
+								value: `${disable}<@&${element}>`,
+							});
 					}
 				}
 			});
@@ -108,7 +113,7 @@ class FaloopCommand extends Command {
 				replyEmbed
 					.addFields({
 						name: ' ',
-						value: `${enable}<@&${roleReporter}>\n${disable}<@&${roleTrials}>`,
+						value: `${enable}<@&${roleReporter}>`,
 					});
 				break;
 			case perm.retired:
@@ -116,7 +121,7 @@ class FaloopCommand extends Command {
 				replyEmbed
 					.addFields({
 						name: ' ',
-						value: `${enable}<@&${roleRetired}>\n${disable}<@&${roleReporter}>`,
+						value: `${enable}<@&${roleRetired}>`,
 					});
 				break;
 			default:
