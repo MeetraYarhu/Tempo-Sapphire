@@ -91,7 +91,7 @@ class FaloopCommand extends Command {
 						member.roles.remove(element);
 						replyEmbed
 							.addFields({
-								name: '',
+								name: ' ',
 								value: `${disable}<@&${element}>`,
 							});
 					}
