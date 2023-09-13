@@ -1,4 +1,4 @@
-const { Command } = require('@sapphire/framework');
+const { Command, CommandOptionsRunTypeEnum } = require('@sapphire/framework');
 const { EmbedBuilder } = require('discord.js');
 
 class FaloopCommand extends Command {
@@ -9,6 +9,7 @@ class FaloopCommand extends Command {
 			description: 'Give relevant Discord roles',
 			requiredClientPermissions: ['ManageRoles'],
 			requiredUserPermissions: ['ManageRoles'],
+			runIn: CommandOptionsRunTypeEnum.GuildAny,
 		});
 	}
 

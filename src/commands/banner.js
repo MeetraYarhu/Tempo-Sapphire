@@ -1,4 +1,4 @@
-const { Command } = require('@sapphire/framework');
+const { Command, CommandOptionsRunTypeEnum } = require('@sapphire/framework');
 const fs = require('fs');
 const path = require('path');
 const { AttachmentBuilder } = require('discord.js');
@@ -9,6 +9,7 @@ class BannerCommand extends Command {
 			...options,
 			name: 'banner',
 			description: 'Posts a banner picture.',
+			runIn: CommandOptionsRunTypeEnum.GuildAny,
 		});
 	}
 

@@ -9,6 +9,7 @@ class RepostCommand extends Command {
 			name: 'repost',
 			description: 'repost',
 			requiredClientPermissions: ['SendMessages', 'AddReactions'],
+			requiredUserPermissions: ['Administrator'],
 		});
 	}
 

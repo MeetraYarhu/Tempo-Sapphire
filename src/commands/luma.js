@@ -1,4 +1,4 @@
-const { Command } = require('@sapphire/framework');
+const { Command, CommandOptionsRunTypeEnum } = require('@sapphire/framework');
 const { AttachmentBuilder } = require('discord.js');
 
 class LumaCommand extends Command {
@@ -8,6 +8,7 @@ class LumaCommand extends Command {
 			name: 'luma',
 			aliases: ['lumabug'],
 			description: 'bugnod',
+			runIn: CommandOptionsRunTypeEnum.GuildAny,
 		});
 	}
 

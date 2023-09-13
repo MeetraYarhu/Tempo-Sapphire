@@ -1,4 +1,4 @@
-const { Command } = require('@sapphire/framework');
+const { Command, CommandOptionsRunTypeEnum } = require('@sapphire/framework');
 
 class GiveListCommand extends Command {
 	constructor(context, options) {
@@ -7,6 +7,7 @@ class GiveListCommand extends Command {
 			name: 'excal',
 			description: 'Give Excal List role',
 			requiredClientPermissions: ['ManageRoles'],
+			runIn: CommandOptionsRunTypeEnum.GuildAny,
 		});
 	}
 

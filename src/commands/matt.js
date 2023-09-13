@@ -1,4 +1,4 @@
-const { Command } = require('@sapphire/framework');
+const { Command, CommandOptionsRunTypeEnum } = require('@sapphire/framework');
 const fs = require('fs');
 const path = require('path');
 const { AttachmentBuilder } = require('discord.js');
@@ -10,6 +10,7 @@ class MattCommand extends Command {
 			name: 'matt',
 			aliases: ['matthew', 'chaser', 'greene'],
 			description: 'Posts a Matt meme.',
+			runIn: CommandOptionsRunTypeEnum.GuildAny,
 		});
 	}
 
