@@ -1,4 +1,4 @@
-const { Command } = require('@sapphire/framework');
+const { Command, CommandOptionsRunTypeEnum } = require('@sapphire/framework');
 const { AttachmentBuilder } = require('discord.js');
 
 class SyrusCommand extends Command {
@@ -7,6 +7,7 @@ class SyrusCommand extends Command {
 			...options,
 			name: 'syrus',
 			description: 'yeehaw',
+			runIn: CommandOptionsRunTypeEnum.GuildAny,
 		});
 	}
 
