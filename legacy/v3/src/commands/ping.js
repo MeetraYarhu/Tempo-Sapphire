@@ -5,6 +5,7 @@ class PingCommand extends Command {
 	constructor(context, options) {
 		super(context, {
 			...options,
+			requiredUserPermissions: ['ManageMessages'],
 		});
 	}
 

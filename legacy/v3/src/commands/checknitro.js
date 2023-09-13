@@ -1,4 +1,4 @@
-const { Command } = require('@sapphire/framework');
+const { Command, CommandOptionsRunTypeEnum } = require('@sapphire/framework');
 const { EmbedBuilder } = require('discord.js');
 
 class CheckNitroCommand extends Command {
@@ -8,6 +8,7 @@ class CheckNitroCommand extends Command {
 			name: 'checknitro',
 			description: 'Check for nitro, remove nitro colors if needed.',
 			requiredClientPermissions: ['ManageRoles'],
+			runIn: CommandOptionsRunTypeEnum.GuildAny,
 		});
 	}
 
