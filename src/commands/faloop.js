@@ -73,6 +73,16 @@ class FaloopCommand extends Command {
 
 		try {
 
+			// Checks if command is being used in Coeurl (481478007932846100), and returns
+			if (interaction.guildId != '481478007932846100') {
+				await interaction.reply({ content: 'You can\'t use that command here!', ephemeral:true });
+				return;
+			}
+			// Checks if target is a bot, and returns
+			if (user.bot === true) {
+				await interaction.reply({ content: `<@${user.id}> is a bot!`, ephemeral: true });
+				return;
+			}
 			// Checks if user already has retired role when trying to assign it, and returns
 			if ((choice === perm.retired) && (member.roles.cache.some(role => role.id === perm.retired))) {
 				await interaction.reply({ content: `That user already has the <@&${roleRetired}> role.`, ephemeral: true });
