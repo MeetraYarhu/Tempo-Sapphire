@@ -80,19 +80,19 @@ class ReportsListener extends Listener {
 				await mainChannel.messages
 					.fetch(message.id)
 					.then((fetchedMessage) => {
-						console.log('Message exists');
+						console.log('s-rank-reports: Message exists');
 						fetchedMessage.delete()
-							.then(() => console.log('Message deleted successfully'))
-							.catch((err) => console.log('Could not delete message ----', err));
+							.then(() => console.log('s-rank-reports: Message deleted successfully'))
+							.catch((err) => console.log('s-rank-reports: Could not delete message ----', err));
 					}).catch((err) => {
 						if (err.status === 404) {
-							console.log('ERROR: Message already deleted ----\n', err);
+							console.log('ERROR: s-rank-reports: Message already deleted ----\n', err);
 						}
 						else if (err.code === '10008') {
-							console.log('ERROR: Message already deleted ----\n', err);
+							console.log('ERROR: s-rank-reports: Message already deleted ----\n', err);
 						}
 						else {
-							console.log('ERROR: Unknown error ----\n', err);
+							console.log('ERROR: s-rank-reports: Unknown error ----\n', err);
 						}
 					});
 			}
