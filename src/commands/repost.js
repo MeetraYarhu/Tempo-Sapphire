@@ -10,6 +10,7 @@ class RepostCommand extends Command {
 			description: 'repost',
 			requiredClientPermissions: ['SendMessages', 'AddReactions'],
 			requiredUserPermissions: ['Administrator'],
+			preconditions: ['OwnerOnly'],
 		});
 	}
 
