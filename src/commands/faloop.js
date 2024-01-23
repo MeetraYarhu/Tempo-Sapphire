@@ -144,7 +144,7 @@ class FaloopCommand extends Command {
 			});
 		}
 		catch (error) {
-			console.log(error);
+			console.log(`Faloop.js: \n${error}`);
 			interaction.reply('Failed');
 		}
 	}
