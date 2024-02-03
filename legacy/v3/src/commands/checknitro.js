@@ -67,7 +67,13 @@ class CheckNitroCommand extends Command {
 					}
 				}
 			}
-			await interaction.editReply({ embeds: [responseEmbed] });
+			console.log(responseEmbed.length);
+			if (responseEmbed.length > 11) {
+				await interaction.editReply({ embeds: [responseEmbed] });
+			}
+			else {
+				await interaction.editReply('No role changes were made.');
+			}
 		}
 		catch (error) {
 			interaction.reply('Failed');
