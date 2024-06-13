@@ -1,5 +1,6 @@
 const { Listener, CommandOptionsRunTypeEnum } = require('@sapphire/framework');
 const { EmbedBuilder } = require('discord.js');
+const idvariables = require('../util/idVariables.json');
 
 class ReportsListener extends Listener {
 	constructor(context, options) {
@@ -14,11 +15,13 @@ class ReportsListener extends Listener {
 
 	async run(message) {
 
-		// Coeurl #s-rank-reports ID: 1101248423249846372
-		// bot testing #s-rank-reports ID: 1101248697280495637
-		if ((message.channelId === '1101248423249846372') && (message.author.bot === false)) {
-			// console.log(message.author);
-			// console.log(message);
+		// Define each guild as it's own object
+		// eslint-disable-next-line no-unused-vars
+		const coeurl = (idvariables.coeurl);
+		// const tempotesting = (idvariables.tempotesting);
+
+		// Check that a report was sent in the proper channel, by a non-bot
+		if ((message.channelId === coeurl.channels.srankreports) && (message.author.bot === false)) {
 
 			try {
 
@@ -28,12 +31,10 @@ class ReportsListener extends Listener {
 					console.log('ERROR: Blank Message or Sticker, successfully deleted');
 					return;
 				}
-
-				const reportsChannel = await message.guild.channels.cache.get('1101248388483272834');
-				const mainChannel = await message.guild.channels.cache.get('1101248423249846372');
-				const mentionRole = '1121306416389554266';
-				// Coeurl #manual-reports ID: 1101248388483272834
-				// bot testing #manual-reports ID: 1101248716305862656
+				// Resolve the channel IDs to a variable
+				const manualReports = await message.guild.channels.cache.get(coeurl.channels.manualreports);
+				const sRankReports = await message.guild.channels.cache.get(coeurl.channels.srankreports);
+				const mentionRole = coeurl.roles.testrole;
 
 				// Create relay embed
 				const relayEmbed = await new EmbedBuilder()
@@ -46,7 +47,7 @@ class ReportsListener extends Listener {
 					});
 
 				// Send report embed
-				await reportsChannel.send({
+				await manualReports.send({
 					content: `<@${message.author.id}> <@&${mentionRole}>`,
 					embeds: [relayEmbed],
 					allowedMentions: {
@@ -66,7 +67,7 @@ class ReportsListener extends Listener {
 					.setColor('Green')
 					.setDescription(`Thanks for the report <@${message.author.id}>! I've relayed it to our spawners for checking.`);
 				// Set response delete time
-				await mainChannel.send({
+				await sRankReports.send({
 					embeds: [responseEmbed],
 				})
 					.then(msg => {
@@ -77,7 +78,7 @@ class ReportsListener extends Listener {
 				await sleep(7500);
 
 				// Delete original message + error logs
-				await mainChannel.messages
+				await sRankReports.messages
 					.fetch(message.id)
 					.then((fetchedMessage) => {
 						console.log('s-rank-reports: Message exists');
