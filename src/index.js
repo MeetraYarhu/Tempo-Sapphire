@@ -14,9 +14,12 @@ const client = new SapphireClient ({
 		GatewayIntentBits.GuildMembers,
 		GatewayIntentBits.GuildPresences,
 		GatewayIntentBits.MessageContent,
+		GatewayIntentBits.GuildModeration,
 	],
 	loadMessageCommandListeners: true,
 });
 
 client.login(maintoken);
 // client.login(testtoken);
+
+module.exports = client;
