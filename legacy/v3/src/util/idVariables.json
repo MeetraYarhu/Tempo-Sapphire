@@ -1,0 +1,20 @@
+{
+	"coeurl": {
+		"channels": {
+			"srankreports": "1101248423249846372",
+			"manualreports": "1101248388483272834"
+		},
+		"roles": {
+			"traincontributor": "718178539194548236"
+		}
+	},
+	"tempotesting": {
+		"channels": {
+			"srankreports": "1101248697280495637",
+			"manualreports": "1101248716305862656"
+		},
+		"roles": {
+			"testrole": "1091974796532785212"
+		}
+	}
+}
