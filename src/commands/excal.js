@@ -28,11 +28,22 @@ class GiveListCommand extends Command {
 
 		try {
 			const role = '785242661392482405';
+			const waffles = '295969949678043146';
+			const meetra = '127254878190829568';
 			const member = await interaction.options.getMember('target');
 			const user = await interaction.options.getUser('target');
 
-			await member.roles.add(role);
-			await interaction.reply(`Added <@&${role}> to <@${user.id}>`);
+			if (interaction.user.id === waffles || interaction.user.id === meetra) {
+				await member.roles.add(role);
+				await interaction.reply(`Added <@&${role}> to <@${user.id}>`);
+			}
+			else {
+				interaction.reply({
+					content: 'You do not have permission to use this command.',
+					ephemeral: true,
+				});
+				console.log(`ERROR: ${interaction.user.username} attempted to use the 'excal' command in guild: ${interaction.guild.name}.`);
+			}
 		}
 		catch (error) {
 			interaction.reply('Failed');
