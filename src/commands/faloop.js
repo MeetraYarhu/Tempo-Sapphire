@@ -1,5 +1,6 @@
 const { Command, CommandOptionsRunTypeEnum } = require('@sapphire/framework');
 const { EmbedBuilder } = require('discord.js');
+const { client } = require('../index.js');
 
 class FaloopCommand extends Command {
 	constructor(context, options) {
@@ -48,11 +49,15 @@ class FaloopCommand extends Command {
 			retired: '829187433182265366',
 		};
 
-
 		// Assign Interaction Values
 		const member = await interaction.options.getMember('target');
 		const user = await interaction.options.getUser('target');
 		const choice = await interaction.options.getString('permissions');
+
+		// Cache member and guild 
+		const guildCache = await client.builds.fetch(481478007932846100);
+		const memberCache = await guildCache.members.fetch();
+
 
 		// Assign Text Shortcuts
 		const enable = '<:plus:1145196907623370802>᲼';
@@ -75,7 +80,7 @@ class FaloopCommand extends Command {
 
 			// Checks if command is being used in Coeurl (481478007932846100), and returns
 			if (interaction.guildId != '481478007932846100') {
-				await interaction.reply({ content: 'You can\'t use that command here!', ephemeral:true });
+				await interaction.reply({ content: 'You can\'t use that command here!', ephemeral: true });
 				return;
 			}
 			// Checks if target is a bot, and returns
