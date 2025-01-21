@@ -42,7 +42,7 @@ class NitroListener extends Listener {
 					{ id: '823366921453305876', name: 'orange' },
 					{ id: '823365226467950643', name: 'pink' },
 				];
-					const Nitro = '589366331074150405';
+				const Nitro = '589366331074150405';
 
 				// Testing Server Roles:
 				/* const rolesToRemove = [
@@ -52,11 +52,11 @@ class NitroListener extends Listener {
 					{ id: '1091974758259752980', name: 'orange' },
 					{ id: '1091974772738502746', name: 'pink' },
 				];
-					const Nitro = '1250572918081982464'; */
-				
+				const Nitro = '1250572918081982464'; */
+
 
 				if ((event.action === 25) && (key === '$remove') && (roleChangedId === Nitro)) {
-					console.log(`${event.target.username}'s Nitro boost has expired.`);
+					console.log(`Checknitro.js: ${event.target.username}'s Nitro boost has expired.`);
 					await removeSpecificRoles(guildId, targetId, rolesToRemove);
 				}
 				else {
