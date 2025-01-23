@@ -1,7 +1,7 @@
 require('module-alias/register');
 const { SapphireClient } = require('@sapphire/framework');
-const { maintoken } = require('../config.json');
-const { testtoken } = require('../config.json');
+// eslint-disable-next-line no-unused-vars
+const { maintoken, testtoken } = require('../config.json');
 const { GatewayIntentBits } = require('discord.js');
 
 
@@ -19,7 +19,7 @@ const client = new SapphireClient ({
 	loadMessageCommandListeners: true,
 });
 
-client.login(maintoken);
-// client.login(testtoken);
+// client.login(maintoken);
+client.login(testtoken);
 
 module.exports = client;
