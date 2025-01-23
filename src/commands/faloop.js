@@ -1,6 +1,5 @@
 const { Command, CommandOptionsRunTypeEnum } = require('@sapphire/framework');
 const { EmbedBuilder, MessageFlags } = require('discord.js');
-const { client } = require('../index.js');
 const idvariables = require('../util/idVariables.json');
 
 // Define each guild as it's own object
@@ -52,11 +51,6 @@ class FaloopCommand extends Command {
 		const member = await interaction.options.getMember('target');
 		const user = await interaction.options.getUser('target');
 		const choice = await interaction.options.getString('permissions');
-
-		// Cache member and guild
-		const guildCache = await client.builds.fetch(481478007932846100);
-		const memberCache = await guildCache.members.fetch();
-
 
 		// Assign Text Shortcuts
 		const enable = '<:plus:1145196907623370802>᲼';
@@ -144,6 +138,7 @@ class FaloopCommand extends Command {
 			await interaction.reply({
 				embeds: [replyEmbed],
 			});
+			await console.log(`Faloop.js: ${interaction.user.username} edited the roles of ${user.username}, ID ${user.id}`);
 		}
 		catch (error) {
 			console.log('Faloop.js:', error);
