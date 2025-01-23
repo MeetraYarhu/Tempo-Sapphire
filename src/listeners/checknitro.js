@@ -27,8 +27,8 @@ class NitroListener extends Listener {
 				const targetId = event.target.id;
 
 				// Define each guild as it's own object
-				// const idvars = (idvariables.coeurl);
-				const idvars = (idvariables.tempotesting);
+				const idvars = (idvariables.coeurl);
+				// const idvars = (idvariables.tempotesting);
 
 				// Coeurl GuildId = 481478007932846100
 				// Testing GuildID = 948851726591614986

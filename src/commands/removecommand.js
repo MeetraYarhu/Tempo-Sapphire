@@ -5,8 +5,8 @@ const { testtoken, maintoken } = require('@config');
 const idvariables = require('../util/idVariables.json');
 
 // Define bot information
-const botinfo = (idvariables.botinfo.tempotesting);
-// const botinfo = (idvariables.botinfo.tempobot);
+// const botinfo = (idvariables.botinfo.tempotesting);
+const botinfo = (idvariables.botinfo.tempobot);
 
 class removeCommandCommand extends Command {
 	constructor(context, options) {
