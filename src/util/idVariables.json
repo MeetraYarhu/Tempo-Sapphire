@@ -1,21 +1,45 @@
 {
 	"coeurl": {
+		"guild": {
+			"id": "481478007932846100"
+		},
 		"channels": {
 			"srankreports": "1101248423249846372",
 			"manualreports": "1101248388483272834"
 		},
 		"roles": {
 			"traincontributor": "718178539194548236",
-			"manualreportsrole": "1121306416389554266"
+			"manualreports": "1121306416389554266",
+			"trials": "828812675831562291",
+			"srankreporter": "612417945812992097",
+			"retiredreporter": "829187433182265366"
 		}
 	},
 	"tempotesting": {
+		"guild": {
+			"id": "948851726591614986"
+		},
 		"channels": {
 			"srankreports": "1101248697280495637",
-			"manualreports": "1101248716305862656"
+			"manualreports": "1101248716305862656",
+			"bot": "1064652730167209984"
 		},
 		"roles": {
-			"testrole": "1091974796532785212"
+			"testrole": "1091974796532785212",
+			"trials": "1145129528105119744",
+			"srankreporter": "1145129487370043443",
+			"retiredreporter": "1145129531531862149",
+			"manualreports": "1091974796532785212"
+		}
+	},
+	"botinfo": {
+		"tempotesting": {
+			"name": "Tempo Testing",
+			"id": "797717037614628945"
+		},
+		"tempobot": {
+			"name": "Tempo Bot",
+			"id": "790489201773772842"
 		}
 	}
 }
