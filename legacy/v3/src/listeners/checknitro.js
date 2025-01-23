@@ -1,5 +1,6 @@
 const { Listener } = require('@sapphire/framework');
-// const idvariables = require('../util/idVariables.json');
+const idvariables = require('../util/idVariables.json');
+
 // const getMemberRoles = require('../util/getMemberRoles.js');
 const removeSpecificRoles = require('../util/removeSpecificRoles.js');
 
@@ -18,16 +19,20 @@ class NitroListener extends Listener {
 		try {
 
 			if (Array.isArray(event.changes) && event.changes.length > 0) {
-				// console.log(event);
+
 				// Returns $add or $remove
 				const [{ key }] = event.changes;
 
 				// ID of user being changed
 				const targetId = event.target.id;
 
+				// Define each guild as it's own object
+				// const idvars = (idvariables.coeurl);
+				const idvars = (idvariables.tempotesting);
+
 				// Coeurl GuildId = 481478007932846100
 				// Testing GuildID = 948851726591614986
-				const guildId = '481478007932846100';
+				const guildId = idvars.guild.id;
 
 				//  Returns members' roles by id and name
 				// const roles = await getMemberRoles(guildId, targetId);
