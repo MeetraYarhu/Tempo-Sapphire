@@ -19,7 +19,7 @@ const client = new SapphireClient ({
 	loadMessageCommandListeners: true,
 });
 
-// client.login(maintoken);
-client.login(testtoken);
+client.login(maintoken);
+// client.login(testtoken);
 
 module.exports = client;

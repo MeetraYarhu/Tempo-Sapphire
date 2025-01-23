@@ -33,7 +33,7 @@ class ReportsListener extends Listener {
 				// Resolve the channel IDs to a variable
 				const manualReports = await message.guild.channels.cache.get(idvars.channels.manualreports);
 				const sRankReports = await message.guild.channels.cache.get(idvars.channels.srankreports);
-				const mentionRole = idvars.roles.manualreport;
+				const mentionRole = idvars.roles.manualreports;
 
 				// Create relay embed
 				const relayEmbed = await new EmbedBuilder()
