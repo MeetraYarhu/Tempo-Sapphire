@@ -1,6 +1,12 @@
 const { Command, CommandOptionsRunTypeEnum } = require('@sapphire/framework');
 const { REST, Routes } = require('discord.js');
-const { testtoken } = require('@config');
+// eslint-disable-next-line no-unused-vars
+const { testtoken, maintoken } = require('@config');
+const idvariables = require('../util/idVariables.json');
+
+// Define bot information
+const botinfo = (idvariables.botinfo.tempotesting);
+// const botinfo = (idvariables.botinfo.tempobot);
 
 class removeCommandCommand extends Command {
 	constructor(context, options) {
@@ -31,8 +37,7 @@ class removeCommandCommand extends Command {
 
 		const rest = new REST().setToken(testtoken);
 
-		// tempo id 797717037614628945
-		const clientId = '797717037614628945';
+		const clientId = botinfo.id;
 
 		try {
 			const globalcommand = await rest.get(Routes.applicationCommand(clientId, choice));
@@ -42,7 +47,7 @@ class removeCommandCommand extends Command {
 				.catch(console.error);
 		}
 		catch (error) {
-			console.error('Error fetching command:', error);
+			console.error('Removecommand.js: Error fetching command:', error);
 		}
 		await interaction.reply('done');
 	}
