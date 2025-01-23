@@ -2,6 +2,10 @@ const { Listener, CommandOptionsRunTypeEnum } = require('@sapphire/framework');
 const { EmbedBuilder } = require('discord.js');
 const idvariables = require('../util/idVariables.json');
 
+// Define each guild as it's own object
+const idvars = (idvariables.coeurl);
+// const idvars = (idvariables.tempotesting);
+
 class ReportsListener extends Listener {
 	constructor(context, options) {
 		super(context, {
@@ -15,13 +19,8 @@ class ReportsListener extends Listener {
 
 	async run(message) {
 
-		// Define each guild as it's own object
-		// eslint-disable-next-line no-unused-vars
-		const coeurl = (idvariables.coeurl);
-		// const tempotesting = (idvariables.tempotesting);
-
 		// Check that a report was sent in the proper channel, by a non-bot
-		if ((message.channelId === coeurl.channels.srankreports) && (message.author.bot === false)) {
+		if ((message.channelId === idvars.channels.srankreports) && (message.author.bot === false)) {
 
 			try {
 
@@ -32,9 +31,9 @@ class ReportsListener extends Listener {
 					return;
 				}
 				// Resolve the channel IDs to a variable
-				const manualReports = await message.guild.channels.cache.get(coeurl.channels.manualreports);
-				const sRankReports = await message.guild.channels.cache.get(coeurl.channels.srankreports);
-				const mentionRole = coeurl.roles.testrole;
+				const manualReports = await message.guild.channels.cache.get(idvars.channels.manualreports);
+				const sRankReports = await message.guild.channels.cache.get(idvars.channels.srankreports);
+				const mentionRole = idvars.roles.manualreport;
 
 				// Create relay embed
 				const relayEmbed = await new EmbedBuilder()
