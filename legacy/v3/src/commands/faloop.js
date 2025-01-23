@@ -3,8 +3,8 @@ const { EmbedBuilder, MessageFlags } = require('discord.js');
 const idvariables = require('../util/idVariables.json');
 
 // Define each guild as it's own object
-// const idvars = (idvariables.coeurl);
-const idvars = (idvariables.tempotesting);
+const idvars = (idvariables.coeurl);
+// const idvars = (idvariables.tempotesting);
 
 class FaloopCommand extends Command {
 	constructor(context, options) {
