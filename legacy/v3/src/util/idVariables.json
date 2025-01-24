@@ -10,9 +10,15 @@
 		"roles": {
 			"traincontributor": "718178539194548236",
 			"manualreports": "1121306416389554266",
-			"trials": "828812675831562291",
+			"trialsreporter": "828812675831562291",
 			"srankreporter": "612417945812992097",
-			"retiredreporter": "829187433182265366"
+			"retiredreporter": "829187433182265366",
+			"nitro": "589366331074150405",
+			"nitropurple": "823367370780966983",
+			"nitrowhite": "823368359725760552",
+			"nitrogreen": "823368119812096021",
+			"nitroorange": "823366921453305876",
+			"nitropink": "823365226467950643"
 		}
 	},
 	"tempotesting": {
@@ -26,10 +32,16 @@
 		},
 		"roles": {
 			"testrole": "1091974796532785212",
-			"trials": "1145129528105119744",
+			"trialsreporter": "1145129528105119744",
 			"srankreporter": "1145129487370043443",
 			"retiredreporter": "1145129531531862149",
-			"manualreports": "1091974796532785212"
+			"manualreports": "1091974796532785212",
+			"nitro": "1250572918081982464",
+			"nitropurple": "1091974696540569641",
+			"nitrowhite": "1091974727721029673",
+			"nitrogreen": "1091974745689428019",
+			"nitroorange": "1091974758259752980",
+			"nitropink": "1091974772738502746"
 		}
 	},
 	"botinfo": {
