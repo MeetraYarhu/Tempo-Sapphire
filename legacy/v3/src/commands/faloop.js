@@ -4,8 +4,8 @@ const removeSpecificRoles = require('@util/removeSpecificRoles.js');
 const idvariables = require('../util/idVariables.json');
 
 // Define each guild as it's own object
-// const idvars = (idvariables.coeurl);
-const idvars = (idvariables.tempotesting);
+const idvars = (idvariables.coeurl);
+// const idvars = (idvariables.tempotesting);
 
 class FaloopCommand extends Command {
 	constructor(context, options) {
@@ -52,7 +52,6 @@ class FaloopCommand extends Command {
 		const member = await interaction.options.getMember('target');
 		const user = await interaction.options.getUser('target');
 		const choice = await interaction.options.getString('permissions');
-		console.log(`Choice: ${choice}`);
 
 		// Assign Text Shortcuts
 		const enable = '<:plus:1145196907623370802>᲼';
