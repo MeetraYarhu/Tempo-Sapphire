@@ -1,10 +1,11 @@
 const { Command, CommandOptionsRunTypeEnum } = require('@sapphire/framework');
 const { EmbedBuilder, MessageFlags } = require('discord.js');
+const removeSpecificRoles = require('@util/removeSpecificRoles.js');
 const idvariables = require('../util/idVariables.json');
 
 // Define each guild as it's own object
-const idvars = (idvariables.coeurl);
-// const idvars = (idvariables.tempotesting);
+// const idvars = (idvariables.coeurl);
+const idvars = (idvariables.tempotesting);
 
 class FaloopCommand extends Command {
 	constructor(context, options) {
@@ -28,7 +29,7 @@ class FaloopCommand extends Command {
 						.setRequired(true)
 						.setDescription('Type of Permissions')
 						.addChoices(
-							{ name: 'Trials', value: idvars.roles.trials },
+							{ name: 'Trials', value: idvars.roles.trialsreporter },
 							{ name: 'Full', value: idvars.roles.srankreporter },
 							{ name: 'Retired', value: idvars.roles.retiredreporter },
 						))
@@ -43,7 +44,7 @@ class FaloopCommand extends Command {
 	async chatInputRun(interaction) {
 
 		// Assign RoleID Variables
-		const roleTrials = idvars.roles.trials;
+		const roleTrials = idvars.roles.trialsreporter;
 		const roleReporter = idvars.roles.srankreporter;
 		const roleRetired = idvars.roles.retiredreporter;
 
@@ -51,6 +52,7 @@ class FaloopCommand extends Command {
 		const member = await interaction.options.getMember('target');
 		const user = await interaction.options.getUser('target');
 		const choice = await interaction.options.getString('permissions');
+		console.log(`Choice: ${choice}`);
 
 		// Assign Text Shortcuts
 		const enable = '<:plus:1145196907623370802>᲼';
@@ -91,20 +93,33 @@ class FaloopCommand extends Command {
 				await interaction.reply({ content: 'Error, cannot add retired role to a user in trials.', flags: MessageFlags.Ephemeral });
 				return;
 			}
+
+			// Automatically generate rolesToRemove using the labels and IDs
+			const rolesToRemove = Object.keys(idvars.roles)
+
+			// Filter keys for only reporting roles
+				.filter((keyrole) => keyrole.includes('reporter'))
+				.map((keyrole) => ({
+					id: idvars.roles[keyrole],
+					name: keyrole.replace('reporter', ''),
+				}));
+			// await console.log(rolesToRemove);
+
 			// Removes any role that is not being added
-			const _roleList = [roleTrials, roleReporter, roleRetired];
-			_roleList.forEach(element => {
-				if (choice != element) {
-					if (member.roles.cache.some(role => role.id === element)) {
-						member.roles.remove(element);
+			rolesToRemove.forEach((roleobject) => {
+				if (choice != roleobject.id) {
+					// console.log(JSON.stringify(roleobject));
+					if (member.roles.cache.some(role => role.id === roleobject.id)) {
+						removeSpecificRoles(idvars.guild.id, user.id, [roleobject]);
 						replyEmbed
 							.addFields({
 								name: ' ',
-								value: `${disable}<@&${element}>`,
+								value: `${disable}<@&${roleobject.id}>`,
 							});
 					}
 				}
 			});
+
 			// Adds role to user
 			switch (choice) {
 			case roleTrials:
