@@ -1,0 +1,27 @@
+{
+  "name": "tempo-sapphire",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "license": "ISC",
+  "dependencies": {
+    "@sapphire/framework": "^4.8.5",
+    "@sapphire/plugin-api": "^8.0.0",
+    "discord-api-types": "^0.37.117",
+    "discord.js": "^14.17.3",
+    "module-alias": "^2.2.3",
+    "node": "^21.2.0",
+    "undici": "^7.2.3"
+  },
+  "devDependencies": {
+    "eslint": "^8.32.0"
+  },
+  "_moduleAliases": {
+    "@root": ".",
+    "@util": "./src/util/",
+    "@config": "./config.json"
+  },
+  "scripts": {
+    "start": "nodemon src/index.js"
+  },
+  "debug.javascript.codelens.npmScripts": "never"
+}
