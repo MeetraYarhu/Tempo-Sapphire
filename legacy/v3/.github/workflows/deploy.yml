@@ -12,12 +12,17 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up SSH
+      - name: Set up SSH key
         run: |
           mkdir -p ~/.ssh
+          echo "${{ secrets.DROPLET_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H 147.182.224.36 >> ~/.ssh/known_hosts
-          chmod 700 ~/.ssh
-          chmod 644 ~/.ssh/known_hosts
+
+      - name: Add SSH key to agent
+        run: |
+          eval $(ssh-agent -s)
+          ssh-add ~/.ssh/id_rsa
 
       - name: Deploy to Droplet
         run: |
