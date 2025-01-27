@@ -19,14 +19,9 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H 147.182.224.36 >> ~/.ssh/known_hosts
 
-      - name: Add SSH key to agent
-        run: |
-          eval $(ssh-agent -s)
-          ssh-add ~/.ssh/id_rsa
-
       - name: Deploy to Droplet
         run: |
-          ssh root@147.182.224.36 "
+          ssh -v -i ~/.ssh/id_rsa root@147.182.224.36 "
           cd ./bot/Tempo-Sapphire &&
           git pull origin main &&
           npm install &&
