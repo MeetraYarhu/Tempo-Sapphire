@@ -18,7 +18,10 @@ class NitroListener extends Listener {
 
 		try {
 
-			if (Array.isArray(event.changes) && event.changes.length > 0) {
+			if (Array.isArray(event.changes) &&
+			event.changes.length > 0 &&
+			Array.isArray(event.changes[0].new) &&
+			event.changes[0].new.length > 0) {
 
 				// Returns $add or $remove
 				const [{ key }] = event.changes;
@@ -35,8 +38,13 @@ class NitroListener extends Listener {
 				//  Returns members' roles by id and name
 				// const roles = await getMemberRoles(guildId, targetId);
 
-				// Returns name and id of the role added/removed
-				const [{ id: roleChangedId }] = event.changes[0].new;
+				// Returns id of the role added/removed
+				const { changes: [
+					{
+						new: [{ id: roleChangedId }],
+					},
+				],
+				} = event;
 
 				// Automatically generate rolesToRemove using the labels and IDs
 				const rolesToRemove = Object.keys(idvars.roles)
@@ -59,7 +67,10 @@ class NitroListener extends Listener {
 				}
 			}
 			else {
-				// do nothing
+				console.warn('checknitro.js: Unexpected event structure:', {
+					changes: event.changes,
+					changesType: typeof event.changes,
+				});
 			}
 
 
