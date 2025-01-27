@@ -12,17 +12,18 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Instal SSH Key
+      - name: Set up SSH
         run: |
-          echo "${{ secrets.DROPLET_SSH_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H -147.182.224.36 >> ~/.ssh/known_hosts
+          mkdir -p ~/.ssh
+          ssh-keyscan -H 147.182.224.36 >> ~/.ssh/known_hosts
+          chmod 700 ~/.ssh
+          chmod 644 ~/.ssh/known_hosts
 
       - name: Deploy to Droplet
         run: |
           ssh root@147.182.224.36 "
-          cd /bot/Tempo-Sapphire &&
+          cd ./bot/Tempo-Sapphire &&
           git pull origin main &&
           npm install &&
-          nodemon index.js
+          npm start
           "
