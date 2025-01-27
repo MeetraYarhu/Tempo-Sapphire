@@ -38,6 +38,7 @@ jobs:
     - name: Install dependencies
       run: |
         ssh root@147.182.224.36 "
+          source ~/.bashrc &&
           cd ./bot/Tempo-Sapphire &&
           npm install
         "
