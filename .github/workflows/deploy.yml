@@ -33,20 +33,3 @@ jobs:
           cd ./bot/Tempo-Sapphire && 
           git pull origin main
         "
-
-    # Install dependencies (make sure npm is in PATH now)
-    - name: Install dependencies
-      run: |
-        ssh root@147.182.224.36 "
-          source ~/.bashrc &&
-          cd ./bot/Tempo-Sapphire &&
-          /root/.nvm/versions/node/v22.13.1/bin/npm install
-        "
-
-    # Start the app
-    - name: Start the app
-      run: |
-        ssh root@147.182.224.36 "
-          cd ./bot/Tempo-Sapphire &&
-          npm start
-        "
