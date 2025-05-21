@@ -1,0 +1,27 @@
+const { Command, CommandOptionsRunTypeEnum } = require('@sapphire/framework');
+const { AttachmentBuilder } = require('discord.js');
+
+class KkibaCommand extends Command {
+	constructor(context, options) {
+		super(context, {
+			...options,
+			name: 'kkiba',
+			description: 'kkiba is scottish',
+			runIn: CommandOptionsRunTypeEnum.GuildAny,
+		});
+	}
+
+	messageRun(message) {
+		const attachment = new AttachmentBuilder('scottish.mp3', { name: 'scottish.mp3' });
+
+		message.channel.send({
+			content: '🏴󠁧󠁢󠁳󠁣󠁴󠁿',
+			files: [attachment],
+		});
+
+	}
+}
+
+module.exports = {
+	KkibaCommand,
+};
