@@ -67,10 +67,12 @@ class NitroListener extends Listener {
 				}
 			}
 			else {
-				console.warn('checknitro.js: Unexpected event structure:', {
+				/* console.warn('checknitro.js: Unexpected event structure:', {
 					changes: event.changes,
 					changesType: typeof event.changes,
-				});
+				}); */
+
+				// do nothing
 			}
 
 
