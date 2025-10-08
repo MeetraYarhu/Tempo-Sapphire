@@ -43,19 +43,23 @@ Developed and maintained independently, Tempo-Bot handles automation tasks such 
 
 ```
 ┌──────────────────────────────┐
-│         Discord API          │
+│          Discord API         │
 └──────────────┬───────────────┘
                │
-       [Discord.js Layer]
+        [ Discord.js Layer ]
                │
-┌──────────────┴───────────────┐
-│   Event Handlers   │  Commands  │
-│  (messages, roles) │ (slash, text) │
-└──────────────┬───────────────┘
+┌────────────────┴────────────────┐
+│        Event Handlers           │
+│       (messages, roles)         │
+├────────────────┬────────────────┤
+│        Commands                 │
+│        (slash, text)            │
+└────────────────┴────────────────┘
                │
-        [JSON Config + ENV]
+       [ JSON Config + ENV ]
                │
-        [Logging / Webhooks]
+       [ Logging / Webhooks ]
+
 ```
 
 ## 🧾 License
