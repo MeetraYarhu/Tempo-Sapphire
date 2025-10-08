@@ -39,21 +39,8 @@ Developed and maintained independently, Tempo-Bot handles automation tasks such 
 
 ---
 
-## 🧱 Architecture Overview
-
-```
-[ Discord API ]
-       │
-[ Discord.js Layer ]
-       │
-[ Event Handlers (messages, roles) ]
-[ Commands (slash, text) ]
-       │
-[ JSON Config + ENV ]
-       │
-[ Logging / Webhooks ]
-
-```
+### 🧱 Architecture Overview
+![Architecture Overview](./docs/tempo-bot-architecture.svg)
 
 ## 🧾 License
 

@@ -144,7 +144,6 @@ audio/# media not tracked
 *.jpeg
 *.gif
 *.webp
-*.svg
 *.mp3
 *.wav
 *.m4a
