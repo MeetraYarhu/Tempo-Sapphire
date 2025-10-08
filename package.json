@@ -23,7 +23,7 @@
     "@config": "./config.json"
   },
   "scripts": {
-    "start": "nodemon src/index.js"
+    "start": "nodemon --verbose src/index.js"
   },
   "debug.javascript.codelens.npmScripts": "never"
 }
