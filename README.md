@@ -51,4 +51,4 @@ This project is licensed under the MIT License.
 
 ## Related Projects
 - [Community-Operations-Systems-Admin](https://github.com/MeetraYarhu/community-operations-systems-admin) — documentation and governance system  
-- [Coeurl Documentation Library](https://github.com/MeetraYarhu/community-operations-systems-admin/tree/main/03_Documentation_Library)
+- [Coeurl Documentation Library](https://github.com/MeetraYarhu/community-operations-systems-admin/tree/main/docs/03_Documentation_Library)
