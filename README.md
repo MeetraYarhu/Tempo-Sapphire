@@ -18,11 +18,11 @@ Developed and maintained independently, Tempo-Bot handles automation tasks such 
 
 | Layer | Technologies |
 |-------|---------------|
-| **Language** | JavaScript (ES Modules) |
+| **Language** | Node.js |
 | **Core Frameworks** | Discord.js v14, Node.js 20 |
 | **Runtime Environment** | Native Linux host (systemd/PM2 process management) |
-| **Configuration** | JSON configuration files, `.env` secrets |
-| **Monitoring** | Structured logging via console output and Discord webhooks |
+| **Configuration** | JSON configuration files |
+| **Monitoring** | Structured logging via console output and Discord embeds |
 | **Version Control** | Git + GitHub |
 
 ---
@@ -45,10 +45,10 @@ Developed and maintained independently, Tempo-Bot handles automation tasks such 
 ## License
 
 This project is licensed under the MIT License.  
-© 2021-2025 Meetra Yarhu · Community Operations Systems Admin
+© 2021-2025 Meetra Yarhu - Community Operations Systems Admin
 
 ---
 
 ## Related Projects
 - [Community-Operations-Systems-Admin](https://github.com/MeetraYarhu/community-operations-systems-admin) — documentation and governance system  
-- [Coeurl Documentation Library](https://github.com/MeetraYarhu/community-operations-systems-admin/tree/main/03_Documentation)
+- [Coeurl Documentation Library](https://github.com/MeetraYarhu/community-operations-systems-admin/tree/main/03_Documentation_Library)
