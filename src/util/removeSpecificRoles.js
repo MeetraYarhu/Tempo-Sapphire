@@ -1,4 +1,5 @@
 const client = require('@root/src/index.js');
+const MODULE = require('path').basename(__filename);
 const getCallerModule = require('@util/getCallerModule.js');
 
 async function removeSpecificRoles(guildId, memberId, rolesToRemove) {
@@ -13,7 +14,7 @@ async function removeSpecificRoles(guildId, memberId, rolesToRemove) {
 
 		for (const roleId of rolesToRemove) {
 			if (typeof roleId !== 'string' || !roleId) {
-				console.log(`${callerModule}: Invalid role ID - ${roleId}`);
+				console.log(`[${MODULE} -> ${callerModule}] Invalid role ID - ${roleId}`);
 				continue;
 			}
 
@@ -21,22 +22,22 @@ async function removeSpecificRoles(guildId, memberId, rolesToRemove) {
 			await guild.roles.fetch(roleId).catch(() => null);
 
 			if (!role) {
-				console.log(`${callerModule}: Role not found - ID: ${roleId}`);
+				console.log(`[${MODULE} -> ${callerModule}]: Role not found - ID: ${roleId}`);
 				continue;
 			}
 
 			const roleName = role.name;
 
 			if (!member.roles.cache.has(roleId)) {
-				console.log(`${callerModule}: Member does not have role - ${roleName} (ID: ${roleId})`);
+				console.log(`[${MODULE} -> ${callerModule}]: Member does not have role - ${roleName} (ID: ${roleId})`);
 				continue;
 			}
 
 			await member.roles.remove(roleId);
-			console.log(`${callerModule}: Removed role ${roleName} (ID: ${roleId}) from member ${memberName} (ID: ${memberId})`);
+			console.log(`[${MODULE} -> ${callerModule}]: Removed role ${roleName} (ID: ${roleId}) from member ${memberName} (ID: ${memberId})`);
 		}
 	}	catch (error) {
-		console.error(`${callerModule}: Error managing member roles:`, error);
+		console.error(`[${MODULE} -> ${callerModule}]: Error managing member roles:`, error);
 	}
 }
 

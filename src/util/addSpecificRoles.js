@@ -26,13 +26,13 @@ async function addSpecificRoles(guildId, memberId, rolesToAdd) {
 
 		if (!role) {
 			results.failed.push({ roleId, roleName, reason: 'Role not found' }); 
-			console.log(`${callerModule}: Role not found - ID: ${roleId}`);
+			console.log(`[${MODULE} -> ${callerModule}] Role not found - ID: ${roleId}`);
 			continue;
 		}
 
 		if (member.roles.cache.has(roleId)) {
 			results.alreadyHad.push({ roleId, roleName });
-			console.log(`${callerModule}: Member already has role - ${roleName} (ID: ${roleId})`);
+			console.log(`[${MODULE} -> ${callerModule}]: Member already has role - ${roleName} (ID: ${roleId})`);
 			continue;
 		}
 
@@ -43,7 +43,7 @@ async function addSpecificRoles(guildId, memberId, rolesToAdd) {
 	if (toAdd.length) {
 		await member.roles.add(toAdd);
 		for (const r of results.added) {
-			console.log(`${callerModule}: Added role ${r.roleName} (ID: ${r.roleId}) to member ${member.user.tag} (ID: ${memberId})`);
+			console.log(`[${MODULE} -> ${callerModule}]: Added role ${r.roleName} (ID: ${r.roleId}) to member ${member.user.tag} (ID: ${memberId})`);
 		}
 	}
 return results;
