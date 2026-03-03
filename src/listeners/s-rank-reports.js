@@ -51,6 +51,7 @@ class ReportsListener extends Listener {
 					embeds: [relayEmbed],
 					allowedMentions: {
 						roles: [mentionRole],
+						users: [message.author.id],
 					},
 				});
 
