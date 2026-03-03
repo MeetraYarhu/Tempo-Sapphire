@@ -40,5 +40,6 @@ async function removeSpecificRoles(guildId, memberId, rolesToRemove) {
 		console.error(`[${MODULE} -> ${callerModule}]: Error managing member roles:`, error);
 	}
 }
-
+// example usage: 
+// await removeSpecificRoles(guildId, userId, [roleId1, roleId2]);
 module.exports = removeSpecificRoles;
