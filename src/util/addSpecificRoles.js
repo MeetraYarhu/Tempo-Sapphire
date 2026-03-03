@@ -1,40 +1,54 @@
 const client = require('@root/src/index.js');
-// const { cacheGuildAndMember } = require('./cacheUtils.js');
+const getCallerModule = require('@util/getCallerModule.js');
 
 async function addSpecificRoles(guildId, memberId, rolesToAdd) {
-	if (!Array.isArray(rolesToAdd)) {
-		throw new Error('rolesToAdd must be an array');
-	}
+	const callerModule = getCallerModule()
 
-	try {
-		const guild = await client.guilds.fetch(guildId);
-		if (!guild) {
-			throw new Error('Guild not found');
+	if (!Array.isArray(rolesToAdd)) throw new Error('rolesToAdd must be an array');
+
+	const results = { added: [], alreadyHad: [], failed: [] };
+
+	const guild = await client.guilds.fetch(guildId);
+	const member = await guild.members.fetch(memberId);
+
+	const toAdd = [];
+
+	for (const roleId of rolesToAdd) {
+		if (typeof roleId !== 'string' || !roleId) {
+			results.failed.push({ roleId, reason: 'Invalid role ID' });
+			continue;
 		}
 
-		const member = await guild.members.fetch(memberId);
-		if (!member) {
-			throw new Error('Member not found');
+		const role = guild.roles.cache.get(roleId) ??
+		await guild.roles.fetch(roleId).catch(() => null); 
+
+		const roleName = role?.name ?? 'Unknown Role';
+
+		if (!role) {
+			results.failed.push({ roleId, roleName, reason: 'Role not found' }); 
+			console.log(`${callerModule}: Role not found - ID: ${roleId}`);
+			continue;
 		}
 
-		const memberName = member.user.tag;
+		if (member.roles.cache.has(roleId)) {
+			results.alreadyHad.push({ roleId, roleName });
+			console.log(`${callerModule}: Member already has role - ${roleName} (ID: ${roleId})`);
+			continue;
+		}
 
-		for (const role of rolesToAdd) {
-			const roleId = role.id;
-			const roleName = role.name;
+		toAdd.push(roleId);
+		results.added.push({ roleId, roleName });
+	}
 
-			if (!member.roles.cache.has(roleId)) {
-				await member.roles.add(roleId);
-				console.log(`Added role ${roleName} (ID: ${roleId}) from member ${memberName} (ID: ${memberId})`);
-			}
-			else {
-				console.log(`Member ${memberName} (ID: ${memberId}) already has role ${roleName} (ID: ${roleId})`);
-			}
+	if (toAdd.length) {
+		await member.roles.add(toAdd);
+		for (const r of results.added) {
+			console.log(`${callerModule}: Added role ${r.roleName} (ID: ${r.roleId}) to member ${member.user.tag} (ID: ${memberId})`);
 		}
 	}
-	catch (error) {
-		console.error('Error managing member roles:', error);
-	}
+return results;
+
 }
-
+// example usage: 
+// await addSpecificRoles(guildId, userId, [roleId1, roleId2]);
 module.exports = addSpecificRoles;
