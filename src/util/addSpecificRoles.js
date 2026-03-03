@@ -1,4 +1,5 @@
 const client = require('@root/src/index.js');
+const MODULE = require('path').basename(__filename);
 const getCallerModule = require('@util/getCallerModule.js');
 
 async function addSpecificRoles(guildId, memberId, rolesToAdd) {
