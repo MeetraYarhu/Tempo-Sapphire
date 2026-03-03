@@ -1,11 +1,13 @@
 const { Command, CommandOptionsRunTypeEnum } = require('@sapphire/framework');
 const { EmbedBuilder, MessageFlags } = require('discord.js');
 const removeSpecificRoles = require('@util/removeSpecificRoles.js');
+const MODULE = require('path').basename(__filename);
+const addSpecificRoles = require('@util/addSpecificRoles')
 const idvariables = require('../util/idVariables.json');
 
 // Define each guild as it's own object
-const idvars = (idvariables.coeurl);
-// const idvars = (idvariables.tempotesting);
+// const idvars = (idvariables.coeurl);
+const idvars = (idvariables.tempotesting);
 
 class FaloopCommand extends Command {
 	constructor(context, options) {
@@ -94,35 +96,28 @@ class FaloopCommand extends Command {
 			}
 
 			// Automatically generate rolesToRemove using the labels and IDs
-			const rolesToRemove = Object.keys(idvars.roles)
-
-			// Filter keys for only reporting roles
-				.filter((keyrole) => keyrole.includes('reporter'))
-				.map((keyrole) => ({
-					id: idvars.roles[keyrole],
-					name: keyrole.replace('reporter', ''),
-				}));
-			// await console.log(rolesToRemove);
+			const rolesToRemove = Object.entries(idvars.roles)
+				.filter(([key]) => key.includes('reporter'))
+				.map(([, id]) => id);
 
 			// Removes any role that is not being added
-			rolesToRemove.forEach((roleobject) => {
-				if (choice != roleobject.id) {
-					// console.log(JSON.stringify(roleobject));
-					if (member.roles.cache.some(role => role.id === roleobject.id)) {
-						removeSpecificRoles(idvars.guild.id, user.id, [roleobject]);
+			rolesToRemove.forEach((roleId) => {
+				if (choice != roleId) {
+					if (member.roles.cache.has(roleId)) {
+						removeSpecificRoles(idvars.guild.id, user.id, [roleId]);
 						replyEmbed
 							.addFields({
 								name: ' ',
-								value: `${disable}<@&${roleobject.id}>`,
-							});
-					}
+								value: `${disable}<@&${roleId}>`,
+							});}
+						
 				}
 			});
 
 			// Adds role to user
 			switch (choice) {
 			case roleTrials:
-				member.roles.add(roleTrials);
+				await addSpecificRoles(interaction.guild.id, user.id, [roleTrials]);
 				replyEmbed
 					.addFields({
 						name: ' ',
@@ -130,16 +125,18 @@ class FaloopCommand extends Command {
 					});
 				break;
 			case roleReporter:
-				member.roles.add(roleReporter);
+				await addSpecificRoles(interaction.guild.id, user.id, [roleReporter]);
 				replyEmbed
+					.setColor('Green')
 					.addFields({
 						name: ' ',
 						value: `${enable}<@&${roleReporter}>`,
 					});
 				break;
 			case roleRetired:
-				member.roles.add(roleRetired);
+				await addSpecificRoles(interaction.guild.id, user.id, [roleRetired]);
 				replyEmbed
+					.setColor('Orange')
 					.addFields({
 						name: ' ',
 						value: `${enable}<@&${roleRetired}>`,
@@ -152,10 +149,10 @@ class FaloopCommand extends Command {
 			await interaction.reply({
 				embeds: [replyEmbed],
 			});
-			await console.log(`Faloop.js: ${interaction.user.username} edited the roles of ${user.username}, ID ${user.id}`);
+			await console.log(`${MODULE}: ${interaction.user.username} edited the roles of ${user.username}, ID ${user.id}`);
 		}
 		catch (error) {
-			console.log('Faloop.js:', error);
+			console.log(`${MODULE}:`, error);
 			interaction.reply('Failed');
 		}
 	}
