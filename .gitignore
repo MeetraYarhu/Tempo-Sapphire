@@ -130,6 +130,7 @@ dist
 .pnp.*
 
 config.json
+errorlog.js
 .eslintrc.json
 .gitignore
 .vscode/
