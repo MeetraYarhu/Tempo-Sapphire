@@ -2,7 +2,7 @@
 
 > A modular Discord automation system for large-scale community management  
 > **Project:** Tempo-Bot Community Operations | **Role:** Developer & Systems Administrator  
-> **Duration:** 2021 – Present | **Last Updated:** October 2025  
+> **Duration:** 2021 – Present 
 
 ---
 
