@@ -1,9 +1,10 @@
 const { Command, CommandOptionsRunTypeEnum } = require('@sapphire/framework');
 const { EmbedBuilder, MessageFlags } = require('discord.js');
 const removeSpecificRoles = require('@util/removeSpecificRoles.js');
-const MODULE = require('path').basename(__filename);
 const addSpecificRoles = require('@util/addSpecificRoles')
 const idvariables = require('../util/idVariables.json');
+const { getLogger } = require('@util/logger.js');
+	const log = getLogger(__filename);
 
 // Define each guild as it's own object
 // const idvars = (idvariables.coeurl);
@@ -55,6 +56,16 @@ class FaloopCommand extends Command {
 		const user = await interaction.options.getUser('target');
 		const choice = await interaction.options.getString('permissions');
 
+		log.info({ 
+			interactionId: interaction.id,
+			invokedByUsername: interaction.user.username,
+			invokedById: interaction.user.id,
+			targetUsername: user.username,
+			targetId: user.id,
+			choice
+		 }, 
+			'Command initiated');
+
 		// Assign Text Shortcuts
 		const enable = '<:plus:1145196907623370802>᲼';
 		// '🔴᲼᲼➡️᲼᲼🟢᲼᲼';
@@ -77,21 +88,35 @@ class FaloopCommand extends Command {
 			// Checks if command is being used in correct guild, and returns
 			if (interaction.guildId != idvars.guild.id) {
 				await interaction.reply({ content: 'You can\'t use that command here!', flags: MessageFlags.Ephemeral });
+				log.warn({ 
+					interactionId: interaction.id,
+					guildId: interaction.guildId 
+				}, 
+					'Command attempted in wrong server');
 				return;
 			}
 			// Checks if target is a bot, and returns
 			if (user.bot === true) {
 				await interaction.reply({ content: `<@${user.id}> is a bot!`, flags: MessageFlags.Ephemeral });
+				log.warn({ 
+					interactionId: interaction.id,
+				}, 'Command attempted on a bot');
 				return;
 			}
 			// Checks if user already has retired role when trying to assign it, and returns
 			if ((choice === roleRetired) && (member.roles.cache.some(role => role.id === roleRetired))) {
 				await interaction.reply({ content: `That user already has the <@&${roleRetired}> role.`, flags: MessageFlags.Ephemeral });
+				log.warn({ 
+					interactionId: interaction.id,
+				}, 'Command attempted to assign retired role to a user that already has it');
 				return;
 			}
 			// Checks if user has the trials role when adding retired, and returns
 			if ((choice === roleRetired) && (member.roles.cache.some(role => role.id === roleTrials))) {
-				await interaction.reply({ content: 'Error, cannot add retired role to a user in trials.', flags: MessageFlags.Ephemeral });
+				await interaction.reply({ content: 'Cannot add retired role to a user in trials.', flags: MessageFlags.Ephemeral });
+				log.warn({ 
+					interactionId: interaction.id,
+				}, 'Command attempted to assign retired role to a user that is in trials');
 				return;
 			}
 
@@ -101,18 +126,17 @@ class FaloopCommand extends Command {
 				.map(([, id]) => id);
 
 			// Removes any role that is not being added
-			rolesToRemove.forEach((roleId) => {
-				if (choice != roleId) {
-					if (member.roles.cache.has(roleId)) {
-						removeSpecificRoles(idvars.guild.id, user.id, [roleId]);
-						replyEmbed
-							.addFields({
-								name: ' ',
-								value: `${disable}<@&${roleId}>`,
-							});}
-						
-				}
-			});
+			for (const roleId of rolesToRemove) {
+				if (choice === roleId) continue; // Skip the role that is being added
+				if (!member.roles.cache.has(roleId)) continue;
+
+				await removeSpecificRoles(idvars.guild.id, user.id, [roleId]);
+				replyEmbed
+					.addFields({
+						name: ' ',
+						value: `${disable}<@&${roleId}>`,
+					});
+			};
 
 			// Adds role to user
 			switch (choice) {
@@ -149,11 +173,10 @@ class FaloopCommand extends Command {
 			await interaction.reply({
 				embeds: [replyEmbed],
 			});
-			await console.log(`${MODULE}: ${interaction.user.username} edited the roles of ${user.username}, ID ${user.id}`);
 		}
 		catch (error) {
-			console.log(`${MODULE}:`, error);
-			interaction.reply('Failed');
+			log.error({ error }, 'Error executing command');
+			await interaction.reply('Failed - if problem persists make note of your attempts and tell Meetra');
 		}
 	}
 }
