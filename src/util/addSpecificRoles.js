@@ -12,14 +12,20 @@ async function addSpecificRoles(guildId, memberId, rolesToAdd) {
 	const guild = await client.guilds.fetch(guildId);
 	const member = await guild.members.fetch(memberId);
 
-	log.debug({ memberId, rolesToAdd }, 'addSpecificRoles started');
+	log.debug({
+		targetUsername: member.user.username, 
+		targetId: memberId, 
+		roleId 
+	}, 'addSpecificRoles started');
 
 	const toAdd = [];
 
 	for (const roleId of rolesToAdd) {
 		if (typeof roleId !== 'string' || !roleId) {
 			results.failed.push({ roleId, reason: 'Invalid role ID' });
-			log.warn({ roleId }, 'Invalid role ID');
+			log.warn({ 
+				roleId 
+			}, 'Invalid role ID');
 			continue;
 		}
 
@@ -30,24 +36,34 @@ async function addSpecificRoles(guildId, memberId, rolesToAdd) {
 
 		if (!role) {
 			results.failed.push({ roleId, roleName, reason: 'Role not found' }); 
-			log.warn({ roleId, roleName }, 'Role not found');
+			log.warn({ 
+				roleId, 
+				roleName 
+			}, 'Role not found');
 			continue;
 		}
 
 		if (member.roles.cache.has(roleId)) {
 			results.alreadyHad.push({ roleId, roleName });
-			log.debug({ roleId, roleName }, 'Member already has role');
+			log.debug({ 
+				roleName, 
+				roleId 
+			}, 'Member already has role');
 			continue;
 		}
 
+		// might want to delete this part
 		toAdd.push(roleId);
 		results.added.push({ roleId, roleName });
 	}
-
+		// might want to try adding rolename to this log as well
 	try {
 		if (toAdd.length) {
 		await member.roles.add(toAdd);
-		log.info({ memberId, roleIds: toAdd }, 'Roles added');
+		log.info({ 
+			memberId, 
+			roleIds: toAdd 
+		}, 'Roles added');
 	}} catch (error) {
 		log.error({ error }, 'Error adding roles to member');
 		results.failed.push(...toAdd.map(roleId => ({ roleId, reason: 'Error adding role', error })));

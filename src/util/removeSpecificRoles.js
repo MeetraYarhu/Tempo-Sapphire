@@ -10,11 +10,18 @@ async function removeSpecificRoles(guildId, memberId, rolesToRemove) {
 	try {
 		const guild = await client.guilds.fetch(guildId);
 		const member = await guild.members.fetch(memberId);
-		log.debug({targetUsername: member.user.username, targetId: memberId, roleId }, 'removeSpecificRoles started');
+
+		log.debug({
+			targetUsername: member.user.username, 
+			targetId: memberId, 
+			roleId 
+		}, 'removeSpecificRoles started');
 
 		for (const roleId of rolesToRemove) {
 			if (typeof roleId !== 'string' || !roleId) {
-				log.warn({ roleId }, 'Invalid role ID');
+				log.warn({ 
+					roleId 
+				}, 'Invalid role ID');
 				continue;
 			}
 
@@ -22,14 +29,21 @@ async function removeSpecificRoles(guildId, memberId, rolesToRemove) {
 			await guild.roles.fetch(roleId).catch(() => null);
 
 			if (!role) {
-				log.warn({ roleId }, 'Role not found');
+				log.warn({ 
+					roleId 
+				}, 'Role not found');
 				continue;
 			}
 
 			const roleName = role.name;
 
 			if (!member.roles.cache.has(roleId)) {
-				log.debug({ targetUsername: member.user.username, targetId: memberId, roleName, roleId }, 'Member does not have role');
+				log.debug({ 
+					targetUsername: member.user.username, 
+					targetId: memberId, 
+					roleName, 
+					roleId 
+				}, 'Member does not have role');
 				continue;
 			}
 
@@ -39,11 +53,12 @@ async function removeSpecificRoles(guildId, memberId, rolesToRemove) {
 				targetId: memberId, 
 				roleName, 
 				roleId 
-			}, 
-				'Role removed');
+			}, 'Role removed');
 		}
 	}	catch (error) {
-		log.error({ error }, 'Error managing member roles');
+		log.error({ 
+			error 
+		}, 'Error managing member roles');
 	}
 }
 // example usage: 
