@@ -15,7 +15,7 @@ async function addSpecificRoles(guildId, memberId, rolesToAdd) {
 	log.debug({
 		targetUsername: member.user.username, 
 		targetId: memberId, 
-		roleId 
+		rolesToAdd 
 	}, 'addSpecificRoles started');
 
 	const toAdd = [];
@@ -65,7 +65,7 @@ async function addSpecificRoles(guildId, memberId, rolesToAdd) {
 			roleIds: toAdd 
 		}, 'Roles added');
 	}} catch (error) {
-		log.error({ error }, 'Error adding roles to member');
+			log.error(error, 'Error adding roles');
 		results.failed.push(...toAdd.map(roleId => ({ roleId, reason: 'Error adding role', error })));
 	}
 return results;
