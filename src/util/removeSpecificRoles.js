@@ -14,7 +14,7 @@ async function removeSpecificRoles(guildId, memberId, rolesToRemove) {
 		log.debug({
 			targetUsername: member.user.username, 
 			targetId: memberId, 
-			roleId 
+			rolesToRemove
 		}, 'removeSpecificRoles started');
 
 		for (const roleId of rolesToRemove) {
@@ -56,9 +56,7 @@ async function removeSpecificRoles(guildId, memberId, rolesToRemove) {
 			}, 'Role removed');
 		}
 	}	catch (error) {
-		log.error({ 
-			error 
-		}, 'Error managing member roles');
+			log.error(error, 'Error removing roles');
 	}
 }
 // example usage: 
