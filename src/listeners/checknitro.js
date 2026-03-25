@@ -5,8 +5,8 @@ const getMemberRoles = require('../util/getMemberRoles.js');
 const removeSpecificRoles = require('../util/removeSpecificRoles.js');
 
 // Define each guild as it's own object
-// const idvars = (idvariables.coeurl);
-const idvars = (idvariables.tempotesting);
+const idvars = (idvariables.coeurl);
+// const idvars = (idvariables.tempotesting);
 
 class NitroListener extends Listener {
 	constructor(context, options) {

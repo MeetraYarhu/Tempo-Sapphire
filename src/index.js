@@ -1,6 +1,6 @@
 require('module-alias/register');
+require('@sapphire/plugin-logger/register');
 const { SapphireClient } = require('@sapphire/framework');
-// eslint-disable-next-line no-unused-vars
 const { maintoken, testtoken } = require('../config.json');
 const { GatewayIntentBits } = require('discord.js');
 
