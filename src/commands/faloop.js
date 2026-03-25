@@ -112,11 +112,20 @@ class FaloopCommand extends Command {
 				return;
 			}
 			// Checks if user has the trials role when adding retired, and returns
-			if ((choice === roleRetired) && (member.roles.cache.some(role => role.id === roleTrials))) {
+			if (choice === roleRetired && member.roles.cache.some(role => role.id === roleTrials)) {
 				await interaction.reply({ content: 'Cannot add retired role to a user in trials.', flags: MessageFlags.Ephemeral });
 				log.warn({ 
 					interactionId: interaction.id,
 				}, 'Command attempted to assign retired role to a user that is in trials');
+				return;
+			}
+
+			// Blocks command if trying to assign trials to a retired user
+			if (choice === roleTrials && member.roles.cache.some(role => role.id === roleRetired)) {
+				await interaction.reply({ content: 'Cannot add trials role to a retired user. Please do this manually.', flags: MessageFlags.Ephemeral });
+				log.warn({
+					interactionId: interaction.id,
+				}, 'Command attempted to assign trials role to a user that is retired');
 				return;
 			}
 
@@ -175,7 +184,7 @@ class FaloopCommand extends Command {
 			});
 		}
 		catch (error) {
-			log.error({ error }, 'Error executing command');
+			log.error(error, 'Error executing command');
 			await interaction.reply('Failed - if problem persists make note of your attempts and tell Meetra');
 		}
 	}
