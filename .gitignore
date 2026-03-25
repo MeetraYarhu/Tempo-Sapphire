@@ -138,6 +138,7 @@ src/commands/testing.js
 errorlog.js
 embed.json
 src/archived/
+src/util/messages.json
 images/
 audio/# media not tracked
 *.png
