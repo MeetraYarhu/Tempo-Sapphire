@@ -21,8 +21,9 @@ class MelonCommand extends Command {
 
 		const chosenFile = files[Math.floor(Math.random() * files.length)];
 
-		const image = fs.readFileSync(path.join(imageDir, chosenFile));
-		console.log(image.length);
+		// const image = fs.readFileSync(path.join(imageDir, chosenFile));
+		const image = fs.readFileSync(path.join('images/melonpics', chosenFile));
+		// console.log(image.length);
 		const name = chosenFile.slice(0, -4);
 
 		const attachment = new AttachmentBuilder(image, { name: chosenFile });
@@ -46,12 +47,6 @@ class MelonCommand extends Command {
 
 		const stringy = JSON.stringify(melonCount, null, 2);
 		fs.writeFileSync(filePath, stringy);
-
-console.log({
-	imageDir,
-	chosenFile
-});
-console.log(attachment);
 
 		message.channel.send({
 			content: name,
