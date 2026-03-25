@@ -26,7 +26,7 @@
     "@config": "./config.json"
   },
   "scripts": {
-    "start": "nodemon --verbose src/index.js"
+    "start": "nodemon --verbose --ignore **/src/util/melonCount.json src/index.js"
   },
   "debug.javascript.codelens.npmScripts": "never"
 }
