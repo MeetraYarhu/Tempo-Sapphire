@@ -4,6 +4,9 @@ const { getLogger } = require('@util/logger.js');
 
 async function removeSpecificRoles(guildId, memberId, rolesToRemove) {
 
+// 3/29/26 - i updated the add roles helper to no longer accept an array. might be worth updating this one as well
+// something about patch TOC TOU conditions
+// faloop.js and checknitro.js are both using this, so will need to refactor those to not use arrays either
 
 	if (!Array.isArray(rolesToRemove)) throw new Error('rolesToRemove must be an array');
 
