@@ -7,8 +7,8 @@ const { getLogger } = require('@util/logger.js');
 	const log = getLogger(__filename);
 
 // Define each guild as it's own object
-// const idvars = (idvariables.coeurl);
-const idvars = (idvariables.tempotesting);
+const idvars = (idvariables.coeurl);
+// const idvars = (idvariables.tempotesting);
 
 class FaloopCommand extends Command {
 	constructor(context, options) {
@@ -150,7 +150,7 @@ class FaloopCommand extends Command {
 			// Adds role to user
 			switch (choice) {
 			case roleTrials:
-				await addSpecificRoles(interaction.guild.id, user.id, [roleTrials]);
+				await addSpecificRoles(interaction.guild.id, user.id, roleTrials);
 				replyEmbed
 					.addFields({
 						name: ' ',
@@ -158,7 +158,7 @@ class FaloopCommand extends Command {
 					});
 				break;
 			case roleReporter:
-				await addSpecificRoles(interaction.guild.id, user.id, [roleReporter]);
+				await addSpecificRoles(interaction.guild.id, user.id, roleReporter);
 				replyEmbed
 					.setColor('Green')
 					.addFields({
@@ -167,7 +167,7 @@ class FaloopCommand extends Command {
 					});
 				break;
 			case roleRetired:
-				await addSpecificRoles(interaction.guild.id, user.id, [roleRetired]);
+				await addSpecificRoles(interaction.guild.id, user.id, roleRetired);
 				replyEmbed
 					.setColor('Orange')
 					.addFields({

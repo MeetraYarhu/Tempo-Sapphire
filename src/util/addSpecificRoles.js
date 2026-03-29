@@ -2,12 +2,7 @@ const client = require('@root/src/index.js');
 const { getLogger } = require('@util/logger.js');
 	const log = getLogger(__filename);
 
-async function addSpecificRoles(guildId, memberId, rolesToAdd) {
-
-
-	if (!Array.isArray(rolesToAdd)) throw new Error('rolesToAdd must be an array');
-
-	const results = { added: [], alreadyHad: [], failed: [] };
+async function addSpecificRoles(guildId, memberId, roleToAdd) {
 
 	const guild = await client.guilds.fetch(guildId);
 	const member = await guild.members.fetch(memberId);
@@ -15,18 +10,16 @@ async function addSpecificRoles(guildId, memberId, rolesToAdd) {
 	log.debug({
 		targetUsername: member.user.username, 
 		targetId: memberId, 
-		rolesToAdd 
+		roleToAdd 
 	}, 'addSpecificRoles started');
 
-	const toAdd = [];
+		const roleId = roleToAdd;
 
-	for (const roleId of rolesToAdd) {
 		if (typeof roleId !== 'string' || !roleId) {
-			results.failed.push({ roleId, reason: 'Invalid role ID' });
 			log.warn({ 
 				roleId 
 			}, 'Invalid role ID');
-			continue;
+			return;
 		}
 
 		const role = guild.roles.cache.get(roleId) ??
@@ -35,42 +28,33 @@ async function addSpecificRoles(guildId, memberId, rolesToAdd) {
 		const roleName = role?.name ?? 'Unknown Role';
 
 		if (!role) {
-			results.failed.push({ roleId, roleName, reason: 'Role not found' }); 
 			log.warn({ 
 				roleId, 
 				roleName 
 			}, 'Role not found');
-			continue;
+			return;
 		}
 
 		if (member.roles.cache.has(roleId)) {
-			results.alreadyHad.push({ roleId, roleName });
 			log.debug({ 
 				roleName, 
 				roleId 
 			}, 'Member already has role');
-			continue;
+			return;
 		}
 
-		// might want to delete this part
-		toAdd.push(roleId);
-		results.added.push({ roleId, roleName });
-	}
 		// might want to try adding rolename to this log as well
 	try {
-		if (toAdd.length) {
-		await member.roles.add(toAdd);
+		await member.roles.add(roleToAdd);
 		log.info({ 
 			memberId, 
-			roleIds: toAdd 
-		}, 'Roles added');
-	}} catch (error) {
+			roleId,
+			roleName,
+		}, 'Role added');
+	} catch (error) {
 			log.error(error, 'Error adding roles');
-		results.failed.push(...toAdd.map(roleId => ({ roleId, reason: 'Error adding role', error })));
-	}
-return results;
-
+		}
 }
 // example usage: 
-// await addSpecificRoles(guildId, userId, [roleId1, roleId2]);
+// await addSpecificRoles(guildId, userId, roleId);
 module.exports = addSpecificRoles;
