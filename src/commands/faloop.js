@@ -139,7 +139,7 @@ class FaloopCommand extends Command {
 				if (choice === roleId) continue; // Skip the role that is being added
 				if (!member.roles.cache.has(roleId)) continue;
 
-				await removeSpecificRoles(idvars.guild.id, user.id, [roleId]);
+				await removeSpecificRoles(idvars.guild.id, user.id, roleId);
 				replyEmbed
 					.addFields({
 						name: ' ',

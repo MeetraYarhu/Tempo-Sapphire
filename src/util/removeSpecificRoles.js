@@ -2,66 +2,62 @@ const client = require('@root/src/index.js');
 const { getLogger } = require('@util/logger.js');
 	const log = getLogger(__filename);
 
-async function removeSpecificRoles(guildId, memberId, rolesToRemove) {
+async function removeSpecificRoles(guildId, memberId, roleToRemove) {
 
 // 3/29/26 - i updated the add roles helper to no longer accept an array. might be worth updating this one as well
 // something about patch TOC TOU conditions
 // faloop.js and checknitro.js are both using this, so will need to refactor those to not use arrays either
+	const guild = await client.guilds.fetch(guildId);
+	const member = await guild.members.fetch(memberId);
 
-	if (!Array.isArray(rolesToRemove)) throw new Error('rolesToRemove must be an array');
+	log.debug({
+		targetUsername: member.user.username, 
+		targetId: memberId, 
+		roleToRemove
+	}, 'removeSpecificRoles started');
 
-	try {
-		const guild = await client.guilds.fetch(guildId);
-		const member = await guild.members.fetch(memberId);
+	const roleId = roleToRemove;
 
-		log.debug({
-			targetUsername: member.user.username, 
-			targetId: memberId, 
-			rolesToRemove
-		}, 'removeSpecificRoles started');
-
-		for (const roleId of rolesToRemove) {
-			if (typeof roleId !== 'string' || !roleId) {
-				log.warn({ 
-					roleId 
-				}, 'Invalid role ID');
-				continue;
-			}
-
-			const role = guild.roles.cache.get(roleId) ??
-			await guild.roles.fetch(roleId).catch(() => null);
-
-			if (!role) {
-				log.warn({ 
-					roleId 
-				}, 'Role not found');
-				continue;
-			}
-
-			const roleName = role.name;
-
-			if (!member.roles.cache.has(roleId)) {
-				log.debug({ 
-					targetUsername: member.user.username, 
-					targetId: memberId, 
-					roleName, 
-					roleId 
-				}, 'Member does not have role');
-				continue;
-			}
-
-			await member.roles.remove(roleId);
-			log.info({ 
-				targetUsername: member.user.username, 
-				targetId: memberId, 
-				roleName, 
-				roleId 
-			}, 'Role removed');
-		}
-	}	catch (error) {
-			log.error(error, 'Error removing roles');
+		if (typeof roleId !== 'string' || !roleId) {
+		log.warn({ 
+			roleId 
+		}, 'Invalid role ID');
+		return;
 	}
+
+		const role = guild.roles.cache.get(roleId) ??
+		await guild.roles.fetch(roleId).catch(() => null);
+
+		const roleName = role?.name ?? 'Unknown Role';
+
+		if (!role) {
+			log.warn({ 
+				roleId,
+				roleName
+			}, 'Role not found');
+			return;
+		}
+
+
+		if (!member.roles.cache.has(roleId)) {
+			log.debug({ 
+				roleName,
+				roleId 
+			}, 'Member does not have role');
+			return;
+		}
+
+		try {
+			await member.roles.remove(roleId);
+			log.info({
+				memberId,
+				roleId,
+				roleName,
+			}, 'Role removed')
+		} catch (error) {
+			log.error(error, 'Error removing roles');
+		}
 }
 // example usage: 
-// await removeSpecificRoles(guildId, userId, [roleId1, roleId2]);
+// await removeSpecificRoles(guildId, userId, roleId);
 module.exports = removeSpecificRoles;
