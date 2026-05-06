@@ -16,17 +16,24 @@ class MelonCommand extends Command {
 		});
 	}
 
-	messageRun(message) {
+	async messageRun(message) {
 		const files = fs.readdirSync(imageDir);
 
 		const chosenFile = files[Math.floor(Math.random() * files.length)];
 
-		// const image = fs.readFileSync(path.join(imageDir, chosenFile));
-		const image = fs.readFileSync(path.join('images/melonpics', chosenFile));
-		// console.log(image.length);
-		const name = chosenFile.slice(0, -4);
+        const imagePath = path.join(imageDir, chosenFile);
+        const stats = fs.statSync(imagePath);
 
-		const attachment = new AttachmentBuilder(image, { name: chosenFile });
+
+		// console.log(`image path: ${imagePath}`);
+        // console.log(`image size MB: ${(stats.size / 1024 / 1024).toFixed(2)}`);
+       
+		const attachment = new AttachmentBuilder(imagePath, { name: chosenFile });
+
+
+		// Passed in message as text
+		const name = chosenFile.slice(0, -4);
+		// console.log(`image name: ${name}`);
 
 		// find user
 		const countUser = melonCount.find((list) => list.id === message.author.id);
