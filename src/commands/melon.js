@@ -5,6 +5,8 @@ const { AttachmentBuilder, MessageFlags  } = require('discord.js');
 const melonCount = require('../util/melonCount.json');
 const filePath = path.join(__dirname, '../util/melonCount.json');
 const imageDir = path.join(__dirname, '../../images/melonpics');
+const { getLogger } = require('@util/logger.js');
+	const log = getLogger(__filename);
 
 class MelonCommand extends Command {
 	constructor(context, options) {
@@ -17,6 +19,13 @@ class MelonCommand extends Command {
 	}
 
 	async messageRun(message) {
+
+		log.info({ 
+			invokedById: message.member.id,
+			invokedByUsername: message.member.displayName
+		 }, 
+			'Command initiated');
+
 		const files = fs.readdirSync(imageDir);
 
 		const chosenFile = files[Math.floor(Math.random() * files.length)];
@@ -54,6 +63,13 @@ class MelonCommand extends Command {
 
 		const stringy = JSON.stringify(melonCount, null, 2);
 		fs.writeFileSync(filePath, stringy);
+
+		log.debug({
+			file: chosenFile,
+			sizeMb: (stats.size / 1024 / 1024).toFixed(2),
+
+		}, 
+			'Pre-Send Parameters');
 
 		message.channel.send({
 			content: name,
