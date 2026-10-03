@@ -20,6 +20,5 @@ const client = new SapphireClient ({
 });
 
 client.login(maintoken);
-// client.login(testtoken);
 
 module.exports = client;
