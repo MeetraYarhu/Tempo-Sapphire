@@ -1,0 +1,61 @@
+{
+  "A Realm Reborn": [
+    { "id": "croque_mitaine", "name": "Croque-Mitaine", "location": "Middle La Noscea" },
+    { "id": "croakadile", "name": "Croakadile", "location": "Lower La Noscea" },
+    { "id": "bonnacon", "name": "Bonnacon", "location": "Western La Noscea" },
+    { "id": "the_garlok", "name": "The Garlok", "location": "Eastern La Noscea" },
+    { "id": "nandi", "name": "Nandi", "location": "Upper La Noscea" },
+    { "id": "chernobog", "name": "Chernobog", "location": "Outer La Noscea" },
+    { "id": "brontes", "name": "Brontes", "location": "Central Thanalan" },
+    { "id": "zona_seeker", "name": "Zona Seeker", "location": "Western Thanalan" },
+    { "id": "lampalagua", "name": "Lampalagua", "location": "Eastern Thanalan" },
+    { "id": "nunyunuwi", "name": "Nunyunuwi", "location": "Southern Thanalan" },
+    { "id": "minhocao", "name": "Minhocao", "location": "Northern Thanalan" },
+    { "id": "laideronnette", "name": "Laideronnette", "location": "Central Shroud" },
+    { "id": "mindflayer", "name": "Mindflayer", "location": "South Shroud" },
+    { "id": "wulgaru", "name": "Wulgaru", "location": "East Shroud" },
+    { "id": "thousand_cast_theda", "name": "Thousand-cast Theda", "location": "North Shroud" },
+    { "id": "safat", "name": "Safat", "location": "Coerthas Central Highlands" },
+    { "id": "agrippa_the_mighty", "name": "Agrippa the Mighty", "location": "Mor Dhona" }
+  ],
+  "Heavensward": [
+    { "id": "kaiser_behemoth", "name": "Kaiser Behemoth", "location": "Coerthas Western Highlands" },
+    { "id": "senmurv", "name": "Senmurv", "location": "The Dravanian Forelands" },
+    { "id": "gandarewa", "name": "Gandarewa", "location": "The Churning Mists" },
+    { "id": "bird_of_paradise", "name": "Bird of Paradise", "location": "The Sea of Clouds" },
+    { "id": "the_pale_rider", "name": "The Pale Rider", "location": "The Dravanian Hinterlands" },
+    { "id": "leucrotta", "name": "Leucrotta", "location": "Azys Lla" }
+  ],
+  "Stormblood": [
+    { "id": "udumbara", "name": "Udumbara", "location": "The Fringes" },
+    { "id": "gamma", "name": "Gamma", "location": "Yanxia" },
+    { "id": "okina", "name": "Okina", "location": "The Ruby Sea" },
+    { "id": "bone_crawler", "name": "Bone Crawler", "location": "The Peaks" },
+    { "id": "orghana", "name": "Orghana", "location": "The Azim Steppe" },
+    { "id": "salt_and_light", "name": "Salt and Light", "location": "The Lochs" }
+  ],
+  "Shadowbringers": [
+    { "id": "tyger", "name": "Tyger", "location": "Lakeland" },
+    { "id": "aglaope", "name": "Aglaope", "location": "Il Mheg" },
+    { "id": "forgiven_pedantry", "name": "Forgiven Pedantry", "location": "Kholusia" },
+    { "id": "tarchia", "name": "Tarchia", "location": "Amh Araeng" },
+    { "id": "ixtab", "name": "Ixtab", "location": "The Rak'tika Greatwood" },
+    { "id": "gunitt", "name": "Gunitt", "location": "The Tempest" }
+  ],
+  "Endwalker": [
+    { "id": "burfurlur_the_canny", "name": "Burfurlur the Canny", "location": "Labyrinthos" },
+    { "id": "sphatika", "name": "Sphatika", "location": "Thavnair" },
+    { "id": "armstrong", "name": "Armstrong", "location": "Garlemald" },
+    { "id": "ruminator", "name": "Ruminator", "location": "Mare Lamentorum" },
+    { "id": "ophioneus", "name": "Ophioneus", "location": "Elpis" },
+    { "id": "narrow_rift", "name": "Narrow-rift", "location": "Ultima Thule" }
+  ],
+  "Dawntrail": [
+    { "id": "ihnuxokiy", "name": "Ihnuxokiy", "location": "Kozama'uka" },
+    { "id": "kirlirger_the_abhorrent", "name": "Kirlirger the Abhorrent", "location": "Urqopacha" },
+    { "id": "neyoozoteel", "name": "Neyoozoteel", "location": "Yak T'el" },
+    { "id": "sansheya", "name": "Sansheya", "location": "Shaaloani" },
+    { "id": "atticus_the_primogenitor", "name": "Atticus the Primogenitor", "location": "Heritage Found" },
+    { "id": "the_forecaster", "name": "The Forecaster", "location": "Living Memory" }
+  ]
+}
