@@ -6,12 +6,15 @@
 2. In the server's configured S-Rank report channel, run /s-rank-panel.
    Posting the panel requires Manage Messages; submitting a report does not.
 3. Choose one of the six expansion buttons.
-4. Select a hunt from the Name | Location dropdown and enter coordinates or ToD.
+4. Choose a World, then select a hunt from the Name | Location dropdown.
+   Worlds: Behemoth, Excalibur, Exodus, Famfrit, Hyperion, Lamia, Leviathan, Ultros.
+5. Enter coordinates or ToD (for example: X: 12.3, Y: 24.5 or ToD: 14:30).
    Leave the optional text input blank if you only know the zone.
-5. Submit. The bot sends a red report embed to the manual report destination,
+6. Submit. The bot sends a red report embed to the manual report destination,
    mentions the configured notification role and reporter, and confirms privately.
 
 Coordinates or ToD is free text, without numeric or format validation.
+The selected World is included beside the hunt name and zone in the report.
 Discord's standard text-input length limit still applies.
 
 ## Data and configuration

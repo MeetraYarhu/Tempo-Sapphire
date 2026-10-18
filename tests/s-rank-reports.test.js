@@ -70,6 +70,10 @@ function interaction(options = {}) {
 		replied: false,
 		fields: {
 			getStringSelectValues: (id) => {
+				if (id === 'world') {
+					if (options.missingWorld) throw new Error('World field missing');
+					return options.selectedWorlds ?? [options.world ?? 'Leviathan'];
+				}
 				assert.equal(id, 'hunt');
 				return options.selected || [options.huntId || 'the_forecaster'];
 			},
@@ -122,13 +126,23 @@ test('all 47 catalog entries produce valid labels, modals, and maximum-length re
 		const modal = reports.buildReportModal(expansion).toJSON();
 		assert.equal(modal.custom_id, reports.MODAL_PREFIX + expansion.id);
 		assert.ok(modal.title.includes('S-Rank'));
-		const [huntLabel, coordinatesLabel] = modal.components;
+		const [worldLabel, huntLabel, coordinatesLabel] = modal.components;
+		assert.equal(worldLabel.label, 'World');
+		assert.equal(worldLabel.component.type, ComponentType.StringSelect);
+		assert.equal(worldLabel.component.custom_id, 'world');
+		assert.equal(worldLabel.component.required, true);
+		assert.equal(worldLabel.component.min_values, 1);
+		assert.equal(worldLabel.component.max_values, 1);
+		assert.deepEqual(worldLabel.component.options.map((option) => option.value), [
+			'Behemoth', 'Excalibur', 'Exodus', 'Famfrit', 'Hyperion', 'Lamia', 'Leviathan', 'Ultros',
+		]);
 		assert.equal(huntLabel.type, ComponentType.Label);
 		assert.equal(huntLabel.component.type, ComponentType.StringSelect);
 		assert.equal(huntLabel.component.min_values, 1);
 		assert.equal(huntLabel.component.max_values, 1);
 		assert.equal(coordinatesLabel.component.custom_id, 'coordinates');
 		assert.equal(coordinatesLabel.label, 'Coordinates or ToD');
+		assert.doesNotMatch(coordinatesLabel.component.placeholder, /server|Leviathan/i);
 		assert.equal(coordinatesLabel.component.required, false);
 		assert.equal(coordinatesLabel.component.max_length, undefined);
 		assert.equal(huntLabel.component.options.length, hunts.length);
@@ -138,7 +152,7 @@ test('all 47 catalog entries produce valid labels, modals, and maximum-length re
 			ids.add(hunt.id);
 			assert.equal(huntLabel.component.options[huntIndex].label, hunt.name + ' | ' + hunt.location);
 			assert.equal(huntLabel.component.options[huntIndex].value, hunt.id);
-			const embed = reports.buildReportEmbed(expansion, hunt, 'x'.repeat(4000), user).toJSON();
+			const embed = reports.buildReportEmbed(hunt, 'Leviathan', 'x'.repeat(4000), user).toJSON();
 			assert.ok(embed.description.length <= 4096);
 			assert.equal(embed.footer.text, user.username);
 		}
@@ -208,7 +222,7 @@ for (const expansion of reports.expansions) {
 		assert.equal(channelId, request.config.channels.manualreports);
 		assert.equal(payload.content, '<@' + user.id + '> <@&' + request.config.roles.manualreports + '>');
 		const embed = payload.embeds[0].toJSON();
-		assert.equal(embed.description, hunt.name + ' | ' + hunt.location + '\n' + coordinates);
+		assert.equal(embed.description, hunt.name + ' | ' + hunt.location + ' | Leviathan\n' + coordinates);
 		assert.equal(embed.title, undefined);
 		assert.deepEqual(payload.allowedMentions.parse, []);
 		assert.deepEqual(payload.allowedMentions.users, [user.id]);
@@ -226,13 +240,24 @@ test('guild configuration routes production reports to their own destination and
 	assert.deepEqual(request.sent[0].payload.allowedMentions.roles, [configByGuild.coeurl.roles.manualreports]);
 });
 
+test('each listed World is preserved in the relayed report', async () => {
+	const { instance } = handler(ReportHandler);
+	for (const world of ['Behemoth', 'Excalibur', 'Exodus', 'Famfrit', 'Hyperion', 'Lamia', 'Leviathan', 'Ultros']) {
+		const request = interaction({ world, coordinates: 'ToD: 14:30' });
+		await instance.run(request.value, 'dawntrail');
+		assert.equal(request.sent.length, 1);
+		assert.equal(request.sent[0].payload.embeds[0].toJSON().description,
+			'The Forecaster | Living Memory | ' + world + '\nToD: 14:30');
+	}
+});
+
 test('a time-of-death report preserves the supplied free text', async () => {
 	const { instance } = handler(ReportHandler);
 	const request = interaction({ coordinates: 'ToD: 14:30 server time, about five minutes ago' });
 	await instance.run(request.value, 'dawntrail');
 	assert.equal(request.sent.length, 1);
 	assert.equal(request.sent[0].payload.embeds[0].toJSON().description,
-		'The Forecaster | Living Memory\nToD: 14:30 server time, about five minutes ago');
+		'The Forecaster | Living Memory | Leviathan\nToD: 14:30 server time, about five minutes ago');
 });
 
 test('zone-only reports can leave the optional text input blank', async () => {
@@ -241,10 +266,14 @@ test('zone-only reports can leave the optional text input blank', async () => {
 	await instance.run(request.value, 'dawntrail');
 	assert.equal(request.sent.length, 1);
 	assert.match(request.sent[0].payload.embeds[0].toJSON().description, /Living Memory/);
-	assert.equal(request.sent[0].payload.embeds[0].toJSON().description, 'The Forecaster | Living Memory');
+	assert.equal(request.sent[0].payload.embeds[0].toJSON().description, 'The Forecaster | Living Memory | Leviathan');
 });
 
 for (const [name, options] of [
+	['unknown World', { world: 'unlisted-world' }],
+	['missing World field', { missingWorld: true }],
+	['no World selected', { selectedWorlds: [] }],
+	['multiple Worlds selected', { selectedWorlds: ['Leviathan', 'Ultros'] }],
 	['unknown hunt', { huntId: 'does-not-exist' }],
 	['hunt from another expansion', { huntId: 'tyger' }],
 	['multiple selected hunts', { selected: ['the_forecaster', 'ihnuxokiy'] }],
@@ -301,11 +330,13 @@ test('DM button click gives a private server-only response', async () => {
 test('two users retain independent hunt and coordinate selections', async () => {
 	const { instance } = handler(ReportHandler);
 	const first = interaction({ huntId: 'the_forecaster', coordinates: 'First location' });
-	const second = interaction({ huntId: 'sphatika', coordinates: 'Second location' });
+	const second = interaction({ huntId: 'sphatika', coordinates: 'Second location', world: 'Ultros' });
 	second.value.user = { ...user, id: '234567890123456789', username: 'Second Reporter' };
 	await Promise.all([instance.run(first.value, 'dawntrail'), instance.run(second.value, 'endwalker')]);
 	assert.match(first.sent[0].payload.embeds[0].toJSON().description, /^The Forecaster/);
 	assert.match(second.sent[0].payload.embeds[0].toJSON().description, /^Sphatika/);
+	assert.match(first.sent[0].payload.embeds[0].toJSON().description, / \| Leviathan\n/);
+	assert.match(second.sent[0].payload.embeds[0].toJSON().description, / \| Ultros\n/);
 	assert.deepEqual(first.sent[0].payload.allowedMentions.users, [user.id]);
 	assert.deepEqual(second.sent[0].payload.allowedMentions.users, [second.value.user.id]);
 });

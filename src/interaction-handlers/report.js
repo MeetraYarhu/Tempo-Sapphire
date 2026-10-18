@@ -2,6 +2,7 @@ const { InteractionHandler, InteractionHandlerTypes } = require('@sapphire/frame
 const { MessageFlags } = require('discord.js');
 const {
 	MODAL_PREFIX,
+	worlds,
 	SRankReportError,
 	getExpansion,
 	getHunts,
@@ -31,6 +32,17 @@ class ReportHandler extends InteractionHandler {
 			const config = getReportContext(interaction);
 			const expansion = getExpansion(expansionId);
 			if (!expansion) throw new SRankReportError('That S-Rank expansion is no longer available. Please use the current panel.');
+			let selectedWorlds;
+			try {
+				selectedWorlds = interaction.fields.getStringSelectValues('world');
+			}
+			catch {
+				throw new SRankReportError('Please reopen the S-Rank form and select a World before submitting.');
+			}
+			if (selectedWorlds.length !== 1 || !worlds.includes(selectedWorlds[0])) {
+				throw new SRankReportError('Choose one of the listed Worlds before submitting the S-Rank report.');
+			}
+			const world = selectedWorlds[0];
 			const selected = interaction.fields.getStringSelectValues('hunt');
 			const hunt = selected.length === 1 ?
 				getHunts(expansion).find((entry) => entry.id === selected[0]) : undefined;
@@ -41,7 +53,7 @@ class ReportHandler extends InteractionHandler {
 			);
 			await channel.send({
 				content: '<@' + interaction.user.id + '> <@&' + config.roles.manualreports + '>',
-				embeds: [buildReportEmbed(expansion, hunt, coordinates, interaction.user)],
+				embeds: [buildReportEmbed(hunt, world, coordinates, interaction.user)],
 				allowedMentions: {
 					parse: [],
 					users: [interaction.user.id],

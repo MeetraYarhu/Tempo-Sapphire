@@ -17,6 +17,16 @@ const idVariables = require('./idVariables.json');
 
 const BUTTON_PREFIX = 'srank:expansion:';
 const MODAL_PREFIX = 'srank:report:';
+const worlds = [
+	'Behemoth',
+	'Excalibur',
+	'Exodus',
+	'Famfrit',
+	'Hyperion',
+	'Lamia',
+	'Leviathan',
+	'Ultros',
+];
 const expansions = [
 	{ id: 'a_realm_reborn', name: 'A Realm Reborn', emoji: '<:2x:1255303608258269304>' },
 	{ id: 'heavensward', name: 'Heavensward', emoji: '<:3x:1255303623181598810>' },
@@ -72,6 +82,13 @@ function buildPanelRows() {
 }
 
 function buildReportModal(expansion) {
+	const worldSelect = new StringSelectMenuBuilder()
+		.setCustomId('world')
+		.setPlaceholder('Choose a World')
+		.setMinValues(1)
+		.setMaxValues(1)
+		.setRequired(true)
+		.addOptions(worlds.map((world) => ({ label: world, value: world })));
 	const huntSelect = new StringSelectMenuBuilder()
 		.setCustomId('hunt')
 		.setPlaceholder('Choose an S-Rank')
@@ -84,12 +101,13 @@ function buildReportModal(expansion) {
 	const coordinates = new TextInputBuilder()
 		.setCustomId('coordinates')
 		.setStyle(TextInputStyle.Short)
-		.setPlaceholder('Example: X: 12.3, Y: 24.5 or ToD: 14:30 server time')
+		.setPlaceholder('Example: X: 12.3, Y: 24.5 or ToD: 14:30')
 		.setRequired(false);
 	return new ModalBuilder()
 		.setCustomId(MODAL_PREFIX + expansion.id)
 		.setTitle(expansion.name + ' S-Rank Report')
 		.addLabelComponents(
+			new LabelBuilder().setLabel('World').setStringSelectMenuComponent(worldSelect),
 			new LabelBuilder().setLabel('S-Rank').setStringSelectMenuComponent(huntSelect),
 			new LabelBuilder()
 				.setLabel('Coordinates or ToD')
@@ -97,10 +115,10 @@ function buildReportModal(expansion) {
 		);
 }
 
-function buildReportEmbed(expansion, hunt, coordinates, user) {
+function buildReportEmbed(hunt, world, coordinates, user) {
 	return new EmbedBuilder()
 		.setColor('Red')
-		.setDescription(hunt.name + ' | ' + hunt.location +
+		.setDescription(hunt.name + ' | ' + hunt.location + ' | ' + world +
 			(coordinates ? '\n' + coordinates : ''))
 		.setTimestamp()
 		.setFooter({
@@ -159,6 +177,7 @@ async function handleReportError(handler, interaction, error) {
 module.exports = {
 	BUTTON_PREFIX,
 	MODAL_PREFIX,
+	worlds,
 	expansions,
 	SRankReportError,
 	getExpansion,
