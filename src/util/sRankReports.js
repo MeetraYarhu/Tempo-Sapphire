@@ -93,7 +93,6 @@ function buildReportModal(expansion) {
 			new LabelBuilder().setLabel('S-Rank').setStringSelectMenuComponent(huntSelect),
 			new LabelBuilder()
 				.setLabel('Coordinates or ToD')
-				.setDescription('Optional if you only know the zone.')
 				.setTextInputComponent(coordinates),
 		);
 }
