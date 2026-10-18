@@ -100,7 +100,6 @@ function buildReportModal(expansion) {
 function buildReportEmbed(expansion, hunt, coordinates, user) {
 	return new EmbedBuilder()
 		.setColor('Red')
-		.setTitle(expansion.name + ' S-Rank Report')
 		.setDescription(hunt.name + ' | ' + hunt.location +
 			(coordinates ? '\n' + coordinates : ''))
 		.setTimestamp()

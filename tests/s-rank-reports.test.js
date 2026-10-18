@@ -209,7 +209,7 @@ for (const expansion of reports.expansions) {
 		assert.equal(payload.content, '<@' + user.id + '> <@&' + request.config.roles.manualreports + '>');
 		const embed = payload.embeds[0].toJSON();
 		assert.equal(embed.description, hunt.name + ' | ' + hunt.location + '\n' + coordinates);
-		assert.equal(embed.title, expansion.name + ' S-Rank Report');
+		assert.equal(embed.title, undefined);
 		assert.deepEqual(payload.allowedMentions.parse, []);
 		assert.deepEqual(payload.allowedMentions.users, [user.id]);
 		assert.deepEqual(payload.allowedMentions.roles, [request.config.roles.manualreports]);
