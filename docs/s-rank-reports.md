@@ -6,12 +6,12 @@
 2. In the server's configured S-Rank report channel, run /s-rank-panel.
    Posting the panel requires Manage Messages; submitting a report does not.
 3. Choose one of the six expansion buttons.
-4. Select a hunt from the Name | Location dropdown and enter its coordinate or
-   time of death. Leave the optional text input blank if you only know the zone.
+4. Select a hunt from the Name | Location dropdown and enter coordinates or ToD.
+   Leave the optional text input blank if you only know the zone.
 5. Submit. The bot sends a red report embed to the manual report destination,
    mentions the configured notification role and reporter, and confirms privately.
 
-Coordinate or Time of Death is free text, without numeric or format validation.
+Coordinates or ToD is free text, without numeric or format validation.
 Discord's standard text-input length limit still applies.
 
 ## Data and configuration

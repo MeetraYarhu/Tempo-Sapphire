@@ -92,7 +92,7 @@ function buildReportModal(expansion) {
 		.addLabelComponents(
 			new LabelBuilder().setLabel('S-Rank').setStringSelectMenuComponent(huntSelect),
 			new LabelBuilder()
-				.setLabel('Coordinate or Time of Death')
+				.setLabel('Coordinates or ToD')
 				.setDescription('Optional if you only know the zone.')
 				.setTextInputComponent(coordinates),
 		);
@@ -103,7 +103,7 @@ function buildReportEmbed(expansion, hunt, coordinates, user) {
 		.setColor('Red')
 		.setTitle(expansion.name + ' S-Rank Report')
 		.setDescription(hunt.name + ' | ' + hunt.location +
-			'\nCoordinate or Time of Death: ' + (coordinates || 'Not provided (zone-only report)'))
+			(coordinates ? '\n' + coordinates : ''))
 		.setTimestamp()
 		.setFooter({
 			text: user.username,

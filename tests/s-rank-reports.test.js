@@ -128,7 +128,7 @@ test('all 47 catalog entries produce valid labels, modals, and maximum-length re
 		assert.equal(huntLabel.component.min_values, 1);
 		assert.equal(huntLabel.component.max_values, 1);
 		assert.equal(coordinatesLabel.component.custom_id, 'coordinates');
-		assert.equal(coordinatesLabel.label, 'Coordinate or Time of Death');
+		assert.equal(coordinatesLabel.label, 'Coordinates or ToD');
 		assert.equal(coordinatesLabel.component.required, false);
 		assert.equal(coordinatesLabel.component.max_length, undefined);
 		assert.equal(huntLabel.component.options.length, hunts.length);
@@ -208,7 +208,7 @@ for (const expansion of reports.expansions) {
 		assert.equal(channelId, request.config.channels.manualreports);
 		assert.equal(payload.content, '<@' + user.id + '> <@&' + request.config.roles.manualreports + '>');
 		const embed = payload.embeds[0].toJSON();
-		assert.equal(embed.description, hunt.name + ' | ' + hunt.location + '\nCoordinate or Time of Death: ' + coordinates);
+		assert.equal(embed.description, hunt.name + ' | ' + hunt.location + '\n' + coordinates);
 		assert.equal(embed.title, expansion.name + ' S-Rank Report');
 		assert.deepEqual(payload.allowedMentions.parse, []);
 		assert.deepEqual(payload.allowedMentions.users, [user.id]);
@@ -231,8 +231,8 @@ test('a time-of-death report preserves the supplied free text', async () => {
 	const request = interaction({ coordinates: 'ToD: 14:30 server time, about five minutes ago' });
 	await instance.run(request.value, 'dawntrail');
 	assert.equal(request.sent.length, 1);
-	assert.match(request.sent[0].payload.embeds[0].toJSON().description,
-		/Coordinate or Time of Death: ToD: 14:30 server time, about five minutes ago/);
+	assert.equal(request.sent[0].payload.embeds[0].toJSON().description,
+		'The Forecaster | Living Memory\nToD: 14:30 server time, about five minutes ago');
 });
 
 test('zone-only reports can leave the optional text input blank', async () => {
@@ -241,7 +241,7 @@ test('zone-only reports can leave the optional text input blank', async () => {
 	await instance.run(request.value, 'dawntrail');
 	assert.equal(request.sent.length, 1);
 	assert.match(request.sent[0].payload.embeds[0].toJSON().description, /Living Memory/);
-	assert.match(request.sent[0].payload.embeds[0].toJSON().description, /Not provided \(zone-only report\)/);
+	assert.equal(request.sent[0].payload.embeds[0].toJSON().description, 'The Forecaster | Living Memory');
 });
 
 for (const [name, options] of [
