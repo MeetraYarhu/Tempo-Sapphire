@@ -56,18 +56,19 @@ function getReportContext(interaction) {
 }
 
 function buildPanelRows() {
-	const buttons = expansions.map((expansion) => {
+	const buttons = [...expansions].reverse().map((expansion) => {
 		const button = new ButtonBuilder()
 			.setCustomId(BUTTON_PREFIX + expansion.id)
-			.setLabel(expansion.name)
-			.setStyle(ButtonStyle.Secondary);
+			.setLabel('Report ' + expansion.name + ' S-Rank')
+			.setStyle(ButtonStyle.Primary);
 		if (expansion.emoji) button.setEmoji(expansion.emoji);
 		return button;
 	});
-	return [
-		new ActionRowBuilder().addComponents(buttons.slice(0, 3)),
-		new ActionRowBuilder().addComponents(buttons.slice(3)),
-	];
+	const rows = [];
+	for (let index = 0; index < buttons.length; index += 2) {
+		rows.push(new ActionRowBuilder().addComponents(buttons.slice(index, index + 2)));
+	}
+	return rows;
 }
 
 function buildReportModal(expansion) {

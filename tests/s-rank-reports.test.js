@@ -162,11 +162,12 @@ test('panel registers for guild use and requires Manage Messages only for postin
 	assert.ok(request.sent[0].payload.content.length <= 2000);
 	assert.match(request.sent[0].payload.content, /PRIMAL S-Ranks only!/);
 	assert.match(request.sent[0].payload.content, /Click an expansion button/);
-	assert.deepEqual(request.sent[0].payload.components.map((row) => row.toJSON().components.length), [3, 3]);
+	assert.deepEqual(request.sent[0].payload.components.map((row) => row.toJSON().components.length), [2, 2, 2]);
 	const buttons = request.sent[0].payload.components.flatMap((row) => row.toJSON().components);
-	assert.deepEqual(buttons.map((button) => button.label), reports.expansions.map((expansion) => expansion.name));
+	assert.deepEqual(buttons.map((button) => button.label),
+		[...reports.expansions].reverse().map((expansion) => 'Report ' + expansion.name + ' S-Rank'));
 	assert.equal(new Set(buttons.map((button) => button.custom_id)).size, 6);
-	assert.equal(buttons[5].emoji.id, '1255303681654521856');
+	assert.equal(buttons[0].emoji.id, '1255303681654521856');
 	assert.equal(request.edits.length, 1);
 });
 
